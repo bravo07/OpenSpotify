@@ -26,5 +26,5 @@ OpenSpotify Downloader is licensed under the BSD 2-clause license.
 
 [libvideo](https://github.com/jamesqo/libvideo)  |  A lightweight .NET library to download YouTube videos.
 
-[FFmpeg](https://github.com/jamesqo/libvideo)  |  FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata.
+[FFmpeg](https://github.com/FFmpeg/FFmpeg)  |  FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata.
 
