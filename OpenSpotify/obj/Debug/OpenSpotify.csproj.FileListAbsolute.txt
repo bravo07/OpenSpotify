@@ -23,3 +23,11 @@ c:\users\valon\documents\visual studio 2015\Projects\OpenSpotify\OpenSpotify\obj
 c:\users\valon\documents\visual studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.dll
 c:\users\valon\documents\visual studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.pdb
 c:\users\valon\documents\visual studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.g.cs
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.g.cs
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.lref
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.baml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.baml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\libvideo.dll

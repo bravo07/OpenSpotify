@@ -6,14 +6,20 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        mc:Ignorable="d" GlowBrush="Green" BorderBrush="Green"
-        Title="MainView" Height="350" Width="525">
+        xmlns:views="clr-namespace:OpenSpotify.Views"
+        x:Name="MetroWindow"
+        mc:Ignorable="d" GlowBrush="Green" BorderBrush="Green" 
+        Title="MainView"
+        Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
+        Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
+        Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
+        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
     <Window.Resources>
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
@@ -53,15 +59,22 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
-        
+
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                SelectedIndex="1"
-         
+                                SelectedIndex="1" 
+                                Content="{Binding ContentWindow}"
+                                SelectedItem="{Binding SelectedItem}"
                                 Foreground="White"
                                 HamburgerWidth="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ItemClick">
+                    <i:InvokeCommandAction Command="{Binding ItemClickCommand}" CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <!--  Items  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
@@ -89,28 +102,9 @@
             <!--  Content  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
-                    <Grid x:Name="ContentGrid">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="48" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Background="#7A7A7A">
-                            <TextBlock x:Name="Header"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontSize="24"
-                                       Foreground="White"
-                                       Text="{Binding Label}" />
-                        </Border>
-                        <controls:TransitioningContentControl Grid.Row="1"
-                                                              Content="{Binding Glyph}"
-                                                              RestartTransitionOnContentChange="True"
-                                                              Transition="Default">
-                            <controls:TransitioningContentControl.ContentTemplate>
-                                <DataTemplate>
-                                </DataTemplate>
-                            </controls:TransitioningContentControl.ContentTemplate>
-                        </controls:TransitioningContentControl>
+                    <Grid>
+                        <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}"
+                                        Content="{Binding ContentWindow}"/>
                     </Grid>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>

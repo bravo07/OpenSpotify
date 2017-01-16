@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="OpenSpotify.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" Width="525" Height="350">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Content="Settings" HorizontalAlignment="Center" FontSize="25" FontFamily="Calibri Light"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="../Assets/Directory.png" Height="25" Width="25" Margin="5"/>
+                <TextBox Grid.Column="1" controls:TextBoxHelper.Watermark="FFmpeg Path" Text="{Binding ApplicationModel.Settings.FFmpegPath}" Margin="5"/>
+                <Button Grid.Column="2" Content="..." Margin="5" Command="{Binding FFmpegPathCommand}"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="../Assets/ApiKey.png" Height="25" Width="25" Margin="5"/>
+                <TextBox Grid.Column="1" controls:TextBoxHelper.Watermark="Youtube ApiKey" Text="{Binding ApplicationModel.Settings.YoutubeApiKey ,UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
+
+<!--d:DesignHeight="300" d:DesignWidth="300"-->

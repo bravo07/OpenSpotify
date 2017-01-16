@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\App.xaml
-11811751144
+4-527433076
 
-16-2087393064
-181689824251
-Views\MainView.xaml;
+251752526435
+69524826737
+Views\DownloadView.xaml;Views\HomeView.xaml;Views\MainView.xaml;Views\SettingsView.xaml;
 
 False
 
