@@ -3,6 +3,10 @@
 # OpenSpotify Downloader
 Thanks for checking out OpenSpotify Downloader. We hope it'll be to be your go-to tool for Downloading Music.
 
+## What you need
+* YouTube API Key
+* FFmpeg (Executable)
+
 * To Download a new Song just Drag & Drop or **CTRL + V** in the Window.
 
 If you run into any problems or issues, **please** let us know so we can address and fix them right away. You can report issues on GitHub:
