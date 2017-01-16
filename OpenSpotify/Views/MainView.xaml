@@ -6,14 +6,15 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:views="clr-namespace:OpenSpotify.Views"
+        xmlns:dd="urn:gong-wpf-dragdrop"
         x:Name="MetroWindow"
         mc:Ignorable="d" GlowBrush="Green" BorderBrush="Green" 
-        Title="MainView"
+        Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
-        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}">
+        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" 
+        AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
@@ -24,7 +25,7 @@
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition Width="40"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ContentControl Grid.Column="0"
@@ -43,7 +44,7 @@
         <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition Width="40" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image Margin="12"
@@ -67,7 +68,7 @@
                                 Foreground="White"
                                 SelectedIndex="0"
                                 DisplayMode="Inline"
-                                HamburgerWidth="48"
+                                HamburgerWidth="40"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
             <i:Interaction.Triggers>

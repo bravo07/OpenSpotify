@@ -1,4 +1,7 @@
-﻿namespace OpenSpotify.Models {
+﻿using System.Windows;
+using Newtonsoft.Json;
+
+namespace OpenSpotify.Models {
 
     public class SettingsModel : BaseModel {
 
@@ -55,6 +58,23 @@
                 _windowLeft = value; 
                 OnPropertyChanged(nameof(WindowLeft));
             }
+        }
+
+        [JsonIgnore]
+        public bool IsReady => Validate();
+
+
+        [JsonIgnore]
+        public string StatusText => ValidateStatusText();
+
+        private bool Validate() {
+            return !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey);
+        }
+
+        private string ValidateStatusText() {
+            return !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey)
+                ? string.Empty
+                : "No FFmpeg or ApiKey";
         }
     }
 }

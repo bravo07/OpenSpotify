@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenSpotify.Models {
@@ -11,9 +12,9 @@ namespace OpenSpotify.Models {
 
             if (SongCollection == null) {
                 SongCollection = new ObservableCollection<SongModel> {
-                    new SongModel {SongName = "TestSong1", CoverImage = "https://recordhounds.files.wordpress.com/2014/10/album-cover.jpeg"}, // UI Test 
-                    new SongModel {SongName = "TestSong2", CoverImage = "https://recordhounds.files.wordpress.com/2014/10/album-cover.jpeg"},
-                    new SongModel {SongName = "TestSong3", CoverImage = "https://recordhounds.files.wordpress.com/2014/10/album-cover.jpeg"}
+                    //new SongModel {SongName = "TestSong1", CoverImage = "https://recordhounds.files.wordpress.com/2014/10/album-cover.jpeg"}, // UI Test 
+                    //new SongModel {SongName = "TestSong2", CoverImage = "https://recordhounds.files.wordpress.com/2014/10/album-cover.jpeg"},
+                    //new SongModel {SongName = "TestSong3", CoverImage = "https://recordhounds.files.wordpress.com/2014/10/album-cover.jpeg"}
                 };
 
             }
@@ -32,5 +33,11 @@ namespace OpenSpotify.Models {
         }
 
         public ObservableCollection<SongModel> SongCollection { get; set; }
+
+        public ObservableCollection<SongModel> DownloadCollection { get; set; } =
+           new ObservableCollection<SongModel>();
+
+        public List<string> FailedSongCollection { get; set; } =
+            new List<string>();
     }
 }

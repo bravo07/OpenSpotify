@@ -9,14 +9,18 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converter:ImageCoverter x:Key="ImageCoverter"/>
+        <converter: x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    <Grid  Margin="50,0,0,0">
-        <ListBox ItemsSource="{Binding ApplicationModel.SongCollection}" Margin="5">
+    <Grid  Margin="48,0,0,0">
+
+        <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" FontFamily="CalibriLight" FontSize="18" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}" Visibility="{Binding ApplicationModel.Settings.IsReady, Converter={StaticResource VisibilityConverter}, FallbackValue=Hidden}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="2">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="0.2*"/>
                         </Grid.ColumnDefinitions>
@@ -31,10 +35,10 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="{Binding SongName}"/>
-                            <TextBlock Grid.Row="1" Text="{Binding SongName}"/>
-                            <TextBlock Grid.Row="2" Text="{Binding SongName}"/>
-                            <controls:MetroProgressBar Grid.Row="3"/>
+                            <TextBlock Grid.Row="0" Margin="5,0,0,0" Text="{Binding SongName}"/>
+                            <TextBlock Grid.Row="1" Margin="5,0,0,0" Text="{Binding SongName}"/>
+                            <TextBlock Grid.Row="2" Margin="5,0,0,0" Text="{Binding SongName}"/>
+                            <controls:MetroProgressBar Margin="5,0,0,0" Grid.Row="3"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>
