@@ -13,7 +13,7 @@
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
-        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
@@ -24,7 +24,7 @@
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition Width="48"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ContentControl Grid.Column="0"
@@ -62,10 +62,11 @@
 
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                SelectedIndex="1" 
                                 Content="{Binding ContentWindow}"
                                 SelectedItem="{Binding SelectedItem}"
                                 Foreground="White"
+                                SelectedIndex="0"
+                                DisplayMode="Inline"
                                 HamburgerWidth="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">

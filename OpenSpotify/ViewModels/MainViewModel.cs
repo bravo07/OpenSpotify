@@ -59,13 +59,16 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<object> ItemClickCommand {
             get {
                 return new CommandHandler<object>(o => {
-                    var tt = (HamburgerMenuGlyphItem)SelectedItem;
-                    if (tt.Label == nameof(Downloads)) {
-                        ContentWindow = new DownloadView(ApplicationModel);
-                    }
-
-                    if (tt.Label == nameof(Settings)) {
-                        ContentWindow = new SettingsView(ApplicationModel);
+                    switch (((HamburgerMenuGlyphItem)SelectedItem).Label) {
+                        case nameof(Downloads):
+                            ContentWindow = new DownloadView(ApplicationModel);
+                            return;
+                        case nameof(Settings):
+                            ContentWindow = new SettingsView(ApplicationModel);
+                            return;
+                        case nameof(Home):
+                            ContentWindow = new HomeView(ApplicationModel);
+                            break;
                     }
                 });
             }

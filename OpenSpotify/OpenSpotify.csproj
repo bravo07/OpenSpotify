@@ -83,6 +83,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="Services\Util\ImageCoverter.cs" />
     <Compile Include="Services\Util\Utils.cs" />
     <Compile Include="Services\Util\Views.cs" />
     <Compile Include="ViewModels\DownloadsViewModel.cs" />

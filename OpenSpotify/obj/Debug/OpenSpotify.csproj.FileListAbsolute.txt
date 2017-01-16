@@ -31,3 +31,4 @@ C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\libvideo.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs

@@ -12,8 +12,8 @@ namespace OpenSpotify {
             ApplicationService.InitializeApplicationDirectorys();
             var applicationModel = ApplicationService.LoadApplicationModel() ?? new ApplicationModel {
                                        Settings = new SettingsModel {
-                                           WindowHeight = 550,
-                                           WindowWidth = 750,
+                                           WindowHeight = 400,
+                                           WindowWidth = 600,
                                            WindowTop = 250,
                                            WindowLeft = 250
                                        }
