@@ -42,5 +42,15 @@
                 <TextBox Grid.Column="1" controls:TextBoxHelper.Watermark="Youtube ApiKey" Text="{Binding ApplicationModel.Settings.YoutubeApiKey ,UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
             </Grid>
         </Grid>
+
+        <Grid Grid.Row="1" Margin="50,0,0,0">
+            <StackPanel Orientation="Vertical">
+                <Label Content="FFmpeg" FontSize="20" FontFamily="Calibri Light"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Bitrate" FontSize="15" FontFamily="Calibri Light"/>
+                    <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

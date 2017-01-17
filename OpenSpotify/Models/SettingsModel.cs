@@ -11,6 +11,7 @@ namespace OpenSpotify.Models {
         private double _windowTop;
         private double _windowLeft;
         private string _youtubeApiKey;
+        private BitrateModel _selectedBitrate;
 
         public string FFmpegPath {
             get { return _fFmpegPath; }
@@ -57,6 +58,14 @@ namespace OpenSpotify.Models {
             set {
                 _windowLeft = value; 
                 OnPropertyChanged(nameof(WindowLeft));
+            }
+        }
+
+        public BitrateModel SelectedBitrate {
+            get { return _selectedBitrate; }
+            set {
+                _selectedBitrate = value;
+                OnPropertyChanged(nameof(SelectedBitrate));
             }
         }
 

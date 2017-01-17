@@ -22,6 +22,7 @@ namespace OpenSpotify.ViewModels {
         private ApplicationModel _applicationModel;
         private UserControl _contentWindow;
         private object _selectedItem;
+        private DownloadService _downloadService;
 
         #region Properties
 
@@ -46,6 +47,14 @@ namespace OpenSpotify.ViewModels {
             set {
                 _selectedItem = value;
                 OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+
+        public DownloadService DownloadService {
+            get { return _downloadService; }
+            set {
+                _downloadService = value; 
+                OnPropertyChanged(nameof(DownloadService));
             }
         }
 
@@ -98,23 +107,16 @@ namespace OpenSpotify.ViewModels {
 
                 await Task.Run(() => {
                     var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
-                    var spotifyFiles = filenames?.Split('\n');
+                    ApplicationModel.DroppedSongs = filenames?.Split('\n').ToList();
 
-                    foreach (var file in spotifyFiles) {
-                        var songObj = DownloadService.DownloadSongInformation(file);
-                        if (songObj == null) {
-                            if (!ApplicationModel.FailedSongCollection.Contains(file)) {
-                                ApplicationModel.FailedSongCollection.Add(file);
-                            }
-                        }
-                        else {
-                            Application.Current.Dispatcher.Invoke(delegate {
-                                if (ApplicationModel.DownloadCollection.All(i => i.Id != songObj.Id)) {
-                                    ApplicationModel.DownloadCollection.Add(songObj);
-                                }
-                            });
-                        }
+                    if (DownloadService == null) {
+                        DownloadService = new DownloadService(ApplicationModel);
+                        DownloadService.Initialize();
+                        return;
                     }
+
+                    DownloadService.ApplicationModel = ApplicationModel;
+                    DownloadService.Initialize();
                 });
             }
         }

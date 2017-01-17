@@ -37,7 +37,6 @@ namespace OpenSpotify.Models {
         public ObservableCollection<SongModel> DownloadCollection { get; set; } =
            new ObservableCollection<SongModel>();
 
-        public List<string> FailedSongCollection { get; set; } =
-            new List<string>();
+        public List<string> DroppedSongs { get; set; } = new List<string>();
     }
 }

@@ -2,19 +2,15 @@
 using System.IO;
 using Newtonsoft.Json;
 using OpenSpotify.Models;
+using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.Services {
 
     public class ApplicationService {
 
-        public static string ApplicationPath { get; set; } =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OpenSpotify");
-
-        public static string MusicPath { get; set; } =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "OpenSpotify");
-
-        public static string ApplicationDataPath = Path.Combine(ApplicationPath, "ApplicationModel.json");
-
+        /// <summary>
+        /// Initializes needed Directories for the Application
+        /// </summary>
         public static void InitializeApplicationDirectorys() {
             if (!Directory.Exists(ApplicationPath)) {
                 Directory.CreateDirectory(ApplicationPath);
@@ -23,8 +19,16 @@ namespace OpenSpotify.Services {
             if (!Directory.Exists(MusicPath)) {
                 Directory.CreateDirectory(MusicPath);
             }
+
+            if (!Directory.Exists(TempPath)) {
+                Directory.CreateDirectory(TempPath);
+            }
         }
 
+        /// <summary>
+        /// Desirializes Saved Application Settings 
+        /// </summary>
+        /// <returns></returns>
         public static ApplicationModel LoadApplicationModel() {
             if (!File.Exists(ApplicationDataPath)) {
                 return null;
@@ -35,6 +39,10 @@ namespace OpenSpotify.Services {
             }
         }
 
+        /// <summary>
+        /// Serializes Application Settings to AppData
+        /// </summary>
+        /// <param name="applicationModel"></param>
         public static void SaveApplicationModel(ApplicationModel applicationModel) {
             using (var streamWriter = new StreamWriter(ApplicationDataPath)) {
                 streamWriter.Write(JsonConvert.SerializeObject(applicationModel));

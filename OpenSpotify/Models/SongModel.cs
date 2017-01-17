@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Collections.Generic;
 
 namespace OpenSpotify.Models {
     public class SongModel : BaseModel {
@@ -19,6 +16,8 @@ namespace OpenSpotify.Models {
         private string _albumname;
         private string _iconUri;
         private string _coverImage;
+        private bool _status;
+        private string _youTubeUri;
 
         #endregion
 
@@ -78,6 +77,22 @@ namespace OpenSpotify.Models {
             set {
                 _coverImage = value;
                 OnPropertyChanged(nameof(CoverImage));
+            }
+        }
+
+        public bool Status {
+            get { return _status; }
+            set {
+                _status = value;
+                OnPropertyChanged(nameof(Status));
+            }
+        }
+
+        public string YouTubeUri {
+            get { return _youTubeUri; }
+            set {
+                _youTubeUri = value;
+                OnPropertyChanged(nameof(YouTubeUri));
             }
         }
 

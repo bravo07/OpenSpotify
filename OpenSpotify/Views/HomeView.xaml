@@ -9,13 +9,22 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converter:ImageCoverter x:Key="ImageCoverter"/>
-        <converter: x:Key="VisibilityConverter"/>
     </UserControl.Resources>
     <Grid  Margin="48,0,0,0">
 
         <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" FontFamily="CalibriLight" FontSize="18" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}" Visibility="{Binding ApplicationModel.Settings.IsReady, Converter={StaticResource VisibilityConverter}, FallbackValue=Hidden}">
+        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
+            <ListBox.Style>
+                <Style TargetType="ListBox">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ApplicationModel.Settings.IsReady}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -43,6 +52,7 @@
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+         
         </ListBox>
     </Grid>
 </UserControl>

@@ -69,3 +69,28 @@ D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.g.resources
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.Properties.Resources.resources
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csproj.GenerateResource.Cache
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\log4net.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.dll
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.pdb
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
+C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml

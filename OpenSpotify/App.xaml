@@ -14,8 +14,4 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
-    <util:VisibilityConverter
-        x:TypeArguments="T" x:Key="VisibilityConverter" 
-        True="Collapsed" 
-        False="Visible" />
 </Application>
