@@ -4,20 +4,21 @@ using OpenSpotify.Services;
 using OpenSpotify.Views;
 
 namespace OpenSpotify {
-    
+
     public partial class App {
 
         private void App_OnStartup(object sender, StartupEventArgs e) {
 
             ApplicationService.InitializeApplicationDirectorys();
             var applicationModel = ApplicationService.LoadApplicationModel() ?? new ApplicationModel {
-                                       Settings = new SettingsModel {
-                                           WindowHeight = 400,
-                                           WindowWidth = 600,
-                                           WindowTop = 250,
-                                           WindowLeft = 250
-                                       }
-                                   };
+                Settings = new SettingsModel {
+                    WindowHeight = 400,
+                    WindowWidth = 600,
+                    WindowTop = 250,
+                    WindowLeft = 250
+                }
+            };
+
             var mainView = new MainView(applicationModel);
             mainView.Show();
         }
