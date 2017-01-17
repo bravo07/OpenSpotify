@@ -18,7 +18,7 @@ using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.Services {
 
-    public class DownloadService : INotifyPropertyChanged{
+    public class DownloadService : INotifyPropertyChanged {
         private YouTubeService _youTubeService;
         private YouTube _youTube;
 
@@ -35,7 +35,7 @@ namespace OpenSpotify.Services {
         public YouTubeService YouTubeService {
             get { return _youTubeService; }
             set {
-                _youTubeService = value; 
+                _youTubeService = value;
                 OnPropertyChanged(nameof(YouTubeService));
             }
         }
@@ -53,6 +53,10 @@ namespace OpenSpotify.Services {
         public FileSystemWatcher FileSystemDownloadWatcher { get; set; }
 
         public FileSystemWatcher FileSystemMusicWatcher { get; set; }
+
+        public DateTime LastDownload { get; set; } = DateTime.MinValue;
+
+        public DateTime LastMusic { get; set; } = DateTime.MinValue;
         #endregion 
 
         #region Initialization 
@@ -101,13 +105,15 @@ namespace OpenSpotify.Services {
 
                         Application.Current.Dispatcher.Invoke(delegate {
                             if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
+                                song.Status = true;
                                 ApplicationModel.DownloadCollection.Add(song);
                             }
                         });
                     }
-                }  
-
-
+                }
+                if (ApplicationModel.DownloadCollection.Count > 0) {
+                    DownloadSongs();
+                }
             });
         }
         #endregion
@@ -159,14 +165,14 @@ namespace OpenSpotify.Services {
 
             var searchListResponse = await searchListRequest.ExecuteAsync();
 
-            var matchingItems = searchListResponse.Items.Where(x => 
+            var matchingItems = searchListResponse.Items.Where(x =>
                 x.Snippet.Title.Contains(songName) && x.Snippet.Title.Contains(artist)).ToList();
 
             if (matchingItems.Count == 0) {
                 return string.Empty;
             }
 
-            //Checks Content for VEVO
+            //Checks Content for better VEVO
             if (matchingItems.Count > 1) {
                 var vevoMatches = matchingItems.Where(x => x.Snippet.Title.Contains(Vevo)).ToList();
                 if (vevoMatches.Count > 0) {
@@ -174,31 +180,28 @@ namespace OpenSpotify.Services {
                 }
             }
 
-            return YouTubeUri + matchingItems[0];
+            return YouTubeUri + matchingItems[0].Id.VideoId;
         }
         #endregion
 
         #region Download Songs
 
-        private async void DownloadSongs() {
+        private void DownloadSongs() {
 
             if (!IsInternetAvailable()) {
                 return;
             }
 
-            await Task.Run(() => {
-                foreach (var song in ApplicationModel.DownloadCollection) {
-                    if (!song.Status) {
-                        continue;
-                    }
-
-                    var video = YouTube.GetVideo(song.YouTubeUri);
-                    if (video != null) {
-                        File.WriteAllBytes(TempPath + video.FullName, video.GetBytes());
-                    }
+            foreach (var song in ApplicationModel.DownloadCollection) {
+                if (!song.Status) {
+                    continue;
                 }
-            });
 
+                var video = YouTube.GetVideo(song.YouTubeUri);
+                if (video != null) {
+                    File.WriteAllBytes(TempPath + video.FullName, video.GetBytes());
+                }
+            }
         }
 
         #endregion
@@ -210,16 +213,20 @@ namespace OpenSpotify.Services {
         /// <param name="fileSystemEventArgs"></param>
         private void FileSystemMusicWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
 
-            var finishedSong =
-                ApplicationModel.DownloadCollection.FirstOrDefault(x => x.SongName.Contains(fileSystemEventArgs.Name));
+            var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
+            if (lastWriteTime.Subtract(LastMusic).Ticks > 0) {
+                var finishedSong =
+                    ApplicationModel.DownloadCollection.FirstOrDefault(
+                        x => x.SongName.Contains(fileSystemEventArgs.Name));
 
-            if (finishedSong == null) {
-                return;
+                if (finishedSong == null) {
+                    return;
+                }
+
+                ConvertService.KillFFmpegProcess();
+                ApplicationModel.DownloadCollection.Remove(finishedSong);
+                ApplicationModel.SongCollection.Add(finishedSong);
             }
-
-            ConvertService.KillFFmpegProcess();
-            ApplicationModel.DownloadCollection.Remove(finishedSong);
-            ApplicationModel.SongCollection.Add(finishedSong);
         }
 
         /// <summary>
@@ -228,9 +235,19 @@ namespace OpenSpotify.Services {
         /// <param name="sender"></param>
         /// <param name="fileSystemEventArgs"></param>
         private void FileSystemDownloadWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
-            if (ConvertService == null) {
-                ConvertService = new ConvertService(ApplicationModel);
-                ConvertService.StartFFmpeg();
+
+            var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
+            if (lastWriteTime.Subtract(LastDownload).Ticks > 0) {
+                if (ConvertService == null) {
+                    ConvertService = new ConvertService(ApplicationModel) {
+                        SongFileName = fileSystemEventArgs.FullPath
+                    };
+                    ConvertService.StartFFmpeg();
+                }
+                else {
+                    ConvertService.SongFileName = fileSystemEventArgs.FullPath;
+                    ConvertService.StartFFmpeg();
+                }
             }
         }
 

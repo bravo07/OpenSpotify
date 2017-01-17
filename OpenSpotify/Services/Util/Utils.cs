@@ -21,7 +21,7 @@ namespace OpenSpotify.Services.Util {
 
         public static Uri SongInformationUri { get; set; } = new Uri("https://api.spotify.com/v1/tracks/");
 
-        public static string YouTubeUri { get; set; } = "http://wwww.youtube.com/";
+        public static string YouTubeUri { get; set; } = "http://www.youtube.com/watch?v=";
 
         public static string SearchInfo => "snippet";
 
