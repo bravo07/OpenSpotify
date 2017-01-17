@@ -228,7 +228,10 @@ namespace OpenSpotify.Services {
         /// <param name="sender"></param>
         /// <param name="fileSystemEventArgs"></param>
         private void FileSystemDownloadWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
-            
+            if (ConvertService == null) {
+                ConvertService = new ConvertService(ApplicationModel);
+                ConvertService.StartFFmpeg();
+            }
         }
 
         #region Notify

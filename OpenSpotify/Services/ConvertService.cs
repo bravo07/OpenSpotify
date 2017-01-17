@@ -12,7 +12,6 @@ namespace OpenSpotify.Services {
 
         public ConvertService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
-            InitializeFFmpeg();
         }
 
         public ApplicationModel ApplicationModel { get; set; }
@@ -21,7 +20,7 @@ namespace OpenSpotify.Services {
 
         public string SongFileName { get; set; }
 
-        private async void InitializeFFmpeg() {
+        public async void StartFFmpeg() {
             if (!File.Exists(ApplicationModel.Settings.FFmpegPath)) {
                 MessageBox.Show("Catastrophic Failure", 
                     "FFmpeg not Found!", MessageBoxButton.OK, MessageBoxImage.Error);
