@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,6 +9,7 @@ using GongSolutions.Wpf.DragDrop;
 using MahApps.Metro.Controls;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
+using OpenSpotify.Services.Util;
 using OpenSpotify.Views;
 using static OpenSpotify.Services.Util.Views;
 
@@ -16,8 +19,11 @@ namespace OpenSpotify.ViewModels {
 
         public MainViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
+            ApplicationModel.DownloadCollection.CollectionChanged += DownloadCollectionOnCollectionChanged;
             Initialize();
         }
+
+
 
         private ApplicationModel _applicationModel;
         private UserControl _contentWindow;
@@ -104,19 +110,11 @@ namespace OpenSpotify.ViewModels {
 
             var dataObject = (dropInfo.Data as IDataObject);
             if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {
-
                 await Task.Run(() => {
                     var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
                     ApplicationModel.DroppedSongs = filenames?.Split('\n').ToList();
+                    ApplicationModel.DroppedSongs?.ForEach(x => ApplicationModel.DownloadCollection.Add(new SongModel {Id = x}));
 
-                    if (DownloadService == null) {
-                        DownloadService = new DownloadService(ApplicationModel);
-                        DownloadService.Initialize();
-                        return;
-                    }
-
-                    DownloadService.ApplicationModel = ApplicationModel;
-                    DownloadService.Initialize();
                 });
             }
         }
@@ -126,5 +124,24 @@ namespace OpenSpotify.ViewModels {
         }
         #endregion
 
+        private void DownloadCollectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs) {
+            Application.Current.Dispatcher.Invoke(() => {
+                foreach (var song in ApplicationModel.DownloadCollection) {
+                    Debug.WriteLine(song.Id);
+                }
+            });
+        }
+
+
+        //                foreach (var song in ApplicationModel.DownloadCollection) {
+        //                    if (DownloadService == null) {
+        //                        DownloadService = new DownloadService(ApplicationModel);
+        //    DownloadService.Initialize();
+        //                        return;
+        //                    }
+
+        //DownloadService.ApplicationModel = ApplicationModel;
+        //                    DownloadService.Initialize();
+        //                }
     }
 }
