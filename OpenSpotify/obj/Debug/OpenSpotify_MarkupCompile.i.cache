@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\
 OpenSpotify
 none
 false
 DEBUG;TRACE
-C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\App.xaml
+D:\Development\OpenSpotify\OpenSpotify\App.xaml
 4-527433076
 
-29-2100077421
-78-1285649827
+29-1340627895
+78-941552553
 Views\DownloadView.xaml;Views\HomeView.xaml;Views\MainView.xaml;Views\SettingsView.xaml;
 
 False

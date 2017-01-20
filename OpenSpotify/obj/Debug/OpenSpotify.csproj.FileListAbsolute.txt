@@ -94,3 +94,25 @@ C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\log4net.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
