@@ -1,10 +1,11 @@
 ﻿<Application x:Class="OpenSpotify.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:util="clr-namespace:OpenSpotify.Services.Util"
-             Startup="App_OnStartup">
+             xmlns:viewModels="clr-namespace:OpenSpotify.ViewModels"
+             StartupUri="Views/MainView.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <viewModels:MainViewModel x:Key="MainViewModel" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

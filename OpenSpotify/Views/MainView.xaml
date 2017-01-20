@@ -15,6 +15,9 @@
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
         Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" 
         AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}">
+    <Window.DataContext>
+        <StaticResource ResourceKey="MainViewModel" />
+    </Window.DataContext>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
@@ -22,6 +25,7 @@
     </i:Interaction.Triggers>
 
     <Window.Resources>
+        
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
@@ -64,7 +68,7 @@
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding ContentWindow}"
-                                SelectedItem="{Binding SelectedItem}"
+                                SelectedItem="{Binding NavigationService.SelectedItem}"
                                 Foreground="White"
                                 SelectedIndex="0"
                                 DisplayMode="Inline"
@@ -73,7 +77,7 @@
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ItemClick">
-                    <i:InvokeCommandAction Command="{Binding ItemClickCommand}" CommandParameter="{Binding}" />
+                    <i:InvokeCommandAction Command="{Binding NavigationService.ItemClickCommand}" CommandParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 
@@ -106,7 +110,7 @@
                 <DataTemplate>
                     <Grid>
                         <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}"
-                                        Content="{Binding ContentWindow}"/>
+                                        Content="{Binding NavigationService.ContentWindow}"/>
                     </Grid>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>
