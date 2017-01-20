@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
-using OpenSpotify.Services.Util;
 
 namespace OpenSpotify.ViewModels {
 
