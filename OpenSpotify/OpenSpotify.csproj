@@ -120,8 +120,10 @@
     </ApplicationDefinition>
     <Compile Include="Models\BitrateModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\ConvertService.cs" />
     <Compile Include="Services\DownloadService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\Util\ImageCoverter.cs" />
     <Compile Include="Services\Util\Utils.cs" />
     <Compile Include="Services\Util\Views.cs" />
