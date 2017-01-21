@@ -15,9 +15,6 @@
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
         Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" 
         AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}">
-    <Window.DataContext>
-        <StaticResource ResourceKey="MainViewModel" />
-    </Window.DataContext>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
@@ -67,7 +64,7 @@
 
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                Content="{Binding ContentWindow}"
+                                Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"
                                 Foreground="White"
                                 SelectedIndex="0"

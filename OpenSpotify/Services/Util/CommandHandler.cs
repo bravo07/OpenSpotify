@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace OpenSpotify.Services {
+namespace OpenSpotify.Services.Util {
 
     public class CommandHandler<T> : ICommand {
 

@@ -7,8 +7,9 @@ namespace OpenSpotify.Views {
     /// </summary>
     public partial class MainView {
 
-        public MainView() {
+        public MainView(ApplicationModel applicationModel) {
             InitializeComponent();
+            DataContext = new MainViewModel(applicationModel);
         }
     }
 }

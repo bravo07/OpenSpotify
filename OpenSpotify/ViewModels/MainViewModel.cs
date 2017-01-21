@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using GongSolutions.Wpf.DragDrop;
-using MahApps.Metro.Controls;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
+using OpenSpotify.Services.Util;
 using OpenSpotify.Views;
-using static OpenSpotify.Services.Util.Views;
 
 namespace OpenSpotify.ViewModels {
 
@@ -23,6 +21,10 @@ namespace OpenSpotify.ViewModels {
         private UserControl _contentWindow;
         private object _selectedItem;
         private DownloadService _downloadService;
+        private DownloadView _downloadView;
+        private SettingsView _settingsView;
+        private HomeView _homeView;
+        private NavigationService _navigationService;
 
         #region Properties
 
@@ -58,6 +60,38 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+        public DownloadView DownloadView {
+            get { return _downloadView; }
+            set {
+                _downloadView = value;
+                OnPropertyChanged(nameof(DownloadView));
+            }
+        }
+
+        public SettingsView SettingsView {
+            get { return _settingsView; }
+            set {
+                _settingsView = value;
+                OnPropertyChanged(nameof(SettingsView));
+            }
+        }
+
+        public HomeView HomeView {
+            get { return _homeView; }
+            set {
+                _homeView = value; 
+                OnPropertyChanged(nameof(HomeView));
+            }
+        }
+
+        public NavigationService NavigationService {
+            get { return _navigationService; }
+            set {
+                _navigationService = value; 
+                OnPropertyChanged(nameof(NavigationService));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -70,30 +104,13 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<object> ItemClickCommand {
-            get {
-                return new CommandHandler<object>(o => {
-                    switch (((HamburgerMenuGlyphItem)SelectedItem).Label) {
-                        case nameof(Downloads):
-                            ContentWindow = new DownloadView(ApplicationModel);
-                            return;
-                        case nameof(Settings):
-                            ContentWindow = new SettingsView(ApplicationModel);
-                            return;
-                        case nameof(Home):
-                            ContentWindow = new HomeView(ApplicationModel);
-                            break;
-                    }
-                });
-            }
-        }
-
         #endregion
 
         #region Functions
 
         private void Initialize() {
-            ContentWindow = new HomeView(ApplicationModel);
+            NavigationService = new NavigationService(ApplicationModel);
+            NavigationService.InitializeNavigation();
         }
 
         public async void DragOver(IDropInfo dropInfo) {
@@ -125,6 +142,5 @@ namespace OpenSpotify.ViewModels {
 
         }
         #endregion
-
     }
 }

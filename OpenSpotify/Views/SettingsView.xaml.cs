@@ -7,9 +7,8 @@ namespace OpenSpotify.Views {
     /// Interaktionslogik für SettingsView.xaml
     /// </summary>
     public partial class SettingsView : UserControl {
-        public SettingsView(ApplicationModel applicationModel) {
+        public SettingsView() {
             InitializeComponent();
-            DataContext = new SettingsViewModel(applicationModel);
         }
     }
 }

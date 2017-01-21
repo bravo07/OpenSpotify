@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
+using OpenSpotify.ViewModels;
 using OpenSpotify.Views;
 using static OpenSpotify.Services.Util.Views;
 
@@ -21,6 +22,10 @@ namespace OpenSpotify.Services {
         private HamburgerMenuGlyphItem _selectedItem;
         private UserControl _contentWindow;
         private HomeView _homeView;
+        private HomeViewModel _homeViewModel;
+        private SettingsViewModel _settingsViewModel;
+        private DownloadsViewModel _downloadsViewModel;
+
         #endregion
 
         #region Properties
@@ -72,6 +77,31 @@ namespace OpenSpotify.Services {
                 OnPropertyChanged(nameof(ContentWindow));
             }
         }
+
+        public HomeViewModel HomeViewModel {
+            get { return _homeViewModel; }
+            set {
+                _homeViewModel = value; 
+                OnPropertyChanged(nameof(HomeViewModel));
+            }
+        }
+
+        public SettingsViewModel SettingsViewModel {
+            get { return _settingsViewModel; }
+            set {
+                _settingsViewModel = value; 
+                OnPropertyChanged(nameof(SettingsViewModel));
+            }
+        }
+
+        public DownloadsViewModel DownloadsViewModel {
+            get { return _downloadsViewModel; }
+            set {
+                _downloadsViewModel = value;
+                OnPropertyChanged(nameof(DownloadsViewModel));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -82,12 +112,18 @@ namespace OpenSpotify.Services {
                     switch (SelectedItem.Label) {
                         case nameof(Downloads):
                             ContentWindow = DownloadView;
+                            DownloadsViewModel.ApplicationModel = ApplicationModel;
+                            DownloadView.DataContext = DownloadsViewModel;
                             return;
                         case nameof(Settings):
                             ContentWindow = SettingsView;
+                            SettingsViewModel.ApplicationModel = ApplicationModel;
+                            SettingsView.DataContext = SettingsViewModel;
                             return;
                         case nameof(Home):
                             ContentWindow = HomeView;
+                            HomeViewModel.ApplicationModel = ApplicationModel;
+                            HomeView.DataContext = HomeViewModel;
                             break;
                     }
                 });
@@ -99,9 +135,18 @@ namespace OpenSpotify.Services {
 
         public void InitializeNavigation() {
 
-            SettingsView = new SettingsView(ApplicationModel);
-            DownloadView = new DownloadView(ApplicationModel);
-            HomeView = new HomeView(ApplicationModel);
+            SettingsView = new SettingsView();
+            SettingsViewModel = new SettingsViewModel(ApplicationModel);
+            SettingsView.DataContext = SettingsViewModel;
+
+            DownloadView = new DownloadView();
+            DownloadsViewModel = new DownloadsViewModel(ApplicationModel);
+            DownloadView.DataContext = DownloadsViewModel;
+
+            HomeView = new HomeView();
+            HomeViewModel = new HomeViewModel(ApplicationModel);
+            HomeView.DataContext = HomeViewModel;
+
             ContentWindow = HomeView;
         }
         #endregion 

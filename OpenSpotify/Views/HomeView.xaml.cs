@@ -7,9 +7,8 @@ namespace OpenSpotify.Views {
     /// Interaktionslogik für HomeView.xaml
     /// </summary>
     public partial class HomeView : UserControl {
-        public HomeView(ApplicationModel applicationModel) {
+        public HomeView() {
             InitializeComponent();
-            DataContext = new HomeViewModel(applicationModel);
         }
     }
 }
