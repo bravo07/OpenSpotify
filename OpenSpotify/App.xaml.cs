@@ -16,7 +16,7 @@ namespace OpenSpotify {
                         WindowHeight = 350,
                         WindowLeft = 100,
                         WindowTop = 100,
-                         WindowWidth = 500
+                        WindowWidth = 500
                     }
                 };
             var mainView = new MainView(applicationModel);

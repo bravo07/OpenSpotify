@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using OpenSpotify.Models;
 using VideoLibrary;
 using static OpenSpotify.Services.Util.Utils;
+using OpenSpotify.Services.Util;
 
 namespace OpenSpotify.Services {
 
@@ -91,30 +92,30 @@ namespace OpenSpotify.Services {
                 return;
             }
 
-            await Task.Run(async () => {
-                foreach (var droppedSong in ApplicationModel.DroppedSongs) {
-                    var song = DownloadSongInformation(droppedSong);
-                    if (song == null) {
+            foreach (var droppedSong in ApplicationModel.DroppedSongs) {
+                var song = DownloadSongInformation(droppedSong);
+                if (song == null) {
+                    song.Status = false;
+                }
+                else {
+                    song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
+                    if (string.IsNullOrEmpty(song.YouTubeUri)) {
                         song.Status = false;
+                        return;
                     }
-                    else {
-                        song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
-                        if (string.IsNullOrEmpty(song.YouTubeUri)) {
-                            song.Status = false;
-                        }
 
-                        Application.Current.Dispatcher.Invoke(delegate {
-                            if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
-                                song.Status = true;
-                                ApplicationModel.DownloadCollection.Add(song);
-                            }
-                        });
-                    }
+                    Application.Current.Dispatcher.Invoke(delegate {
+                        if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
+                            song.Status = true;
+                            ApplicationModel.DownloadCollection.Add(song);
+                        }
+                    });
                 }
-                if (ApplicationModel.DownloadCollection.Count > 0) {
-                    DownloadSongs();
-                }
-            });
+            }
+
+            if (ApplicationModel.DownloadCollection.Count > 0) {
+                DownloadSongs();
+            }
         }
         #endregion
 
@@ -166,13 +167,14 @@ namespace OpenSpotify.Services {
             var searchListResponse = await searchListRequest.ExecuteAsync();
 
             var matchingItems = searchListResponse.Items.Where(x =>
-                x.Snippet.Title.Contains(songName) && x.Snippet.Title.Contains(artist)).ToList();
+                x.Snippet.Title.Contains(songName, StringComparison.OrdinalIgnoreCase) &&
+                x.Snippet.Title.Contains(artist, StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (matchingItems.Count == 0) {
                 return string.Empty;
             }
 
-            //Checks Content for better VEVO
+            //Checks Content for VEVO
             if (matchingItems.Count > 1) {
                 var vevoMatches = matchingItems.Where(x => x.Snippet.Title.Contains(Vevo)).ToList();
                 if (vevoMatches.Count > 0) {
@@ -199,7 +201,7 @@ namespace OpenSpotify.Services {
 
                 var video = YouTube.GetVideo(song.YouTubeUri);
                 if (video != null) {
-                    File.WriteAllBytes(TempPath + video.FullName, video.GetBytes());
+                    File.WriteAllBytes(TempPath + "\\" + video.FullName.Replace(" ", string.Empty), video.GetBytes());
                 }
             }
         }

@@ -44,7 +44,6 @@ D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.g.cs
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.g.cs
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\App.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.cache
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.lref
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.exe
@@ -116,3 +115,4 @@ D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.pdb
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs

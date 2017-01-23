@@ -13,8 +13,10 @@
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
-        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" 
-        AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}">
+        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" MinHeight="350" MinWidth="550"
+        AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.CanDragWithMouseRightButton="True" 
+        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" 
+        dd:DragDrop.UseDefaultEffectDataTemplate="True">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
@@ -22,11 +24,10 @@
     </i:Interaction.Triggers>
 
     <Window.Resources>
-        
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="48"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ContentControl Grid.Column="0"
@@ -45,7 +46,7 @@
         <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image Margin="12"
@@ -62,14 +63,13 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid>
+    <Grid >
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"
                                 Foreground="White"
                                 SelectedIndex="0"
-                                DisplayMode="Inline"
-                                HamburgerWidth="40"
+                                DisplayMode="Overlay" OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
             <i:Interaction.Triggers>
@@ -105,10 +105,8 @@
             <!--  Content  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}"
+                    <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}"
                                         Content="{Binding NavigationService.ContentWindow}"/>
-                    </Grid>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>

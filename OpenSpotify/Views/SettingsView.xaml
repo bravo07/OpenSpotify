@@ -6,7 +6,32 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d">
     <Grid>
-        <Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Margin="70,10,0,0">
+            
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Assets/Directory.png" Height="25" Width="25"/>
+                <TextBox controls:TextBoxHelper.Watermark="FFmpeg Path" Text="{Binding ApplicationModel.Settings.FFmpegPath}" IsReadOnly="True" Margin="5"/>
+                <Button Content="..." Margin="5" Command="{Binding FFmpegPathCommand}" Width="50"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Assets/ApiKey.png" Height="25" Width="25"/>
+                <TextBox controls:TextBoxHelper.Watermark="Youtube ApiKey" Text="{Binding ApplicationModel.Settings.YoutubeApiKey ,UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical">
+                <Label Content="FFmpeg" FontSize="20" FontFamily="Calibri Light"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Bitrate" FontSize="15" FontFamily="Calibri Light"/>
+                    <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        
+        
+        
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -51,6 +76,6 @@
                     <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
                 </StackPanel>
             </StackPanel>
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

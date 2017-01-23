@@ -27,7 +27,7 @@ namespace OpenSpotify.Services.Util {
 
         public static string Vevo => "VEVO";
 
-        public static string FFmpegCommand { get; set; } = "ffmpeg -i ";
+        public static string FFmpegCommand { get; set; } = "ffmpeg.exe -i ";
 
         public static string FFmpegName => "ffmpeg";
         #endregion 
@@ -58,5 +58,11 @@ namespace OpenSpotify.Services.Util {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
         #endregion 
+    }
+
+    public static class StringExtensions {
+        public static bool Contains(this string source, string toCheck, StringComparison comp) {
+            return source.IndexOf(toCheck, comp) >= 0;
+        }
     }
 }
