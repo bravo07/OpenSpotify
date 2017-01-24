@@ -27,6 +27,8 @@ namespace OpenSpotify.ViewModels {
 
         public ObservableCollection<BitrateModel> BitrateCollection { get; set; }
 
+        public ObservableCollection<FormatModel> FormatCollection { get; set; }
+
         public CommandHandler<object> FFmpegPathCommand {
             get {
                 return new CommandHandler<object>(o => {
@@ -49,7 +51,13 @@ namespace OpenSpotify.ViewModels {
                 new BitrateModel { BitrateName = "192 kBit/s", Bitrate = "192K"},
                 new BitrateModel { BitrateName = "128 kBit/s", Bitrate = "128K"},
             };
+
+            FormatCollection = new ObservableCollection<FormatModel> {
+                new FormatModel { FormatName = "Mp3", Format = ".mp3"},
+                new FormatModel { FormatName = "Wav", Format = ".wav"},
+            };
             ApplicationModel.Settings.SelectedBitrate = BitrateCollection[0];
+            ApplicationModel.Settings.SelectedFormat = FormatCollection[0];
         }
     }
 }

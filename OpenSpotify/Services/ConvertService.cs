@@ -20,20 +20,30 @@ namespace OpenSpotify.Services {
 
         public string SongFileName { get; set; }
 
-        public async void StartFFmpeg() {
+        public void StartFFmpeg() {
             if (!File.Exists(ApplicationModel.Settings.FFmpegPath)) {
                 MessageBox.Show("Catastrophic Failure",
                     "FFmpeg not Found!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            var processStartInfo = new ProcessStartInfo {
-                FileName = ApplicationModel.Settings.FFmpegPath,
-                Arguments = $"{FFmpegCommand} {SongFileName} -b:a " +
+            var ffmpegCommand = $"-i {SongFileName} -b:a " +
                             $"{ApplicationModel.Settings.SelectedBitrate.Bitrate} -vn " +
-                            $"{Path.Combine(MusicPath, Path.GetFileNameWithoutExtension(SongFileName))}.mp3",
-                //WindowStyle = ProcessWindowStyle.Hidden
-            };
-            Process.Start(processStartInfo);
+                            $"{Path.Combine(MusicPath, Path.GetFileNameWithoutExtension(SongFileName))}" +
+                            $"{ApplicationModel.Settings.SelectedFormat.Format}";
+            Debug.WriteLine(" FFMPEG " + ffmpegCommand);
+
+
+            using (var ffmpegProcess = new Process()) {
+                var processStartInfo = new ProcessStartInfo {
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    FileName = ApplicationModel.Settings.FFmpegPath,
+                    Arguments = ffmpegCommand,
+                };
+                ffmpegProcess.StartInfo = processStartInfo;
+                ffmpegProcess.Start();
+            }
         }
 
         public void KillFFmpegProcess() {

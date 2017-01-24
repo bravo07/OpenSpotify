@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace OpenSpotify.Services.Util {
 
@@ -27,7 +28,7 @@ namespace OpenSpotify.Services.Util {
 
         public static string Vevo => "VEVO";
 
-        public static string FFmpegCommand { get; set; } = "ffmpeg.exe -i ";
+        public static string FFmpegCommand { get; set; } = "ffmpeg -i ";
 
         public static string FFmpegName => "ffmpeg";
         #endregion 
@@ -58,6 +59,9 @@ namespace OpenSpotify.Services.Util {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
         #endregion 
+        public static string RemoveSpecialCharacters(string source) {
+            return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
+        }
     }
 
     public static class StringExtensions {

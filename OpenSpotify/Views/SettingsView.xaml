@@ -25,6 +25,8 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Bitrate" FontSize="15" FontFamily="Calibri Light"/>
                     <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
+                    <Label Content="Format" FontSize="15" FontFamily="Calibri Light"/>
+                    <controls:SplitButton ItemsSource="{Binding FormatCollection}" DisplayMemberPath="FormatName" SelectedItem="{Binding ApplicationModel.Settings.SelectedFormat}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

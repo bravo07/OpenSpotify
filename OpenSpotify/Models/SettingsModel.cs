@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Newtonsoft.Json;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.Models {
 
@@ -12,6 +13,8 @@ namespace OpenSpotify.Models {
         private double _windowLeft;
         private string _youtubeApiKey;
         private BitrateModel _selectedBitrate;
+        private FormatModel _selectedFormat;
+
 
         public string FFmpegPath {
             get { return _fFmpegPath; }
@@ -66,6 +69,14 @@ namespace OpenSpotify.Models {
             set {
                 _selectedBitrate = value;
                 OnPropertyChanged(nameof(SelectedBitrate));
+            }
+        }
+
+        public FormatModel SelectedFormat {
+            get { return _selectedFormat; }
+            set {
+                _selectedFormat = value;
+                OnPropertyChanged(nameof(SelectedFormat));
             }
         }
 

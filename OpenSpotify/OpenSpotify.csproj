@@ -119,6 +119,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\BitrateModel.cs" />
+    <Compile Include="Models\FormatModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\ConvertService.cs" />

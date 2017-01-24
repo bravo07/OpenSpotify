@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.Models {
     public class SongModel : BaseModel {
@@ -18,6 +19,9 @@ namespace OpenSpotify.Models {
         private string _coverImage;
         private bool _status;
         private string _youTubeUri;
+        private string _artistName;
+        private double _statusValue;
+        private string _fileName;
 
         #endregion
 
@@ -88,6 +92,14 @@ namespace OpenSpotify.Models {
             }
         }
 
+        public double StatusValue {
+            get { return _statusValue; }
+            set {
+                _statusValue = value;
+                OnPropertyChanged(nameof(StatusValue));
+            }
+        }
+
         public string YouTubeUri {
             get { return _youTubeUri; }
             set {
@@ -97,6 +109,22 @@ namespace OpenSpotify.Models {
         }
 
         public List<string> Artists { get; set; }
+
+        public string ArtistName {
+            get { return _artistName; }
+            set {
+                _artistName = value;
+                OnPropertyChanged(nameof(ArtistName));
+            }
+        }
+
+        public string FileName {
+            get { return _fileName; }
+            set {
+                _fileName = value;
+                OnPropertyChanged(nameof(FileName));
+            }
+        }
 
         #endregion 
     }
