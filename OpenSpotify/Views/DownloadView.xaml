@@ -6,9 +6,7 @@
              xmlns:local="clr-namespace:OpenSpotify.Views"
              mc:Ignorable="d">
     <Grid>
-        <StackPanel Margin="70,10,0,0">
-            <Label Content="Hello from Download" Foreground="White" FontSize="30"/>
-            <Button Command="{Binding TestCommand}" Content="Downloa Click"/>
-        </StackPanel>
+        
+        
     </Grid>
 </UserControl>
