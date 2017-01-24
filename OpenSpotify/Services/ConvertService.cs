@@ -26,20 +26,16 @@ namespace OpenSpotify.Services {
                     "FFmpeg not Found!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            var ffmpegCommand = $"-i {SongFileName} -b:a " +
-                            $"{ApplicationModel.Settings.SelectedBitrate.Bitrate} -vn " +
-                            $"{Path.Combine(MusicPath, Path.GetFileNameWithoutExtension(SongFileName))}" +
-                            $"{ApplicationModel.Settings.SelectedFormat.Format}";
-            Debug.WriteLine(" FFMPEG " + ffmpegCommand);
-
-
             using (var ffmpegProcess = new Process()) {
                 var processStartInfo = new ProcessStartInfo {
                     WindowStyle = ProcessWindowStyle.Hidden,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     FileName = ApplicationModel.Settings.FFmpegPath,
-                    Arguments = ffmpegCommand,
+                    Arguments = $"-i {SongFileName} -b:a " +
+                                $"{ApplicationModel.Settings.SelectedBitrate.Bitrate} -vn " +
+                                $"{Path.Combine(MusicPath, Path.GetFileNameWithoutExtension(SongFileName))}" +
+                                $"{ApplicationModel.Settings.SelectedFormat.Format}"
                 };
                 ffmpegProcess.StartInfo = processStartInfo;
                 ffmpegProcess.Start();
