@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Net.Mime;
-using System.Windows.Data;
+using System.IO;
 using System.Windows.Forms;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
@@ -68,6 +67,21 @@ namespace OpenSpotify.ViewModels {
                         if (result == DialogResult.OK) {
                             ApplicationModel.Settings.MusicPath = folderBrowserDialog.SelectedPath;
                         }
+                    }
+                });
+            }
+        }
+
+        public CommandHandler<object> DeleteSettingsCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    if (File.Exists(ApplicationDataPath)) {
+                        File.Delete(ApplicationDataPath);
+                        MessageBox.Show("Settings Deleted!", "Information", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                    else {
+                        MessageBox.Show("No Settings available!", "Information", MessageBoxButtons.OK,MessageBoxIcon.Error);
                     }
                 });
             }

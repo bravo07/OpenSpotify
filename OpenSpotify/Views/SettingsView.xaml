@@ -29,7 +29,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                 <Image Source="../Assets/Delete.png" Height="25" Width="25"/>
-                <Button Margin="5,2,0,0" Content="Delete Settings" FontFamily="Calibri Light"/>
+                <Button Margin="5,2,0,0" Content="Delete Settings" FontFamily="Calibri Light" Command="{Binding DeleteSettingsCommand}"/>
             </StackPanel>
             
             <StackPanel Orientation="Vertical">

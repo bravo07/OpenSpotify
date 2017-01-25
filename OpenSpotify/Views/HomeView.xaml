@@ -6,19 +6,18 @@
              xmlns:converter="clr-namespace:OpenSpotify.Services.Util"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <!--<UserControl.Resources>
+    <UserControl.Resources>
         <converter:ImageCoverter x:Key="ImageCoverter"/>
-    </UserControl.Resources>-->
+    </UserControl.Resources>
     <Grid Margin="48,0,0,0">
 
         <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" 
                     FontFamily="CalibriLight" FontSize="18" 
                     Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
             <ListBox.Style>
                 <Style TargetType="ListBox">
-                    <Setter Property="Background" Value="#FF252525"/>
                     <Setter Property="Visibility" Value="Collapsed"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ApplicationModel.Settings.IsReady}" Value="True">
@@ -38,7 +37,7 @@
 
                         <Image Grid.Column="0" Source="{Binding CoverImage, Converter={StaticResource ImageCoverter}}" Height="80" Width="80"/>
 
-                        <Grid Grid.Column="1">  
+                        <Grid Grid.Column="1" Grid.ColumnSpan="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
@@ -48,6 +47,10 @@
 
                             <TextBlock Grid.Row="0" Margin="5,0,0,0" Foreground="White" Text="{Binding SongName}"/>
                             <TextBlock Grid.Row="1" Margin="5,0,0,0" Foreground="DimGray" Text="{Binding ArtistName}"/>
+
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Image Source="../Assets/Remove.png"/>
+                            </Button>
                         </Grid>
                     </Grid>
                 </DataTemplate>

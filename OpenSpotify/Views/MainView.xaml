@@ -8,13 +8,14 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:dd="urn:gong-wpf-dragdrop"
         x:Name="MetroWindow"
-        mc:Ignorable="d" GlowBrush="Green" BorderBrush="Green" 
+        mc:Ignorable="d" GlowBrush="Green" 
         Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         MinHeight="350" MinWidth="550" Height="400" Width="600"
         AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.CanDragWithMouseRightButton="True" 
-        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanMinimize" Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame">
+        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanMinimize"
+        Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
