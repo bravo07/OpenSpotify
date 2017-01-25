@@ -26,7 +26,7 @@ OpenSpotify Downloader is licensed under the BSD 2-clause license.
 
 [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)  |  High-performance JSON framework
 
-[GongSolutions.WPF.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)  |  High-performance JSON framework
+[GongSolutions.WPF.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)  |  MVVM Drag & Drop Library
 
 [libvideo](https://github.com/jamesqo/libvideo)  |  A lightweight .NET library to download YouTube videos.
 
