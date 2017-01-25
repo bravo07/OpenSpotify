@@ -1,10 +1,11 @@
-﻿using System.Windows;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.Models {
 
     public class SettingsModel : BaseModel {
+
+        #region Fields
 
         private string _fFmpegPath;
         private double _windowHeight;
@@ -14,7 +15,11 @@ namespace OpenSpotify.Models {
         private string _youtubeApiKey;
         private BitrateModel _selectedBitrate;
         private FormatModel _selectedFormat;
+        private string _musicPath;
 
+        #endregion
+
+        #region Properties
 
         public string FFmpegPath {
             get { return _fFmpegPath; }
@@ -23,7 +28,7 @@ namespace OpenSpotify.Models {
                 OnPropertyChanged(nameof(FFmpegPath));
             }
         }
-        
+
         public string YoutubeApiKey {
             get { return _youtubeApiKey; }
             set {
@@ -32,26 +37,10 @@ namespace OpenSpotify.Models {
             }
         }
 
-        public double WindowHeight {
-            get { return _windowHeight; }
-            set {
-                _windowHeight = value; 
-                OnPropertyChanged(nameof(WindowHeight));
-            }
-        }
-
-        public double WindowWidth {
-            get { return _windowWidth; }
-            set {
-                _windowWidth = value;
-                OnPropertyChanged(nameof(WindowWidth));
-            }
-        }
-
         public double WindowTop {
             get { return _windowTop; }
             set {
-                _windowTop = value; 
+                _windowTop = value;
                 OnPropertyChanged(nameof(WindowTop));
             }
         }
@@ -59,7 +48,7 @@ namespace OpenSpotify.Models {
         public double WindowLeft {
             get { return _windowLeft; }
             set {
-                _windowLeft = value; 
+                _windowLeft = value;
                 OnPropertyChanged(nameof(WindowLeft));
             }
         }
@@ -80,21 +69,25 @@ namespace OpenSpotify.Models {
             }
         }
 
-        [JsonIgnore]
-        public bool IsReady => Validate();
+        public string MusicPath {
+            get { return _musicPath; }
+            set {
+                _musicPath = value;
+                OnPropertyChanged(nameof(MusicPath));
+            }
+        }
 
+        [JsonIgnore]
+        public bool IsReady => !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey);
 
         [JsonIgnore]
         public string StatusText => ValidateStatusText();
-
-        private bool Validate() {
-            return !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey);
-        }
 
         private string ValidateStatusText() {
             return !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey)
                 ? string.Empty
                 : "No FFmpeg or ApiKey";
-        }
+        } 
+        #endregion
     }
 }

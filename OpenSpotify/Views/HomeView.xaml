@@ -4,19 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:OpenSpotify.Services.Util"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
+    <!--<UserControl.Resources>
         <converter:ImageCoverter x:Key="ImageCoverter"/>
-    </UserControl.Resources>
-    <Grid  Margin="48,0,0,0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+    </UserControl.Resources>-->
+    <Grid Margin="48,0,0,0">
 
-        <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" FontFamily="CalibriLight" FontSize="18" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" 
+                    FontFamily="CalibriLight" FontSize="18" 
+                    Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
+        <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListBox.Style>
                 <Style TargetType="ListBox">
+                    <Setter Property="Background" Value="#FF252525"/>
                     <Setter Property="Visibility" Value="Collapsed"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ApplicationModel.Settings.IsReady}" Value="True">
@@ -46,7 +48,6 @@
 
                             <TextBlock Grid.Row="0" Margin="5,0,0,0" Foreground="White" Text="{Binding SongName}"/>
                             <TextBlock Grid.Row="1" Margin="5,0,0,0" Foreground="DimGray" Text="{Binding ArtistName}"/>
-                            <controls:MetroProgressBar Margin="5,0,0,0" Grid.Row="3" Value="{Binding StatusValue}" Maximum="100"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>

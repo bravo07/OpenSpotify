@@ -12,16 +12,22 @@
         Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
-        Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
-        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}" MinHeight="350" MinWidth="550"
+        MinHeight="350" MinWidth="550" Height="400" Width="600"
         AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.CanDragWithMouseRightButton="True" 
-        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" 
-        dd:DragDrop.UseDefaultEffectDataTemplate="True">
+        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanMinimize" Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Command="{Binding OpenMusicCommand}">
+                <Image Source="../Assets/Directory.png" Stretch="Uniform" Height="17" Width="17"/>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 
     <Window.Resources>
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
@@ -67,7 +73,6 @@
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"
-                                Foreground="White"
                                 SelectedIndex="0"
                                 DisplayMode="Overlay" OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
@@ -86,26 +91,11 @@
                     <controls:HamburgerMenuGlyphItem Glyph="/Assets/Settings.png" Label="Settings" />
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
-
-            <!--  Options  -->
-            <controls:HamburgerMenu.OptionsItemsSource>
-                <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Label="About">
-                        <controls:HamburgerMenuGlyphItem.Tag>
-                            <iconPacks:PackIconMaterial Width="22"
-                                                        Height="22"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Kind="Help" />
-                        </controls:HamburgerMenuGlyphItem.Tag>
-                    </controls:HamburgerMenuGlyphItem>
-                </controls:HamburgerMenuItemCollection>
-            </controls:HamburgerMenu.OptionsItemsSource>
-
+            
             <!--  Content  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
-                    <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}"
+                    <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                         Content="{Binding NavigationService.ContentWindow}"/>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>

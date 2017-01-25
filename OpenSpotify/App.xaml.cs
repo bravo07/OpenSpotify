@@ -2,6 +2,7 @@
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Views;
+using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify {
 
@@ -13,10 +14,9 @@ namespace OpenSpotify {
             var applicationModel = ApplicationService.LoadApplicationModel() ?? 
                 new ApplicationModel {
                     Settings = new SettingsModel {
-                        WindowHeight = 350,
                         WindowLeft = 100,
                         WindowTop = 100,
-                        WindowWidth = 500
+                        MusicPath = MusicPath
                     }
                 };
             var mainView = new MainView(applicationModel);

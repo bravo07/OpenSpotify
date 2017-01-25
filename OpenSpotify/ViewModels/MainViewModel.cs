@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using GongSolutions.Wpf.DragDrop;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
-using OpenSpotify.Views;
 
 namespace OpenSpotify.ViewModels {
 
@@ -17,9 +17,12 @@ namespace OpenSpotify.ViewModels {
             Initialize();
         }
 
+        #region Fields
+
         private ApplicationModel _applicationModel;
         private DownloadService _downloadService;
-        private NavigationService _navigationService;
+        private NavigationService _navigationService; 
+        #endregion
 
         #region Properties
 
@@ -50,11 +53,21 @@ namespace OpenSpotify.ViewModels {
         #endregion
 
         #region Commands
-
+        
         public CommandHandler<object> ViewClosingCommand {
             get {
                 return new CommandHandler<object>(o => {
                     ApplicationService.SaveApplicationModel(ApplicationModel);
+                });
+            }
+        }
+
+        public CommandHandler<object> OpenMusicCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    if (Directory.Exists(ApplicationModel.Settings.MusicPath)) {
+                        Process.Start(ApplicationModel.Settings.MusicPath);
+                    }
                 });
             }
         }
@@ -66,6 +79,7 @@ namespace OpenSpotify.ViewModels {
         private void Initialize() {
             NavigationService = new NavigationService(ApplicationModel);
             NavigationService.InitializeNavigation();
+            DownloadService = new DownloadService(ApplicationModel);
         }
 
         public void DragOver(IDropInfo dropInfo) {
@@ -75,25 +89,25 @@ namespace OpenSpotify.ViewModels {
         }
 
         public async void Drop(IDropInfo dropInfo) {
+
             if (!ApplicationModel.Settings.IsReady) {
                 return;
             }
 
-            var dataObject = (dropInfo.Data as IDataObject);
+            var dataObject = dropInfo.Data as IDataObject;
             if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {
 
                 await Task.Run(() => {
-                    var filenames = (string) dataObject.GetData(DataFormats.StringFormat, true);
+                    var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
                     ApplicationModel.DroppedSongs = filenames?.Split('\n').ToList();
 
-                    if (DownloadService == null) {
-                        DownloadService = new DownloadService(ApplicationModel);
-                        DownloadService.Initialize();
+                    if (ApplicationModel.DroppedSongs == null) {
                         return;
                     }
-
-                    DownloadService.ApplicationModel = ApplicationModel;
-                    DownloadService.Initialize();
+                    
+                    foreach (var droppedSong in ApplicationModel.DroppedSongs) {              
+                        DownloadService.Start(droppedSong);
+                    }
                 });
             }
         }

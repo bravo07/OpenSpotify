@@ -21,14 +21,18 @@ using OpenSpotify.Services.Util;
 namespace OpenSpotify.Services {
 
     public class DownloadService : INotifyPropertyChanged {
-        private YouTubeService _youTubeService;
-        private YouTube _youTube;
 
         public DownloadService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             InitalizeYouTubeService();
             InitializeFileWatcher();
         }
+
+        #region Fields
+
+        private YouTubeService _youTubeService;
+        private YouTube _youTube;
+        #endregion
 
         #region Properties
 
@@ -87,37 +91,27 @@ namespace OpenSpotify.Services {
             FileSystemMusicWatcher.Created += FileSystemMusicWatcherOnCreated;
         }
 
-
-        public async void Initialize() {
+        public async void Start(string songId) {
             if (!IsInternetAvailable()) {
                 return;
             }
 
-            foreach (var droppedSong in ApplicationModel.DroppedSongs) {
-                var song = DownloadSongInformation(droppedSong);
-                song.StatusValue = 30;
-                if (song == null) {
-                    song.Status = false;
-                }
-                else {
-                    song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
-                    if (string.IsNullOrEmpty(song.YouTubeUri)) {
-                        song.Status = false;
-                        return;
-                    }
+            var song = DownloadSongInformation(songId);
+            song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
 
-                    Application.Current.Dispatcher.Invoke(delegate {
-                        if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
-                            song.Status = true;
-                            ApplicationModel.DownloadCollection.Add(song);
-                        }
-                    });
-                }
+            if (string.IsNullOrEmpty(song.YouTubeUri)) {
+                song.Status = false;
+                return;
             }
 
-            if (ApplicationModel.DownloadCollection.Count > 0) {
-                DownloadSongs();
-            }
+            Application.Current.Dispatcher.Invoke(delegate {
+                if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
+                    song.Status = true;
+                    ApplicationModel.DownloadCollection.Add(song);
+                }
+            });
+
+            DownloadSongs(song);
         }
         #endregion
 
@@ -194,30 +188,29 @@ namespace OpenSpotify.Services {
 
         #region Download Songs
 
-        private void DownloadSongs() {
+        private void DownloadSongs(SongModel song) {
 
             if (!IsInternetAvailable()) {
                 return;
             }
 
-            foreach (var song in ApplicationModel.DownloadCollection) {
-                if (!song.Status) {
-                    continue;
-                }
-
-                song.StatusValue = 80;
-                var video = YouTube.GetVideo(song.YouTubeUri);
-                if (video != null) {
-                    song.FileName = Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
-                    File.WriteAllBytes(TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)), video.GetBytes());
-                }
+            var video = YouTube.GetVideo(song.YouTubeUri);
+            if (video == null) {
+                return;
             }
+
+            song.FileName = Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
+            File.WriteAllBytes(TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)), video.GetBytes());
         }
 
         #endregion
 
+        #region FileSystemWatcher
+
         /// <summary>
-        /// Notifys when File Converted and Done
+        /// Notifys when File Converted and Done 
+        /// lastWriteTime.Subtract(LastDownload).Ticks > 0 because the FileSystemWatcher gets called 2 times read here 
+        /// http://stackoverflow.com/questions/1764809/filesystemwatcher-changed-event-is-raised-twice?answertab=votes#tab-top
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="fileSystemEventArgs"></param>
@@ -243,7 +236,9 @@ namespace OpenSpotify.Services {
         }
 
         /// <summary>
-        /// Notifys when Download is finished
+        /// Notifys when Download is finished || 
+        /// lastWriteTime.Subtract(LastDownload).Ticks > 0 because the FileSystemWatcher gets called 2 times read here 
+        /// http://stackoverflow.com/questions/1764809/filesystemwatcher-changed-event-is-raised-twice?answertab=votes#tab-top
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="fileSystemEventArgs"></param>
@@ -263,6 +258,7 @@ namespace OpenSpotify.Services {
                 }
             }
         }
+        #endregion 
 
         #region Notify
 

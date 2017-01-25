@@ -1,26 +1,36 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Microsoft.Win32;
+using System.Net.Mime;
+using System.Windows.Data;
+using System.Windows.Forms;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
+using static OpenSpotify.Services.Util.Utils;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.ViewModels {
 
     public class SettingsViewModel : BaseViewModel {
 
-        private ApplicationModel _applicationModel;
-        private BitrateModel _selectedBitrate;
-
         public SettingsViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
         }
 
+        #region Fields
+
+        private ApplicationModel _applicationModel;
+        private BitrateModel _selectedBitrate;
+        #endregion
+
+        #region Properties
+
         public ApplicationModel ApplicationModel {
             get { return _applicationModel; }
             set {
-                _applicationModel = value; 
+                _applicationModel = value;
                 OnPropertyChanged(nameof(SettingsViewModel));
             }
         }
@@ -28,6 +38,9 @@ namespace OpenSpotify.ViewModels {
         public ObservableCollection<BitrateModel> BitrateCollection { get; set; }
 
         public ObservableCollection<FormatModel> FormatCollection { get; set; }
+        #endregion
+
+        #region Commands
 
         public CommandHandler<object> FFmpegPathCommand {
             get {
@@ -44,7 +57,27 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+        public CommandHandler<object> MusicPathCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    using (var folderBrowserDialog = new FolderBrowserDialog()) {
+                        folderBrowserDialog.SelectedPath = MusicPath;
+                        folderBrowserDialog.ShowNewFolderButton = true;
+
+                        var result = folderBrowserDialog.ShowDialog();
+                        if (result == DialogResult.OK) {
+                            ApplicationModel.Settings.MusicPath = folderBrowserDialog.SelectedPath;
+                        }
+                    }
+                });
+            }
+        }
+        #endregion
+
+        #region Fields
+
         private void Initialize() {
+
             BitrateCollection = new ObservableCollection<BitrateModel> {
                 new BitrateModel { BitrateName = "320 kBit/s", Bitrate = "320K"},
                 new BitrateModel { BitrateName = "256 kBit/s", Bitrate = "256K"},
@@ -56,8 +89,10 @@ namespace OpenSpotify.ViewModels {
                 new FormatModel { FormatName = "Mp3", Format = ".mp3"},
                 new FormatModel { FormatName = "Wav", Format = ".wav"},
             };
+
             ApplicationModel.Settings.SelectedBitrate = BitrateCollection[0];
             ApplicationModel.Settings.SelectedFormat = FormatCollection[0];
-        }
+        } 
+        #endregion
     }
 }
