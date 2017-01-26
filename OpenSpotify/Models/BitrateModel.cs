@@ -1,4 +1,5 @@
 ﻿namespace OpenSpotify.Models {
+
     public class BitrateModel {
 
         public string BitrateName { get; set; }

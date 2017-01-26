@@ -13,13 +13,17 @@ namespace OpenSpotify.Services {
             ApplicationModel = applicationModel;
         }
 
+        #region Properties
+
         public ApplicationModel ApplicationModel { get; set; }
 
         public Process FFmpegProcess { get; set; }
 
-        public string SongFileName { get; set; }
+        public string SongFileName { get; set; } 
+        #endregion
 
         public void StartFFmpeg() {
+
             if (!File.Exists(ApplicationModel.Settings.FFmpegPath)) {
                 MessageBox.Show("Catastrophic Failure",
                     "FFmpeg not Found!", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -9,11 +9,11 @@
         xmlns:dd="urn:gong-wpf-dragdrop"
         x:Name="MetroWindow"
         mc:Ignorable="d" GlowBrush="Green" 
-        Title="Open Spotify"
+        Title="Open Spotify (BETA)"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         MinHeight="350" MinWidth="550" Height="400" Width="600"
-        AllowDrop="True" dd:DragDrop.IsDragSource="True" dd:DragDrop.CanDragWithMouseRightButton="True" 
+        AllowDrop="True" dd:DragDrop.IsDragSource="False"
         dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanMinimize"
         Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame">
     <i:Interaction.Triggers>
@@ -75,6 +75,7 @@
                                 Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"
                                 SelectedIndex="0"
+                                SelectedOptionsIndex="0"
                                 DisplayMode="Overlay" OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
@@ -96,8 +97,9 @@
             <!--  Content  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
-                    <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                        Content="{Binding NavigationService.ContentWindow}"/>
+                    <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" 
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Content="{Binding NavigationService.ContentWindow}"/>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>

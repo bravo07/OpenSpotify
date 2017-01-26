@@ -20,9 +20,9 @@ namespace OpenSpotify.Services.Util {
 
         public static string ApplicationDataPath = Path.Combine(ApplicationPath, "ApplicationModel.json");
 
-        public static Uri SongInformationUri { get; set; } = new Uri("https://api.spotify.com/v1/tracks/");
+        public static Uri SongInformationUri => new Uri("https://api.spotify.com/v1/tracks/");
 
-        public static string YouTubeUri { get; set; } = "http://www.youtube.com/watch?v=";
+        public static string YouTubeUri => "http://www.youtube.com/watch?v=";
 
         public static string SearchInfo => "snippet";
 
@@ -33,15 +33,17 @@ namespace OpenSpotify.Services.Util {
         public static string FFmpegName => "ffmpeg";
         #endregion 
 
-        #region WinAPI
-
-        [DllImport("wininet.dll")]
-        private static extern bool InternetGetConnectedState(out int description, int reservedValue);
+        #region Check Internet
 
         /// <summary>
         /// Checks for available Connection | more reliable then pinging Google
         /// </summary>
+        /// <param name="description"></param>
+        /// <param name="reservedValue"></param>
         /// <returns></returns>
+        [DllImport("wininet.dll")]
+        private static extern bool InternetGetConnectedState(out int description, int reservedValue);
+
         public static bool IsInternetAvailable() {
             int description;
             return InternetGetConnectedState(out description, 0);
@@ -59,6 +61,7 @@ namespace OpenSpotify.Services.Util {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
         #endregion 
+
         public static string RemoveSpecialCharacters(string source) {
             return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }

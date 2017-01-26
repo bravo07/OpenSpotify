@@ -4,28 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:OpenSpotify.Services.Util"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converter:ImageCoverter x:Key="ImageCoverter"/>
     </UserControl.Resources>
-    <Grid Margin="48,0,0,0">
+    <Grid Margin="48,10,0,0">
 
         <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" 
                     FontFamily="CalibriLight" FontSize="18" 
                     Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
-            <ListBox.Style>
-                <Style TargetType="ListBox">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ApplicationModel.Settings.IsReady}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -48,14 +39,20 @@
                             <TextBlock Grid.Row="0" Margin="5,0,0,0" Foreground="White" Text="{Binding SongName}"/>
                             <TextBlock Grid.Row="1" Margin="5,0,0,0" Foreground="DimGray" Text="{Binding ArtistName}"/>
 
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Top">
-                                <Image Source="../Assets/Remove.png"/>
-                            </Button>
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                                <Image Source="../Assets/Remove.png"  Margin="3">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.RemoveSongCommand}" CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-         
+
         </ListBox>
     </Grid>
 </UserControl>

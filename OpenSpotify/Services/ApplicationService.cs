@@ -8,9 +8,6 @@ namespace OpenSpotify.Services {
 
     public class ApplicationService {
 
-        /// <summary>
-        /// Initializes needed Directories for the Application
-        /// </summary>
         public static void InitializeApplicationDirectorys() {
             if (!Directory.Exists(ApplicationPath)) {
                 Directory.CreateDirectory(ApplicationPath);
@@ -25,10 +22,6 @@ namespace OpenSpotify.Services {
             }
         }
 
-        /// <summary>
-        /// Desirializes Saved Application Settings 
-        /// </summary>
-        /// <returns></returns>
         public static ApplicationModel LoadApplicationModel() {
             if (!File.Exists(ApplicationDataPath)) {
                 return null;
@@ -39,10 +32,6 @@ namespace OpenSpotify.Services {
             }
         }
 
-        /// <summary>
-        /// Serializes Application Settings to AppData
-        /// </summary>
-        /// <param name="applicationModel"></param>
         public static void SaveApplicationModel(ApplicationModel applicationModel) {
             using (var streamWriter = new StreamWriter(ApplicationDataPath)) {
                 streamWriter.Write(JsonConvert.SerializeObject(applicationModel));
