@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using Google.Apis.Services;
-using Google.Apis.YouTube.v3;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OpenSpotify.Models;
 using VideoLibrary;
+using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+using Google.Apis.Services;
+using Google.Apis.YouTube.v3;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using static OpenSpotify.Services.Util.Utils;
 using OpenSpotify.Services.Util;
 
@@ -104,7 +104,7 @@ namespace OpenSpotify.Services {
                 return;
             }
 
-            Application.Current.Dispatcher.Invoke(delegate {
+            Application.Current.Dispatcher.Invoke(() => {      
                 if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
                     song.Status = true;
                     ApplicationModel.DownloadCollection.Add(song);
@@ -118,7 +118,9 @@ namespace OpenSpotify.Services {
         #region Get Song Information 
 
         public SongModel DownloadSongInformation(string id) {
+
             try {
+
                 string loadedData;
                 using (var webClient = new WebClient()) {
                     loadedData = webClient.DownloadString(SongInformationUri + PrepareId(id));
@@ -132,7 +134,6 @@ namespace OpenSpotify.Services {
                     SongName = (string)desirializedInfo["name"],
                     CoverImage = (string)desirializedInfo["album"]["images"][0]["url"],
                     StatusValue = 60,
-                    Progress = 0,
                 };
 
                 var artistBuilder = new StringBuilder();
@@ -144,6 +145,7 @@ namespace OpenSpotify.Services {
                 return songModel;
             }
             catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
                 return null;
             }
@@ -152,12 +154,6 @@ namespace OpenSpotify.Services {
 
         #region Search YouTube 
 
-        /// <summary>
-        /// Searches YouTube for the Uri
-        /// </summary>
-        /// <param name="songName"></param>
-        /// <param name="artist"></param>
-        /// <returns></returns>
         public async Task<string> SearchForSong(string songName, string artist) {
 
             var searchListRequest = YouTubeService.Search.List(SearchInfo);
@@ -194,13 +190,19 @@ namespace OpenSpotify.Services {
                 return;
             }
 
-            var video = YouTube.GetVideo(song.YouTubeUri);
-            if (video == null) {
-                return;
-            }
+            try {
+                var video = YouTube.GetVideo(song.YouTubeUri);
+                if (video == null) {
+                    return;
+                }
 
-            song.FileName = Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
-            File.WriteAllBytes(TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)), video.GetBytes());
+                song.FileName = Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
+                File.WriteAllBytes(TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)), video.GetBytes());
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         #endregion
@@ -227,10 +229,17 @@ namespace OpenSpotify.Services {
                 }
 
                 Application.Current.Dispatcher.Invoke(() => {
+
                     ConvertService.KillFFmpegProcess();
-                    finishedSong.StatusValue = 100;
+
+                    var fullPath = Path.Combine(TempPath, Path.GetFileName(fileSystemEventArgs.FullPath));
+                    finishedSong.FullPath = fullPath;
                     ApplicationModel.DownloadCollection.Remove(finishedSong);
                     ApplicationModel.SongCollection.Add(finishedSong);
+
+                    //if (File.Exists(fullPath)) {
+                    //    File.Delete(fullPath);
+                    //}
                 });
             }
         }
