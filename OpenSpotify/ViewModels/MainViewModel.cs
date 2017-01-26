@@ -83,7 +83,6 @@ namespace OpenSpotify.ViewModels {
         }
 
         public void DragOver(IDropInfo dropInfo) {
-
             dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
             dropInfo.Effects = DragDropEffects.Copy;
         }
