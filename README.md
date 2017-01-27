@@ -16,7 +16,7 @@ If you run into any problems or issues, **please** let us know so we can address
 
 
 ## Contributing
-If you want to Contribute you need to follow the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel" target="top">MVVM</a>  Design Pattern.
+If you want to Contribute you need to follow the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel" target="top">MVVM</a>  Design Pattern. ( My custom one ) :)
 
 ### License
 OpenSpotify Downloader is licensed under the BSD 2-clause license.
