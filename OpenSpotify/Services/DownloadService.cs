@@ -20,7 +20,7 @@ using OpenSpotify.Services.Util;
 
 namespace OpenSpotify.Services {
 
-    public class DownloadService : INotifyPropertyChanged {
+    public class DownloadService : BaseService {
 
         public DownloadService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
@@ -266,14 +266,6 @@ namespace OpenSpotify.Services {
                     ConvertService.StartFFmpeg();
                 }
             }
-        }
-        #endregion 
-
-        #region Notify
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion 
     }
