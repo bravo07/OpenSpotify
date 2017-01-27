@@ -232,7 +232,7 @@ namespace OpenSpotify.Services {
 
                     ConvertService.KillFFmpegProcess();
 
-                    var fullPath = Path.Combine(TempPath, Path.GetFileName(fileSystemEventArgs.FullPath));
+                    var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
                     finishedSong.FullPath = fullPath;
                     ApplicationModel.DownloadCollection.Remove(finishedSong);
                     ApplicationModel.SongCollection.Add(finishedSong);

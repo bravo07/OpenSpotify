@@ -31,18 +31,22 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<SongModel> PlaySongCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
-                    Debug.WriteLine(selectedSong.FileName);
-                    //if (File.Exists(selectedSong.FileName)) {
-                    //    Process.Start(selectedSong.FileName);
-                    //}
+                    if (!File.Exists(selectedSong.FullPath)) {
+                        return;
+                    }
+                    Process.Start(selectedSong.FullPath);
                 });
             }
         }
-
-        public CommandHandler<SongModel> OpenFileInDirectoryCommand {
+        
+    
+    public CommandHandler<SongModel> OpenFileInDirectoryCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
-                    ApplicationService.SaveApplicationModel(ApplicationModel);
+                    if (!File.Exists(selectedSong.FullPath)) {
+                        return;
+                    }
+                    Process.Start("explorer.exe","/select, \"" + selectedSong.FullPath + "\"");
                 });
             }
         }
@@ -50,7 +54,7 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<SongModel> RemoveSongCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
-                    ApplicationService.SaveApplicationModel(ApplicationModel);
+                    ApplicationModel.SongCollection.Remove(selectedSong);
                 });
             }
         }

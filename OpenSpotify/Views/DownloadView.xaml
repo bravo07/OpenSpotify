@@ -17,7 +17,7 @@
                             <ColumnDefinition Width="0.2*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Source="{Binding CoverImage}" Stretch="Fill" Height="80" Width="80"/>
+                        <Image Grid.Column="0" Source="{Binding CoverImage}" Stretch="UniformToFill" Height="80" Width="80" HorizontalAlignment="Left"/>
 
                         <Grid Grid.Column="1" Grid.ColumnSpan="2">
                             <Grid.RowDefinitions>

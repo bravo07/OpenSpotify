@@ -8,7 +8,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:dd="urn:gong-wpf-dragdrop"
         x:Name="MetroWindow"
-        mc:Ignorable="d" GlowBrush="Green" 
+        mc:Ignorable="d" GlowBrush="Red" 
         Title="Open Spotify (BETA)"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
@@ -24,6 +24,7 @@
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
+            
             <Button Command="{Binding OpenMusicCommand}">
                 <Image Source="../Assets/Directory.png" Stretch="Uniform" Height="17" Width="17"/>
             </Button>
@@ -37,16 +38,10 @@
                     <ColumnDefinition Width="48"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ContentControl Grid.Column="0"
-                                Content="{Binding Tag}"
-                                Focusable="False"
-                                Foreground="White"
-                                IsTabStop="False" />
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="16"
-                           Foreground="White"
-                           Text="{Binding Label}" />
+                <ContentControl Grid.Column="0" Content="{Binding Tag}" Focusable="False"
+                                Foreground="White" IsTabStop="False" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="16"
+                           Foreground="White" Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
 
@@ -56,16 +51,10 @@
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Margin="12"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Source="{Binding Glyph}"
-                       Stretch="UniformToFill" />
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="16"
-                           Foreground="White"
-                           Text="{Binding Label}" />
+                <Image Margin="12" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Source="{Binding Glyph}" Stretch="UniformToFill" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="16"
+                           Foreground="White" Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -93,7 +82,7 @@
                     <controls:HamburgerMenuGlyphItem Glyph="/Assets/Settings.png" Label="Settings" />
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
-            
+
             <!--  Content  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
