@@ -14,7 +14,6 @@ using Newtonsoft.Json.Linq;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 using static OpenSpotify.Services.Util.Utils;
 using OpenSpotify.Services.Util;
 
