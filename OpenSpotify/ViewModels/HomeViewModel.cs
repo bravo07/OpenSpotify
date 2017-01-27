@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using System.IO;
-using OpenSpotify.Models;
+﻿using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
 
 namespace OpenSpotify.ViewModels {
+
     public class HomeViewModel : BaseViewModel {
 
         private ApplicationModel _applicationModel;

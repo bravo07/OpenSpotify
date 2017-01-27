@@ -24,6 +24,7 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+
         #endregion
 
         #region Command

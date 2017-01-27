@@ -109,21 +109,28 @@ namespace OpenSpotify.Services {
         public CommandHandler<object> ItemClickCommand {
             get {
                 return new CommandHandler<object>(o => {
+
                     switch (SelectedItem.Label) {
+
                         case nameof(Downloads):
                             ContentWindow = DownloadView;
                             DownloadsViewModel.ApplicationModel = ApplicationModel;
                             DownloadView.DataContext = DownloadsViewModel;
+                            ApplicationModel.IsDownloadView = true;
                             return;
+
                         case nameof(Settings):
                             ContentWindow = SettingsView;
                             SettingsViewModel.ApplicationModel = ApplicationModel;
                             SettingsView.DataContext = SettingsViewModel;
+                            ApplicationModel.IsDownloadView = false;
                             return;
+
                         case nameof(Home):
                             ContentWindow = HomeView;
                             HomeViewModel.ApplicationModel = ApplicationModel;
                             HomeView.DataContext = HomeViewModel;
+                            ApplicationModel.IsDownloadView = false;
                             break;
                     }
                 });

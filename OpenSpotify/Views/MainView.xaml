@@ -24,7 +24,18 @@
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            
+            <TextBox Width="150" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationModel.IsDownloadView}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
             <Button Command="{Binding OpenMusicCommand}">
                 <Image Source="../Assets/Directory.png" Stretch="Uniform" Height="17" Width="17"/>
             </Button>
@@ -59,7 +70,7 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid >
+    <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"

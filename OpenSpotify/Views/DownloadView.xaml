@@ -7,7 +7,8 @@
              x:Name="UserControl"
              mc:Ignorable="d">
     <Grid>
-        <ListBox ItemsSource="{Binding ApplicationModel.SongCollection}" Margin="48,10,0,0">
+        <ListBox ItemsSource="{Binding ApplicationModel.SongCollection}"
+                 Margin="48,10,0,0" TextSearch.TextPath="Name" IsTextSearchEnabled="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using GongSolutions.Wpf.DragDrop;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
@@ -21,7 +23,10 @@ namespace OpenSpotify.ViewModels {
 
         private ApplicationModel _applicationModel;
         private DownloadService _downloadService;
-        private NavigationService _navigationService; 
+        private NavigationService _navigationService;
+        private string _searchText;
+        private CollectionView _collectionView;
+
         #endregion
 
         #region Properties
@@ -50,10 +55,27 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+        public string SearchText {
+            get { return _searchText; }
+            set {
+                _searchText = value;
+                CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection).Refresh();
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
+
+        public CollectionView CollectionView {
+            get { return _collectionView; }
+            set {
+                _collectionView = value; 
+                OnPropertyChanged(nameof(CollectionView));
+            }
+        }
+
         #endregion
 
         #region Commands
-        
+
         public CommandHandler<object> ViewClosingCommand {
             get {
                 return new CommandHandler<object>(o => {
@@ -80,6 +102,16 @@ namespace OpenSpotify.ViewModels {
             NavigationService = new NavigationService(ApplicationModel);
             NavigationService.InitializeNavigation();
             DownloadService = new DownloadService(ApplicationModel);
+            CollectionView = (CollectionView) CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
+            CollectionView.Filter = SearchFilter;
+        }
+
+        private bool SearchFilter(object item) {
+            if (string.IsNullOrEmpty(SearchText)) {
+                return true;
+            }
+            var songModel = item as SongModel;
+            return songModel != null && (songModel.SongName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         public void DragOver(IDropInfo dropInfo) {
