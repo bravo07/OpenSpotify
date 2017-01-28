@@ -110,7 +110,9 @@ namespace OpenSpotify.ViewModels {
                 return true;
             }
             var songModel = item as SongModel;
-            return songModel != null && (songModel.SongName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0);
+            return songModel != null &&
+                   (songModel.SongName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                   (songModel.ArtistName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         public void DragOver(IDropInfo dropInfo) {

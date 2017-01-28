@@ -43,6 +43,10 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<SongModel> OpenYoutubeCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
+                    if (selectedSong.YouTubeUri == null) {
+                        return;
+                    }
+
                     Process.Start(selectedSong.YouTubeUri);
                 });
             }
