@@ -28,24 +28,39 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Margin="5,0,0,0" Foreground="White" Text="{Binding SongName}"/>
-                            <TextBlock Grid.Row="1" Margin="5,0,0,0" Foreground="DimGray" Text="{Binding ArtistName}"/>
-                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-                                <Image Source="../Assets/Play.png"  Margin="3">
+                            <StackPanel Grid.Row="0" Orientation="Vertical" Margin="5,0,0,0">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Margin" Value="0,1,0,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Foreground="White" Text="{Binding SongName}"/>
+                                <TextBlock Foreground="DimGray" Text="{Binding ArtistName}"/>
+                                <TextBlock Text="{Binding YouTubeUri}" Foreground="#FF727272">                                  
+                                        <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                                <Image Source="../Assets/Play.png" Margin="3" Width="15" Height="15">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.PlaySongCommand}" CommandParameter="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Image>
-                                <Image Source="../Assets/Open.png"  Margin="3">
+                                <Image Source="../Assets/Open.png" Margin="3" Width="15" Height="15">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenFileInDirectoryCommand}" CommandParameter="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Image>
-                                <Image Source="../Assets/Remove.png"  Margin="3">
+                                <Image Source="../Assets/Remove.png" Margin="3" Width="15" Height="15">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.RemoveSongCommand}" CommandParameter="{Binding}"/>

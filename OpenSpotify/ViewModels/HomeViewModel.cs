@@ -1,4 +1,5 @@
-﻿using OpenSpotify.Models;
+﻿using System.Diagnostics;
+using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
 
 namespace OpenSpotify.ViewModels {
@@ -21,6 +22,13 @@ namespace OpenSpotify.ViewModels {
 
         #region Commands
 
+        public CommandHandler<SongModel> OpenYoutubeCommand {
+            get {
+                return new CommandHandler<SongModel>(selectedSong => {
+                    Process.Start(selectedSong.YouTubeUri);
+                });
+            }
+        }
 
         public CommandHandler<SongModel> RemoveSongCommand {
             get {

@@ -39,9 +39,17 @@ namespace OpenSpotify.ViewModels {
                 });
             }
         }
-        
-    
-    public CommandHandler<SongModel> OpenFileInDirectoryCommand {
+
+        public CommandHandler<SongModel> OpenYoutubeCommand {
+            get {
+                return new CommandHandler<SongModel>(selectedSong => {
+                    Process.Start(selectedSong.YouTubeUri);
+                });
+            }
+        }
+
+
+        public CommandHandler<SongModel> OpenFileInDirectoryCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
                     if (!File.Exists(selectedSong.FullPath)) {

@@ -26,7 +26,6 @@ namespace OpenSpotify.ViewModels {
         private NavigationService _navigationService;
         private string _searchText;
         private CollectionView _collectionView;
-
         #endregion
 
         #region Properties
