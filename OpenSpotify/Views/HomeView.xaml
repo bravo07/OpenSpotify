@@ -52,6 +52,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBlock>
+                                <TextBlock Text="{Binding Status,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#FF727272"/>
                             </StackPanel>
 
                             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">

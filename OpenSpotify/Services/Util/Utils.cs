@@ -31,6 +31,18 @@ namespace OpenSpotify.Services.Util {
         public static string FFmpegCommand { get; set; } = "ffmpeg -i ";
 
         public static string FFmpegName => "ffmpeg";
+
+        public static string LoadingSongInformation => "Loading Song Information";
+
+        public static string FailedLoadingSongInformation => "Failed to load Song Information";
+
+        public static string Downloading => "Downloading...";
+
+        public static string Finished => "Finished.";
+
+        public static string FailedYoutTubeUri => "Failed to load YouTube Uri.";
+
+        public static string Converting => "Converting...";
         #endregion 
 
         #region Check Internet

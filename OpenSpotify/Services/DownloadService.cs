@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using OpenSpotify.Models;
 using VideoLibrary;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using Newtonsoft.Json.Linq;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
@@ -96,16 +97,17 @@ namespace OpenSpotify.Services {
             }
 
             var song = DownloadSongInformation(songId);
+            song.Status = LoadingSongInformation;
             song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
 
             if (string.IsNullOrEmpty(song.YouTubeUri)) {
-                song.Status = false;
+                song.Status = FailedLoadingSongInformation;
                 return;
             }
 
             Application.Current.Dispatcher.Invoke(() => {      
                 if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
-                    song.Status = true;
+                    song.Status = Downloading;
                     ApplicationModel.DownloadCollection.Add(song);
                 }
             });
@@ -192,11 +194,13 @@ namespace OpenSpotify.Services {
             try {
                 var video = YouTube.GetVideo(song.YouTubeUri);
                 if (video == null) {
+                    song.Status = FailedYoutTubeUri;
                     return;
                 }
 
                 song.FileName = Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
                 File.WriteAllBytes(TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)), video.GetBytes());
+                song.Status = Converting;
             }
             catch (Exception ex) {
                 Debug.WriteLine(ex.Message);
@@ -233,6 +237,7 @@ namespace OpenSpotify.Services {
 
                     var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
                     finishedSong.FullPath = fullPath;
+                    finishedSong.Status = Finished;
                     ApplicationModel.DownloadCollection.Remove(finishedSong);
                     ApplicationModel.SongCollection.Add(finishedSong);
 

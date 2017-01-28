@@ -115,4 +115,3 @@ D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csprojResolveAssemblyReference.cache

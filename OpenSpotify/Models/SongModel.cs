@@ -12,7 +12,7 @@ namespace OpenSpotify.Models {
         private string _songname;
         private string _albumname;
         private string _coverImage;
-        private bool _status;
+        private string _status;
         private string _youTubeUri;
         private string _artistName;
         private double _statusValue;
@@ -64,7 +64,7 @@ namespace OpenSpotify.Models {
             }
         }
 
-        public bool Status {
+        public string Status {
             get { return _status; }
             set {
                 _status = value;
