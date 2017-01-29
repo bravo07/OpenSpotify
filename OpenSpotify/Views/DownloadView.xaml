@@ -4,14 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:util="clr-namespace:OpenSpotify.Services.Util"
              x:Name="UserControl"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
+    </UserControl.Resources>
     <Grid>
         <ListBox ItemsSource="{Binding ApplicationModel.SongCollection}"
                  Margin="48,10,0,0" TextSearch.TextPath="Name" IsTextSearchEnabled="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Play Song" FontFamily="Calibri Light" Command="{Binding Path=Data.PlaySongCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Assets/Play.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Open Song" FontFamily="Calibri Light" Command="{Binding Path=Data.OpenFileInDirectoryCommand, Source={StaticResource DataContextProxy}}"  CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Assets/Open.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Remove Song" FontFamily="Calibri Light" Command="{Binding Path=Data.RemoveSongCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Assets/RemoveSong.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Remove All" FontFamily="Calibri Light" Command="{Binding Path=Data.RemoveAllCommand, Source={StaticResource DataContextProxy}}">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Assets/Remove.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="1*"/>
@@ -37,7 +65,7 @@
                                 <TextBlock Foreground="White" Text="{Binding SongName}" FontSize="16" FontFamily="Calibri Light"/>
                                 <TextBlock Foreground="#FFB8B8B8" Text="{Binding ArtistName}" FontSize="15" FontFamily="Calibri Light"/>
                                 <TextBlock Text="{Binding YouTubeUri}" Foreground="#FF838383" FontSize="14" FontFamily="Calibri Light">                                      
-                                        <i:Interaction.Triggers>
+                                    <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" CommandParameter="{Binding}"/>
                                         </i:EventTrigger>

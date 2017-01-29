@@ -92,7 +92,6 @@ namespace OpenSpotify.ViewModels {
                 });
             }
         }
-
         #endregion
 
         #region Functions

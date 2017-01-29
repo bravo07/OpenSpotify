@@ -11,30 +11,30 @@
 
             <Label Content="General" FontSize="20" FontFamily="Calibri Light"/>
             <StackPanel Orientation="Horizontal">
-                <Image Source="../Assets/Directory.png" Height="21" Width="21"/>
+                <Image Source="../Assets/Directory.png" Height="20" Width="20"/>
                 <TextBox controls:TextBoxHelper.Watermark="FFmpeg Path" Width="400" Text="{Binding ApplicationModel.Settings.FFmpegPath}" IsReadOnly="True" Margin="5"/>
                 <Button Content="..." Margin="5" Command="{Binding FFmpegPathCommand}" Width="50"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <Image Source="../Assets/Music.png" Height="21" Width="21"/>
+                <Image Source="../Assets/Music.png" Height="20" Width="20"/>
                 <TextBox controls:TextBoxHelper.Watermark="Music Path" Width="400" Text="{Binding ApplicationModel.Settings.MusicPath}" IsReadOnly="True" Margin="5"/>
                 <Button Content="..." Margin="5" Command="{Binding MusicPathCommand}" Width="50"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <Image Source="../Assets/ApiKey.png" Height="21" Width="21"/>
+                <Image Source="../Assets/ApiKey.png" Height="20" Width="20"/>
                 <TextBox controls:TextBoxHelper.Watermark="Youtube ApiKey" Width="400" Text="{Binding ApplicationModel.Settings.YoutubeApiKey ,UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <Image Source="../Assets/Delete.png" Height="21" Width="21"/>
+                <Image Source="../Assets/Delete.png" Height="20" Width="20"/>
                 <Button Margin="5,2,0,0" Content="Delete Settings" FontFamily="Calibri Light" Command="{Binding DeleteSettingsCommand}"/>
             </StackPanel>
             
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                 <Label Content="FFmpeg" FontSize="20" FontFamily="Calibri Light"/>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                     <Label Content="Bitrate" FontSize="15" FontFamily="Calibri Light"/>
                     <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
                     <Label Content="Format" FontSize="15" FontFamily="Calibri Light"/>

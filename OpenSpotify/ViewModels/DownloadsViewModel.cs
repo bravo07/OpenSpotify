@@ -33,6 +33,8 @@ namespace OpenSpotify.ViewModels {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
                     if (!File.Exists(selectedSong.FullPath)) {
+                        ApplicationModel.SongCollection.Remove(selectedSong);
+                        ApplicationService.SaveApplicationModel(ApplicationModel);
                         return;
                     }
                     Process.Start(selectedSong.FullPath);
@@ -57,6 +59,8 @@ namespace OpenSpotify.ViewModels {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
                     if (!File.Exists(selectedSong.FullPath)) {
+                        ApplicationModel.SongCollection.Remove(selectedSong);
+                        ApplicationService.SaveApplicationModel(ApplicationModel);
                         return;
                     }
                     Process.Start("explorer.exe","/select, \"" + selectedSong.FullPath + "\"");
@@ -68,6 +72,16 @@ namespace OpenSpotify.ViewModels {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
                     ApplicationModel.SongCollection.Remove(selectedSong);
+                    ApplicationService.SaveApplicationModel(ApplicationModel);
+                });
+            }
+        }
+
+        public CommandHandler<SongModel> RemoveAllCommand {
+            get {
+                return new CommandHandler<SongModel>(selectedSong => {
+                    ApplicationModel.SongCollection.Clear();
+                    ApplicationService.SaveApplicationModel(ApplicationModel);
                 });
             }
         }
