@@ -171,8 +171,7 @@ namespace OpenSpotify.Services {
             if (matchingItems.Count == 0) {
                 return string.Empty;
             }
-
-            PrintYouTubeResult(matchingItems);
+            
             //Checks Content for VEVO
             if (matchingItems.Count > 1) {
                 var vevoMatches = matchingItems.Where(x => x.Snippet.ChannelTitle.Contains(Vevo)).ToList();
@@ -188,13 +187,6 @@ namespace OpenSpotify.Services {
             var result = vevoResults.FirstOrDefault(x => x.Snippet.Title.Contains(Audio));
             return result ?? vevoResults[0];
         }
-
-        public void PrintYouTubeResult(List<SearchResult> list) {
-            foreach (var result in list) {
-                Debug.WriteLine($"CHANNEL: {result.Snippet.ChannelTitle} : TITLE: {result.Snippet.Title}");
-            }
-        }
-
         #endregion
 
         #region Download Songs
@@ -254,10 +246,6 @@ namespace OpenSpotify.Services {
                     finishedSong.Status = Finished;
                     ApplicationModel.DownloadCollection.Remove(finishedSong);
                     ApplicationModel.SongCollection.Add(finishedSong);
-
-                    //if (File.Exists(fullPath)) {
-                    //    File.Delete(fullPath);
-                    //}
                 });
             }
         }

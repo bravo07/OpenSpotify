@@ -18,7 +18,7 @@ namespace OpenSpotify.Services.Util {
                 return new BitmapImage(uri);
             }
 
-            throw new NotSupportedException();
+            return new BitmapImage();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
