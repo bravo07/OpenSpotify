@@ -28,6 +28,8 @@ namespace OpenSpotify.Services.Util {
 
         public static string Vevo => "VEVO";
 
+        public static string Audio => "Audio";
+
         public static string FFmpegCommand { get; set; } = "ffmpeg -i ";
 
         public static string FFmpegName => "ffmpeg";

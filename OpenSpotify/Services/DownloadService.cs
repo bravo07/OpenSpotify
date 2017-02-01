@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using System.Threading.Tasks;
+using Google.Apis.YouTube.v3.Data;
 using static OpenSpotify.Services.Util.Utils;
 using OpenSpotify.Services.Util;
 
@@ -171,16 +172,29 @@ namespace OpenSpotify.Services {
                 return string.Empty;
             }
 
+            PrintYouTubeResult(matchingItems);
             //Checks Content for VEVO
             if (matchingItems.Count > 1) {
-                var vevoMatches = matchingItems.Where(x => x.Snippet.Title.Contains(Vevo)).ToList();
+                var vevoMatches = matchingItems.Where(x => x.Snippet.ChannelTitle.Contains(Vevo)).ToList();
                 if (vevoMatches.Count > 0) {
-                    return YouTubeUri + vevoMatches[0].Id.VideoId;
+                    return YouTubeUri + CheckVevoMatches(vevoMatches).Id.VideoId;
                 }
             }
 
             return YouTubeUri + matchingItems[0].Id.VideoId;
         }
+
+        private SearchResult CheckVevoMatches(IReadOnlyList<SearchResult> vevoResults) {
+            var result = vevoResults.FirstOrDefault(x => x.Snippet.Title.Contains(Audio));
+            return result ?? vevoResults[0];
+        }
+
+        public void PrintYouTubeResult(List<SearchResult> list) {
+            foreach (var result in list) {
+                Debug.WriteLine($"CHANNEL: {result.Snippet.ChannelTitle} : TITLE: {result.Snippet.Title}");
+            }
+        }
+
         #endregion
 
         #region Download Songs
