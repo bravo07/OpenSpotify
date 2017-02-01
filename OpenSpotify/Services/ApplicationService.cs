@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json;
 using OpenSpotify.Models;
@@ -20,7 +21,10 @@ namespace OpenSpotify.Services {
             if (!Directory.Exists(TempPath)) {
                 Directory.CreateDirectory(TempPath);
             }
+            ClearTemp();
         }
+
+        #region Load / Save Application
 
         public static ApplicationModel LoadApplicationModel() {
             if (!File.Exists(ApplicationDataPath)) {
@@ -37,5 +41,24 @@ namespace OpenSpotify.Services {
                 streamWriter.Write(JsonConvert.SerializeObject(applicationModel));
             }
         }
+        #endregion
+
+        #region Clear Temp
+
+        private static void ClearTemp() {
+            try {
+                foreach (var file in Directory.GetFiles(TempPath)) {
+                    if (File.Exists(file)) {
+                        File.Delete(file);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        #endregion 
     }
 }
