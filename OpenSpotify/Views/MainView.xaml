@@ -67,8 +67,6 @@
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"
-                                SelectedIndex="0"
-                                SelectedOptionsIndex="0"
                                 DisplayMode="Overlay" OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">

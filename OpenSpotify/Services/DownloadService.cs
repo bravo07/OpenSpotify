@@ -165,7 +165,7 @@ namespace OpenSpotify.Services {
             var searchListResponse = await searchListRequest.ExecuteAsync();
 
             var matchingItems = searchListResponse.Items.Where(x =>
-                x.Snippet.Title.Contains(songName, StringComparison.OrdinalIgnoreCase) &&
+                x.Snippet.Title.Contains(songName, StringComparison.OrdinalIgnoreCase) ||
                 x.Snippet.Title.Contains(artist, StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (matchingItems.Count == 0) {

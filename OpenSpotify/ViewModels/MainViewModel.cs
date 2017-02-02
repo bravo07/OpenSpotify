@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using GongSolutions.Wpf.DragDrop;
+using MahApps.Metro.Controls;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
@@ -26,6 +27,8 @@ namespace OpenSpotify.ViewModels {
         private NavigationService _navigationService;
         private string _searchText;
         private CollectionView _collectionView;
+        private int _selectedPageIndex;
+
         #endregion
 
         #region Properties
@@ -68,6 +71,14 @@ namespace OpenSpotify.ViewModels {
             set {
                 _collectionView = value; 
                 OnPropertyChanged(nameof(CollectionView));
+            }
+        }
+
+        public int SelectedPageIndex {
+            get { return _selectedPageIndex; }
+            set {
+                _selectedPageIndex = value; 
+                OnPropertyChanged(nameof(SelectedPageIndex));
             }
         }
 
@@ -120,7 +131,7 @@ namespace OpenSpotify.ViewModels {
         }
 
         public async void Drop(IDropInfo dropInfo) {
-
+            
             if (!ApplicationModel.Settings.IsReady) {
                 return;
             }

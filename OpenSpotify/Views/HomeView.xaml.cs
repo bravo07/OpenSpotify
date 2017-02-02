@@ -6,7 +6,7 @@ namespace OpenSpotify.Views {
     /// <summary>
     /// Interaktionslogik für HomeView.xaml
     /// </summary>
-    public partial class HomeView : UserControl {
+    public partial class HomeView  {
         public HomeView() {
             InitializeComponent();
         }
