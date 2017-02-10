@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,7 +9,6 @@ using Newtonsoft.Json;
 using OpenSpotify.Models;
 using VideoLibrary;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using Newtonsoft.Json.Linq;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;

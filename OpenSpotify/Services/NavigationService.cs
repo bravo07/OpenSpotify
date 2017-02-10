@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
@@ -117,6 +118,7 @@ namespace OpenSpotify.Services {
                             DownloadsViewModel.ApplicationModel = ApplicationModel;
                             DownloadView.DataContext = DownloadsViewModel;
                             ApplicationModel.IsDownloadView = true;
+                            ApplicationModel.IsListEmpty = Visibility.Collapsed;
                             return;
 
                         case nameof(Settings):
@@ -124,6 +126,7 @@ namespace OpenSpotify.Services {
                             SettingsViewModel.ApplicationModel = ApplicationModel;
                             SettingsView.DataContext = SettingsViewModel;
                             ApplicationModel.IsDownloadView = false;
+                            ApplicationModel.IsListEmpty = Visibility.Collapsed;
                             return;
 
                         case nameof(Home):
@@ -131,6 +134,8 @@ namespace OpenSpotify.Services {
                             HomeViewModel.ApplicationModel = ApplicationModel;
                             HomeView.DataContext = HomeViewModel;
                             ApplicationModel.IsDownloadView = false;
+                            ApplicationModel.IsListEmpty = 
+                                ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
                             break;
                     }
                 });

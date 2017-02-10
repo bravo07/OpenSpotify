@@ -1,31 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using Newtonsoft.Json;
+// ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenSpotify.Models {
+namespace OpenSpotify.Models
+{
 
-    public class ApplicationModel : BaseModel {
+    public class ApplicationModel : BaseModel
+    {
 
         public ApplicationModel() {
-
-            if (SongCollection == null) {
-                SongCollection = new ObservableCollection<SongModel> {
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                };
-            }
-
-            if (Settings == null) {
-                Settings = new SettingsModel();
-            }
+            Initialize();
         }
 
         #region Fields
 
         private SettingsModel _settings;
         private bool _isDownloadView;
+        private Visibility _isListEmpty;
 
         #endregion 
 
@@ -41,21 +34,57 @@ namespace OpenSpotify.Models {
 
         public ObservableCollection<SongModel> SongCollection { get; set; }
 
+        [JsonIgnore]
         public ObservableCollection<SongModel> DownloadCollection { get; set; } =
            new ObservableCollection<SongModel>();
 
-        public List<string> DroppedSongs { get; set; } =
-            new List<string>();
+        public ObservableCollection<string> DroppedSongs { get; set; } = new ObservableCollection<string>();
 
         [JsonIgnore]
         public bool IsDownloadView {
             get { return _isDownloadView; }
             set {
-                _isDownloadView = value; 
+                _isDownloadView = value;
                 OnPropertyChanged(nameof(IsDownloadView));
             }
         }
 
+        public Visibility IsListEmpty {
+            get { return _isListEmpty; }
+            set {
+                _isListEmpty = value;
+                OnPropertyChanged(nameof(IsListEmpty));
+            }
+        }
+
         #endregion
+
+        #region Functions
+
+        private void Initialize() {
+            if (SongCollection == null)
+            {
+                SongCollection = new ObservableCollection<SongModel> {
+                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                };
+            }
+
+            if (Settings == null)
+            {
+                Settings = new SettingsModel();
+            }
+
+            DroppedSongs.CollectionChanged += (sender, args) => {
+                CheckList();
+            };
+        }
+
+        private void CheckList() {
+            IsListEmpty = DownloadCollection.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+        #endregion 
     }
 }

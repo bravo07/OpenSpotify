@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -6,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using GongSolutions.Wpf.DragDrop;
-using MahApps.Metro.Controls;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
@@ -82,6 +83,7 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+
         #endregion
 
         #region Commands
@@ -143,7 +145,7 @@ namespace OpenSpotify.ViewModels {
 
                 await Task.Run(() => {
                     var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
-                    ApplicationModel.DroppedSongs = filenames?.Split('\n').ToList();
+                    ApplicationModel.DroppedSongs = ToCollection(filenames?.Split('\n'));
 
                     if (ApplicationModel.DroppedSongs == null) {
                         return;
@@ -155,6 +157,15 @@ namespace OpenSpotify.ViewModels {
                 });
             }
         }
+
+        private static ObservableCollection<string> ToCollection(IEnumerable<string> split) {
+            var temp = new ObservableCollection<string>();
+            foreach (var songId in split) {
+                temp.Add(songId);
+            }
+            return temp;
+        }
+
         #endregion
     }
 }

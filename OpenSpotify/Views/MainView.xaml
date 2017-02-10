@@ -22,6 +22,8 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    
+    <!-- R E S O U R C E S --> 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
@@ -51,32 +53,44 @@
         </DataTemplate>
     </Window.Resources>
 
+
+    <!-- T I T L E M E N U -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <TextBox Width="150" controls:TextBoxHelper.Watermark="Search..."
+            <TextBox Width="150" 
+                     controls:TextBoxHelper.Watermark="Search..."
                      controls:TextBoxHelper.ClearTextButton="True"
                      Visibility="{Binding ApplicationModel.IsDownloadView ,Converter={StaticResource BoolToVis}}" 
                      Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Command="{Binding OpenMusicCommand}">
-                <Image Source="../Assets/Directory.png" Stretch="Uniform" Height="17" Width="17"/>
+                <Image Source="../Assets/Directory.png" 
+                       Stretch="Uniform"
+                       Height="17"
+                       Width="17"/>
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     
+    
     <Grid>
+
+        <!-- M A I N M E N U -->
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding NavigationService.ContentWindow}"
                                 SelectedItem="{Binding NavigationService.SelectedItem}"
-                                DisplayMode="Overlay" OpenPaneLength="48"
+                                DisplayMode="Overlay"
+                                OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ItemClick">
-                    <i:InvokeCommandAction Command="{Binding NavigationService.ItemClickCommand}" CommandParameter="{Binding}" />
+                    <i:InvokeCommandAction Command="{Binding NavigationService.ItemClickCommand}" 
+                                           CommandParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 
-            <!--  Items  -->
+            
+            <!--  I T E M S  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
                     <controls:HamburgerMenuGlyphItem Glyph="/Assets/Home.png" Label="Home"/>
@@ -85,15 +99,29 @@
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
 
-            <!--  Content  -->
+            
+            <!--  C O N T E N T  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
                     <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" 
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
                                     Content="{Binding NavigationService.ContentWindow}"/>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>
+
+
+        <Label HorizontalAlignment="Center" 
+               Content="Drag Drop Songs here..." 
+               FontSize="19" 
+               AllowDrop="True" 
+               dd:DragDrop.IsDragSource="False"
+               dd:DragDrop.IsDropTarget="True"
+               FontFamily="Calibri Light" 
+               VerticalAlignment="Center" 
+               Visibility="{Binding ApplicationModel.IsListEmpty}"
+               Foreground="Red"/>
     </Grid>
 </controls:MetroWindow>
 

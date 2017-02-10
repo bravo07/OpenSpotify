@@ -12,11 +12,9 @@
         <converter:ImageCoverter x:Key="ImageCoverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="48,10,0,0">
-        <TextBlock  Text="{Binding ApplicationModel.Settings.StatusText}" 
-                    FontFamily="CalibriLight" FontSize="18" 
-                    Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
+    <Grid Margin="48,10,0,0">
+     
         <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -27,7 +25,10 @@
                             <ColumnDefinition Width="0.2*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Source="{Binding CoverImage, Converter={StaticResource ImageCoverter}}" Height="80" Width="80"/>
+                        <Image Grid.Column="0" 
+                               Source="{Binding CoverImage, Converter={StaticResource ImageCoverter}}" 
+                               Height="80"
+                               Width="80"/>
 
                         <Grid Grid.Column="1" Grid.ColumnSpan="2">
                             <Grid.RowDefinitions>
@@ -43,9 +44,20 @@
                                         <Setter Property="Margin" Value="0,1,0,0"/>
                                     </Style>
                                 </StackPanel.Resources>
-                                <TextBlock Foreground="White" Text="{Binding SongName}" FontSize="16" FontFamily="Calibri Light"/>
-                                <TextBlock Foreground="#FFB8B8B8" Text="{Binding ArtistName}" FontSize="15" FontFamily="Calibri Light"/>
-                                <TextBlock Text="{Binding YouTubeUri}" Foreground="#FF838383" FontSize="14" FontFamily="Calibri Light">                                          
+                                <TextBlock Foreground="White" 
+                                           Text="{Binding SongName}" 
+                                           FontSize="16" 
+                                           FontFamily="Calibri Light"/>
+                                
+                                <TextBlock Foreground="#FFB8B8B8"
+                                           Text="{Binding ArtistName}" 
+                                           FontSize="15"
+                                           FontFamily="Calibri Light"/>
+                                
+                                <TextBlock Text="{Binding YouTubeUri}" 
+                                           Foreground="#FF838383" 
+                                           FontSize="14" 
+                                           FontFamily="Calibri Light">                                          
                                         <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" CommandParameter="{Binding}"/>

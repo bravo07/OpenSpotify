@@ -8,8 +8,6 @@ namespace OpenSpotify.Models {
         #region Fields
 
         private string _fFmpegPath;
-        private double _windowHeight;
-        private double _windowWidth;
         private double _windowTop;
         private double _windowLeft;
         private string _youtubeApiKey;
