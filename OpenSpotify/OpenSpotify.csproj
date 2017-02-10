@@ -134,13 +134,24 @@
     <Compile Include="Services\Util\Views.cs" />
     <Compile Include="ViewModels\DownloadsViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\MusicPlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\Custom\MusicPlayerView.xaml.cs">
+      <DependentUpon>MusicPlayerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MusicView.xaml.cs">
+      <DependentUpon>MusicView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Custom\MusicPlayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DownloadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +182,10 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MusicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,6 +250,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\RemoveSong.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\PlayerPause.png" />
+    <Resource Include="Assets\PlayerPlay.png" />
+    <Resource Include="Assets\PlayerSound10.png" />
+    <Resource Include="Assets\PlayerSound100.png" />
+    <Resource Include="Assets\PlayerSound50.png" />
+    <Resource Include="Assets\PlayerSoundOff.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

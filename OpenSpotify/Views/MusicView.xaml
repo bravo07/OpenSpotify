@@ -1,0 +1,13 @@
+﻿<Window x:Class="OpenSpotify.Views.MusicView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OpenSpotify.Views"
+        xmlns:custom="clr-namespace:OpenSpotify.Views.Custom"
+        mc:Ignorable="d" WindowStyle="None"
+        Title="MusicView" Height="170" Width="700" ResizeMode="NoResize" Background="{x:Null}">
+    <Grid ClipToBounds="True">
+        <custom:MusicPlayerView/>
+    </Grid>
+</Window>

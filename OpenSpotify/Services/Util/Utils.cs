@@ -2,10 +2,13 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
 
-namespace OpenSpotify.Services.Util {
+namespace OpenSpotify.Services.Util
+{
 
-    public class Utils {
+    public class Utils
+    {
 
         #region Properties
 
@@ -45,7 +48,14 @@ namespace OpenSpotify.Services.Util {
         public static string FailedYoutTubeUri => "Failed to load YouTube Uri.";
 
         public static string Converting => "Converting...";
-        #endregion 
+        #endregion
+
+        #region Images
+          
+        public static BitmapImage SoundImage100 => new BitmapImage(new Uri("Assets/PlayerSound100.png"));
+        public static BitmapImage SoundImage50 => new BitmapImage(new Uri("Assets/PlayerSound50.png"));
+        public static BitmapImage SoundImage10 => new BitmapImage(new Uri("Assets/PlayerSound10.png"));
+        #endregion
 
         #region Check Internet
 
@@ -58,7 +68,8 @@ namespace OpenSpotify.Services.Util {
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int reservedValue);
 
-        public static bool IsInternetAvailable() {
+        public static bool IsInternetAvailable()
+        {
             int description;
             return InternetGetConnectedState(out description, 0);
         }
@@ -71,18 +82,22 @@ namespace OpenSpotify.Services.Util {
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static string PrepareId(string id) {
+        public static string PrepareId(string id)
+        {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
         #endregion 
 
-        public static string RemoveSpecialCharacters(string source) {
+        public static string RemoveSpecialCharacters(string source)
+        {
             return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }
     }
 
-    public static class StringExtensions {
-        public static bool Contains(this string source, string toCheck, StringComparison comp) {
+    public static class StringExtensions
+    {
+        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        {
             return source.IndexOf(toCheck, comp) >= 0;
         }
     }

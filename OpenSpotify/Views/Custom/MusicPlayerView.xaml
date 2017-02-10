@@ -13,7 +13,7 @@
         <util:PlayPauseConverter x:Key="PlayPauseConverter"/>
     </UserControl.Resources>-->
 
-    <Border CornerRadius="50" Background="#FF1E1E1E" Opacity="0.8">
+    <Border CornerRadius="38" Background="#FF1E1E1E" Opacity="0.8">
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -73,8 +73,16 @@
             </Grid>
             
             <!--S O U N D  S L I D E R-->
-            <Border Grid.Column="2" CornerRadius="50" Width="30" Margin="0,-200,0,200">
-                <Slider Orientation="Vertical" HorizontalAlignment="Center" >
+            <Border Grid.Column="2" 
+                    CornerRadius="13" 
+                    Width="30" 
+                    Margin="0,-200,0,200" 
+                    Background="#FF1E1E1E" 
+                    Opacity="0.8">
+                <Slider Orientation="Vertical" 
+                        HorizontalAlignment="Center"
+                        Visibility="{Binding SoundSliderVisibility}" 
+                        Height="140">
                    
                 </Slider>
             </Border>

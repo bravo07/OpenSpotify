@@ -5,14 +5,17 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
+using static OpenSpotify.Services.Util.Utils;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.ViewModels
 {
-    public class MusicPlayerViewModel : BaseViewModel {
+    public class MusicPlayerViewModel : BaseViewModel
+    {
 
-        public MusicPlayerViewModel(ApplicationModel applicationModel) {
+        public MusicPlayerViewModel(ApplicationModel applicationModel)
+        {
             ApplicationModel = applicationModel;
             Initialize();
         }
@@ -25,6 +28,7 @@ namespace OpenSpotify.ViewModels
         private double _sliderTrackValue;
         private TimeSpan _totalTrackTime;
         private double _sliderTrackMaximum;
+        private Visibility _soundSliderVisibility;
 
         #endregion
 
@@ -70,6 +74,14 @@ namespace OpenSpotify.ViewModels
             }
         }
 
+        public Visibility SoundSliderVisibility {
+            get { return _soundSliderVisibility; }
+            set {
+                _soundSliderVisibility = value;
+                OnPropertyChanged(nameof(SoundSliderVisibility));
+            }
+        }
+
         public TimeSpan TotalTrackTime {
             get { return _totalTrackTime; }
             set {
@@ -86,29 +98,29 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<bool> PlayPauseCommand {
             get {
                 return new CommandHandler<bool>(state => {
-                    if (state)
-                    {
+                    if (state) {
                         SoundPlayerElement.Pause();
                     }
-                    else
-                    {
+                    else {
                         SoundPlayerElement.Play();
                     }
                 });
             }
         }
-        
-        public CommandHandler<bool> SoundCommand {
-            get {
-                return new CommandHandler<bool>(state => {
 
+        public CommandHandler<object> SoundCommand {
+            get {
+                return new CommandHandler<object>(state =>
+                {
+                    SoundImage = SliderTrackValue > 50 ? SoundImage100 : SoundImage50;
                 });
             }
         }
 
         public CommandHandler<object> ValueChangedCommand {
             get {
-                return new CommandHandler<object>(state => {
+                return new CommandHandler<object>(state =>
+                {
 
                 });
             }
@@ -118,26 +130,31 @@ namespace OpenSpotify.ViewModels
 
         #region Functions 
 
-        private void Initialize() {
+        private void Initialize()
+        {
             SoundPlayerElement = new MediaElement();
             SoundPlayerElement.MediaOpened += SoundPlayerElementOnMediaOpened;
         }
 
-        private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs) {
+        private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
+        {
             TotalTrackTime = SoundPlayerElement.NaturalDuration.TimeSpan;
 
-            SoundElementTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
+            SoundElementTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             SoundElementTimer.Tick += SoundElementTimerTick;
             SoundElementTimer.Start();
         }
 
-        private void SoundElementTimerTick(object sender, EventArgs e) {
+        private void SoundElementTimerTick(object sender, EventArgs e)
+        {
 
-            if (!(SoundPlayerElement.NaturalDuration.TimeSpan.TotalSeconds > 0)) {
+            if (!(SoundPlayerElement.NaturalDuration.TimeSpan.TotalSeconds > 0))
+            {
                 return;
             }
 
-            if (TotalTrackTime.TotalSeconds > 0) {
+            if (TotalTrackTime.TotalSeconds > 0)
+            {
                 SliderTrackValue = SoundPlayerElement.Position.TotalSeconds / TotalTrackTime.TotalSeconds;
             }
         }
