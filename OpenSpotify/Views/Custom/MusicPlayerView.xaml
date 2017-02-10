@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="OpenSpotify.Views.Custom.MusicPlayerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OpenSpotify.Views.Custom"
+             xmlns:util="clr-namespace:OpenSpotify.Services.Util"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="170" d:DesignWidth="700">
+
+    <!--<UserControl.Resources>
+        <util:PlayPauseConverter x:Key="PlayPauseConverter"/>
+    </UserControl.Resources>-->
+
+    <Border CornerRadius="50" Background="#FF1E1E1E" Opacity="0.8">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.35*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <!-- P L A Y  /  P A U S E-->
+            <ToggleButton x:Name="ToggleButtonPlayPause"
+                          Grid.Column="0"
+                          BorderThickness="0" 
+                          Background="Transparent"
+                          Command="{Binding PlayPauseCommand}"
+                          CommandParameter="{Binding ElementName=ToggleButtonPlayPause, Path=Is}"
+                          Style="{StaticResource {x:Type ToggleButton}}">
+                <ToggleButton.Content>
+                    <Image Source="{Binding ElementName=ToggleButtonPlayPause, 
+                                            Path=IsChecked, 
+                                            Converter={StaticResource PlayPauseConverter}}"/>
+                </ToggleButton.Content>
+            </ToggleButton>
+
+            <!-- S O U N D -->
+            <ToggleButton x:Name="ToggleButtonSound"
+                          Grid.Column="2"
+                          BorderThickness="0" 
+                          Command="{Binding SoundCommand}"
+                          Background="Transparent"
+                          Style="{StaticResource {x:Type ToggleButton}}">
+                <ToggleButton.Content>
+                    <Image Source="{Binding SoundImage}"/>
+                </ToggleButton.Content>
+            </ToggleButton>
+
+
+
+            <!-- V A L U E  /  S L I D E R -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Slider Grid.Row="1" 
+                        VerticalAlignment="Center" 
+                        Value="{Binding SliderTrackValue}"
+                        Maximum="{Binding SliderTrackMaximum}"
+                        IsMoveToPointEnabled="True">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding ValueChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
+            </Grid>
+            
+            <!--S O U N D  S L I D E R-->
+            <Border Grid.Column="2" CornerRadius="50" Width="30" Margin="0,-200,0,200">
+                <Slider Orientation="Vertical" HorizontalAlignment="Center" >
+                   
+                </Slider>
+            </Border>
+            
+
+        </Grid>
+    </Border>
+</UserControl>
