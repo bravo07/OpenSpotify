@@ -145,7 +145,7 @@ namespace OpenSpotify.ViewModels {
 
                 await Task.Run(() => {
                     var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
-                    ApplicationModel.DroppedSongs = ToCollection(filenames?.Split('\n'));
+                    ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
 
                     if (ApplicationModel.DroppedSongs == null) {
                         return;
@@ -158,12 +158,11 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        private static ObservableCollection<string> ToCollection(IEnumerable<string> split) {
-            var temp = new ObservableCollection<string>();
+        private void ToCollection(IEnumerable<string> split, ObservableCollection<string> applicationModelDroppedSongs) {          
             foreach (var songId in split) {
-                temp.Add(songId);
+                applicationModelDroppedSongs.Add(songId);
             }
-            return temp;
+            ApplicationModel.DroppedSongs = applicationModelDroppedSongs;
         }
 
         #endregion

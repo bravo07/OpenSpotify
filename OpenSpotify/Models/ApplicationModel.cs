@@ -78,12 +78,12 @@ namespace OpenSpotify.Models
             }
 
             DroppedSongs.CollectionChanged += (sender, args) => {
-                CheckList();
+                IsListEmpty = DroppedSongs.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             };
-        }
 
-        private void CheckList() {
-            IsListEmpty = DownloadCollection.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            DownloadCollection.CollectionChanged += (sender, args) => {
+                IsListEmpty = DownloadCollection.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            };
         }
         #endregion 
     }
