@@ -15,3 +15,5 @@
         </ResourceDictionary>
     </Application.Resources>
 </Application>
+
+<!--StartupUri="Views/MusicView.xaml"-->

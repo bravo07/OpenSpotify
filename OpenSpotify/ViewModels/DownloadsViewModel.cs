@@ -3,14 +3,18 @@ using System.IO;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
+using OpenSpotify.Views;
 
 namespace OpenSpotify.ViewModels {
 
     public class DownloadsViewModel : BaseViewModel {
 
         private ApplicationModel _applicationModel;
+        private MusicView _musicView;
+        private MusicPlayerViewModel _musicPlayerViewModel;
 
         public DownloadsViewModel(ApplicationModel applicationModel) {
+            Initialize();
             ApplicationModel = applicationModel;
         }
 
@@ -24,6 +28,21 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+        public MusicView MusicView {
+            get { return _musicView; }
+            set {
+                _musicView = value;
+                OnPropertyChanged(nameof(MusicView));
+            }
+        }
+
+        public MusicPlayerViewModel MusicPlayerViewModel {
+            get { return _musicPlayerViewModel; }
+            set {
+                _musicPlayerViewModel = value; 
+                OnPropertyChanged(nameof(MusicPlayerViewModel));
+            }
+        }
 
         #endregion
 
@@ -32,12 +51,14 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<SongModel> PlaySongCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
+
                     if (!File.Exists(selectedSong.FullPath)) {
-                        ApplicationModel.SongCollection.Remove(selectedSong);
-                        ApplicationService.SaveApplicationModel(ApplicationModel);
                         return;
                     }
-                    Process.Start(selectedSong.FullPath);
+
+                    MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel,selectedSong);
+                    MusicView.DataContext = MusicPlayerViewModel;
+                    MusicView.Show();
                 });
             }
         }
@@ -86,5 +107,15 @@ namespace OpenSpotify.ViewModels {
             }
         }
         #endregion
+
+        #region Functions
+
+        private void Initialize() {
+            if (MusicView == null) {
+                MusicView = new MusicView();
+            }
+        }
+
+        #endregion 
     }
 }

@@ -14,19 +14,23 @@
                                      TrueValue="/Assets/PlayerPause.png" 
                                      FalseValue="/Assets/PlayerPlay.png"/>
     </UserControl.Resources>
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
             <viewModels:MusicPlayerViewModel/>
-        </UserControl.DataContext>
+        </UserControl.DataContext>-->
 
     <Border CornerRadius="38" Background="#FF1E1E1E" Opacity="0.88">
-
         <Grid>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.35*"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0.35*"/>
             </Grid.ColumnDefinitions>
 
+            <ContentControl Content="{Binding SoundPlayerElement}"
+                            Background="Transparent" 
+                            Width="0" 
+                            Height="0"/>
 
             <!-- P L A Y  /  P A U S E-->
             <ToggleButton x:Name="ToggleButtonPlayPause"
@@ -74,14 +78,12 @@
                 </Grid.RowDefinitions>
                 <Slider Grid.Row="1" 
                         VerticalAlignment="Center" 
-                        Value="{Binding SliderTrackValue}"
-                        Maximum="{Binding SliderTrackMaximum}"
-                        IsMoveToPointEnabled="True">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction Command="{Binding ValueChanged}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                        SmallChange="{Binding SmallChange, Mode=TwoWay}" 
+                        Minimum="0"
+                        Maximum="{Binding SliderTrackMaximum, Mode=TwoWay}"
+                        LargeChange="{Binding LargeChange, Mode=TwoWay}"                        
+                        util:SliderDragBehaviors.DragCompletedCommand="{Binding DragCompletedCommand}"
+                        Value="{Binding SliderTrackValue, Mode=TwoWay}">
                 </Slider>
             </Grid>
 
@@ -98,8 +100,17 @@
                 <Slider Orientation="Vertical" 
                         HorizontalAlignment="Center"
                         IsMoveToPointEnabled="True"
-                        IsSnapToTickEnabled="True" 
-                        Value="{Binding SoundSliderValue}" Margin="7,10"/>
+                        Minimum="0" 
+                        SmallChange="0.01" 
+                        LargeChange="0.1"
+                        Maximum="1"
+                        Value="{Binding SoundSliderValue}" Margin="7,10">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding SoundValueChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
             </Border>
         </Grid>
     </Border>

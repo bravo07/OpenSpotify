@@ -130,6 +130,7 @@
     <Compile Include="Services\Util\BindingProxy .cs" />
     <Compile Include="Services\Util\BooleanConverter.cs" />
     <Compile Include="Services\Util\ImageCoverter.cs" />
+    <Compile Include="Services\Util\SliderDragBehaviors.cs" />
     <Compile Include="Services\Util\Utils.cs" />
     <Compile Include="Services\Util\Views.cs" />
     <Compile Include="ViewModels\DownloadsViewModel.cs" />
@@ -148,6 +149,10 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="ResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Custom\MusicPlayerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

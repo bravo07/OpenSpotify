@@ -12,7 +12,5 @@ namespace OpenSpotify.Views.Custom
         {
             InitializeComponent();
         }
-
-
     }
 }

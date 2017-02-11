@@ -14,16 +14,16 @@ namespace OpenSpotify.ViewModels
     public class MusicPlayerViewModel : BaseViewModel
     {
 
-        public MusicPlayerViewModel(ApplicationModel applicationModel)
+        public MusicPlayerViewModel(ApplicationModel applicationModel, SongModel currentSong)
         {
             ApplicationModel = applicationModel;
+            CurrentSong = currentSong;
             Initialize();
         }
-
-
+        
         public MusicPlayerViewModel()
         {
-            Initialize();
+         
         }
 
         #region Fields
@@ -35,7 +35,11 @@ namespace OpenSpotify.ViewModels
         private TimeSpan _totalTrackTime;
         private double _sliderTrackMaximum;
         private Visibility _soundSliderVisibility;
-        private bool _soundSliderValue;
+        private double _soundSliderValue;
+        private SongModel _currentSong;
+        private double _largeChange;
+        private bool _isDragging;
+        private double _smallChange;
 
         #endregion
 
@@ -46,6 +50,14 @@ namespace OpenSpotify.ViewModels
             set {
                 _applicationModel = value;
                 OnPropertyChanged(nameof(ApplicationModel));
+            }
+        }
+
+        public SongModel CurrentSong {
+            get { return _currentSong; }
+            set {
+                _currentSong = value;
+                OnPropertyChanged(nameof(CurrentSong));
             }
         }
 
@@ -89,6 +101,14 @@ namespace OpenSpotify.ViewModels
             }
         }
 
+        public double SoundSliderValue {
+            get { return _soundSliderValue; }
+            set {
+                _soundSliderValue = value;
+                OnPropertyChanged(nameof(SoundSliderValue));
+            }
+        }
+
         public TimeSpan TotalTrackTime {
             get { return _totalTrackTime; }
             set {
@@ -98,6 +118,31 @@ namespace OpenSpotify.ViewModels
         }
 
         public DispatcherTimer SoundElementTimer { get; set; }
+
+        public double SmallChange {
+            get { return _smallChange; }
+            set {
+                _smallChange = value; 
+                OnPropertyChanged(nameof(SmallChange));
+            }
+        }
+
+        public double LargeChange {
+            get { return _largeChange; }
+            set {
+                _largeChange = value; 
+                OnPropertyChanged(nameof(LargeChange));
+            }
+        }
+
+        public bool IsDragging {
+            get { return _isDragging; }
+            set {
+                _isDragging = value;
+                OnPropertyChanged(nameof(IsDragging));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -122,8 +167,15 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<bool> SoundCommand {
             get {
                 return new CommandHandler<bool>(state => {
+
+                    if (!state && SoundSliderValue == 0) {
+                        SoundImage = SoundImageOff;
+                    }
+                    else {
+                        SoundImage = SoundImage100;
+                    }
+
                     SoundSliderVisibility = state ? Visibility.Visible : Visibility.Collapsed;
-                    SoundImage = SliderTrackValue > 50 ? SoundImage100 : SoundImage50;
                 });
             }
         }
@@ -137,11 +189,45 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-        public bool SoundSliderValue {
-            get { return _soundSliderValue; }
-            set {
-                _soundSliderValue = value;
-                OnPropertyChanged(nameof(SoundSliderValue));
+        public CommandHandler<object> DragCompletedCommand { 
+    
+            get {
+                return new CommandHandler<object>(state => {
+                    IsDragging = false;
+                    SoundPlayerElement.Position = TimeSpan.FromSeconds(SliderTrackValue);
+                });
+            }
+        }
+
+        public CommandHandler<object> SoundValueChangedCommand {
+            get {
+                return new CommandHandler<object>(state => {
+
+                    SoundPlayerElement.Volume = SoundSliderValue;
+
+                    if (SoundSliderValue == 0) {
+                        SoundPlayerElement.Volume = 0;
+                        SoundImage = SoundImageOff;
+                        return;
+                    }
+
+                    if (SoundSliderValue <= 0.1) {
+                        SoundPlayerElement.Volume = 0.1;
+                        SoundImage = SoundImage10;
+                        return;
+                    }
+
+                    if (SoundSliderValue <= 0.5) {
+                        SoundPlayerElement.Volume = 0.5;
+                        SoundImage = SoundImage50;
+                        return;
+                    }
+
+                    if (SoundSliderValue > 0.5) {
+                        SoundPlayerElement.Volume = 0.8;
+                        SoundImage = SoundImage100;
+                    }
+                });
             }
         }
 
@@ -149,39 +235,43 @@ namespace OpenSpotify.ViewModels
 
         #region Functions 
 
-        private void Initialize()
-        {
-
+        private void Initialize() {
             SoundSliderVisibility = Visibility.Collapsed;
             SoundImage = SoundImage100;
-            SoundPlayerElement = new MediaElement();
+            SoundSliderValue = 0.2;
+            SoundPlayerElement = new MediaElement {
+                LoadedBehavior = MediaState.Manual,
+                Source = new Uri(CurrentSong.FullPath, UriKind.RelativeOrAbsolute)
+            };
+            SoundPlayerElement.Play();
             SoundPlayerElement.MediaOpened += SoundPlayerElementOnMediaOpened;
-            SoundPlayerElement.LoadedBehavior = MediaState.Manual;
         }
 
         private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)
         {
             TotalTrackTime = SoundPlayerElement.NaturalDuration.TimeSpan;
+            SliderTrackMaximum = TotalTrackTime.Seconds;
+            SmallChange = 1;
+            LargeChange = Math.Min(10, TotalTrackTime.Seconds / 10);
 
-            SoundElementTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            SoundElementTimer = new DispatcherTimer {
+                Interval = TimeSpan.FromMilliseconds(200)
+            };
             SoundElementTimer.Tick += SoundElementTimerTick;
             SoundElementTimer.Start();
+
+            SoundPlayerElement.Play();
         }
+        private void SoundElementTimerTick(object sender, EventArgs e) {
 
-        private void SoundElementTimerTick(object sender, EventArgs e)
-        {
-
-            if (!(SoundPlayerElement.NaturalDuration.TimeSpan.TotalSeconds > 0))
-            {
+            if (!(SoundPlayerElement.NaturalDuration.TimeSpan.TotalSeconds > 0)) {
                 return;
             }
 
-            if (TotalTrackTime.TotalSeconds > 0)
-            {
-                SliderTrackValue = SoundPlayerElement.Position.TotalSeconds / TotalTrackTime.TotalSeconds;
+            if (TotalTrackTime.TotalSeconds > 0) {
+                SliderTrackValue = SoundPlayerElement.Position.TotalSeconds;
             }
         }
-
         #endregion 
     }
 }

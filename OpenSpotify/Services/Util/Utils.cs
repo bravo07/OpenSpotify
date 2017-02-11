@@ -55,6 +55,7 @@ namespace OpenSpotify.Services.Util
         public static BitmapImage SoundImage100 => new BitmapImage(new Uri("/Assets/PlayerSound100.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage SoundImage50 => new BitmapImage(new Uri("/Assets/PlayerSound50.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage SoundImage10 => new BitmapImage(new Uri("/Assets/PlayerSound10.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage SoundImageOff => new BitmapImage(new Uri("/Assets/PlayerSoundOff.png", UriKind.RelativeOrAbsolute));
         #endregion
 
         #region Check Internet
