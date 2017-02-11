@@ -1,19 +1,24 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Windows;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
 using OpenSpotify.Views;
 
-namespace OpenSpotify.ViewModels {
+namespace OpenSpotify.ViewModels
+{
 
-    public class DownloadsViewModel : BaseViewModel {
+    public class DownloadsViewModel : BaseViewModel
+    {
 
         private ApplicationModel _applicationModel;
         private MusicView _musicView;
         private MusicPlayerViewModel _musicPlayerViewModel;
 
-        public DownloadsViewModel(ApplicationModel applicationModel) {
+        public DownloadsViewModel(ApplicationModel applicationModel)
+        {
             Initialize();
             ApplicationModel = applicationModel;
         }
@@ -39,7 +44,7 @@ namespace OpenSpotify.ViewModels {
         public MusicPlayerViewModel MusicPlayerViewModel {
             get { return _musicPlayerViewModel; }
             set {
-                _musicPlayerViewModel = value; 
+                _musicPlayerViewModel = value;
                 OnPropertyChanged(nameof(MusicPlayerViewModel));
             }
         }
@@ -62,10 +67,18 @@ namespace OpenSpotify.ViewModels {
                         MusicView.Show();
                         return;
                     }
-                    else {
+
+
+
+                    if (Application.Current.Windows.Cast<Window>().All(w => w.GetType() != typeof(MusicView))) {
                         MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
-                        MusicView.DataContext = MusicPlayerViewModel;
+                        MusicView = new MusicView {DataContext = MusicPlayerViewModel};
+                        MusicView.Show();
+                        return;
                     }
+
+                    MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+                    MusicView.DataContext = MusicPlayerViewModel;
                 });
             }
         }
@@ -91,7 +104,7 @@ namespace OpenSpotify.ViewModels {
                         ApplicationService.SaveApplicationModel(ApplicationModel);
                         return;
                     }
-                    Process.Start("explorer.exe","/select, \"" + selectedSong.FullPath + "\"");
+                    Process.Start("explorer.exe", "/select, \"" + selectedSong.FullPath + "\"");
                 });
             }
         }
@@ -117,7 +130,8 @@ namespace OpenSpotify.ViewModels {
 
         #region Functions
 
-        private void Initialize() {
+        private void Initialize()
+        {
             if (MusicView == null) {
                 MusicView = new MusicView();
             }

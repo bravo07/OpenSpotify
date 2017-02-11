@@ -273,6 +273,17 @@ namespace OpenSpotify.ViewModels {
                 });
             }
         }
+
+        public CommandHandler<UserControl> ClosePlayerCommand {
+
+            get {
+                return new CommandHandler<UserControl>(userControl => {
+                    var parentWin = Window.GetWindow(userControl);
+                    parentWin?.Close();
+                });
+            }
+        }
+
         #endregion
 
         #region Functions 
@@ -346,7 +357,7 @@ namespace OpenSpotify.ViewModels {
                 return;
             }
 
-            if (IndexOfLastSong + 1 > ApplicationModel.SongCollection.Count) {
+            if (IndexOfLastSong + 1 >= ApplicationModel.SongCollection.Count) {
                 IndexOfLastSong = 0;
             }
 

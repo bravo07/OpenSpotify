@@ -9,6 +9,7 @@
              xmlns:viewModels="clr-namespace:OpenSpotify.ViewModels"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"            
              mc:Ignorable="d" 
+             x:Name="UserControl"
              d:DesignHeight="100" 
              d:DesignWidth="550"
              Foreground="{x:Null}"
@@ -135,18 +136,29 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                
-                
-                
+
+
+
                 <!--S O N G   T I T E L-->
                 <Label Grid.Row="0" FontFamily="Calibri Light" 
                        Content="{Binding CurrentSongName}" 
                        FontSize="12" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center"/>
-                
-                
-                
+
+
+
+                <!--C L O S E-->
+                <Image Grid.Row="0" HorizontalAlignment="Right" Source="../../Assets/Delete.png" Margin="0,0,0,20" Width="10">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding ClosePlayerCommand}"
+                                                   CommandParameter="{Binding ElementName=UserControl}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
+
+
                 <!--S O N G   T I M E R-->
                 <Label Grid.Row="2" 
                        FontFamily="Calibri Light" 

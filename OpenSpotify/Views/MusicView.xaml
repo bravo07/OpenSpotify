@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OpenSpotify.Views"
         xmlns:custom="clr-namespace:OpenSpotify.Views.Custom"
+        x:Name="MusicPlayerView"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" ShowInTaskbar="False"
         mc:Ignorable="d" WindowStyle="None"  MouseDown="MusicPlayerView_OnMouseDown" AllowsTransparency="True"
-        Title="MusicView" Height="300" Width="550" x:Name="Window" ResizeMode="NoResize" Background="Transparent" Foreground="{x:Null}">
+        Title="MusicView" Height="300" Width="550" ResizeMode="NoResize" Background="Transparent" Foreground="{x:Null}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
