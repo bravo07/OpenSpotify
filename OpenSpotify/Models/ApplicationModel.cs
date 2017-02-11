@@ -65,10 +65,10 @@ namespace OpenSpotify.Models
             if (SongCollection == null)
             {
                 SongCollection = new ObservableCollection<SongModel> {
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
+                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
                 };
             }
 

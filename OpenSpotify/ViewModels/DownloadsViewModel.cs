@@ -56,9 +56,16 @@ namespace OpenSpotify.ViewModels {
                         return;
                     }
 
-                    MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel,selectedSong);
-                    MusicView.DataContext = MusicPlayerViewModel;
-                    MusicView.Show();
+                    if (MusicPlayerViewModel == null) {
+                        MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+                        MusicView.DataContext = MusicPlayerViewModel;
+                        MusicView.Show();
+                        return;
+                    }
+                    else {
+                        MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+                        MusicView.DataContext = MusicPlayerViewModel;
+                    }
                 });
             }
         }

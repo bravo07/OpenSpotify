@@ -7,20 +7,30 @@
              xmlns:util="clr-namespace:OpenSpotify.Services.Util"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:viewModels="clr-namespace:OpenSpotify.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"            
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="550" Foreground="{x:Null}" Background="Transparent" >
+             d:DesignHeight="100" 
+             d:DesignWidth="550"
+             Foreground="{x:Null}"
+             Background="Transparent" >
+
+    <!--R E S O U R C E S-->
     <UserControl.Resources>
         <util:PlayPauseConverter x:Key="PlayPauseConverter" 
-                                     TrueValue="/Assets/PlayerPause.png" 
-                                     FalseValue="/Assets/PlayerPlay.png"/>
+                                 FalseValue="/Assets/PlayerPause.png" 
+                                 TrueValue="/Assets/PlayerPlay.png"/>
     </UserControl.Resources>
-    <!--<UserControl.DataContext>
-            <viewModels:MusicPlayerViewModel/>
-        </UserControl.DataContext>-->
 
-    <Border CornerRadius="38" Background="#FF1E1E1E" Opacity="0.88">
+
+    <!--M A I N   B O R D E R-->
+    <Border x:Name="MainBorder" 
+            CornerRadius="38" 
+            BorderBrush="Red" 
+            BorderThickness="1"
+            Background="#FF1E1E1E" 
+            Opacity="0.88">
+
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.35*"/>
                 <ColumnDefinition/>
@@ -46,7 +56,13 @@
                                             Path=IsChecked, 
                                             Converter={StaticResource PlayPauseConverter}}"
                            Width="80"
-                           Height="80"/>
+                           Height="80">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="GotFocus">
+                                <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
                 </ToggleButton.Content>
             </ToggleButton>
 
@@ -57,13 +73,19 @@
                           Grid.Column="2" BorderBrush="Transparent"
                           BorderThickness="0" 
                           Command="{Binding SoundCommand}"
-                           CommandParameter="{Binding ElementName=ToggleButtonSound, Path=IsChecked}"
+                          CommandParameter="{Binding ElementName=ToggleButtonSound, Path=IsChecked}"
                           Background="Transparent"
                           Style="{StaticResource {x:Type ToggleButton}}">
                 <ToggleButton.Content>
                     <Image Source="{Binding SoundImage}"
                            Width="80"
-                           Height="80"/>
+                           Height="80">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="GotFocus">
+                                <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
                 </ToggleButton.Content>
             </ToggleButton>
 
@@ -72,21 +94,69 @@
             <!-- V A L U E  /  S L I D E R -->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
+
                 <Slider Grid.Row="1" 
                         VerticalAlignment="Center" 
+                        IsMoveToPointEnabled="True"
                         SmallChange="{Binding SmallChange, Mode=TwoWay}" 
                         Minimum="0"
+                        Style="{DynamicResource FlatSlider}"
                         Maximum="{Binding SliderTrackMaximum, Mode=TwoWay}"
                         LargeChange="{Binding LargeChange, Mode=TwoWay}"                        
-                        util:SliderDragBehaviors.DragCompletedCommand="{Binding DragCompletedCommand}"
                         Value="{Binding SliderTrackValue, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding ValueChangedCommand}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="GotFocus">
+                            <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Slider>
+
+
+
+                <!--F O R W A R D    B A C K W A R D-->
+                <Image Grid.Row="2" HorizontalAlignment="Left" Source="../../Assets/PlayerBack.png" Margin="4,10,0,5" Width="31">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding PlayerBackCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
+                <Image Grid.Row="2" HorizontalAlignment="Right" Source="../../Assets/PlayerNext.png" Margin="0,10,253,5"  Width="31">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding PlayerNextCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
+                
+                
+                
+                <!--S O N G   T I T E L-->
+                <Label Grid.Row="0" FontFamily="Calibri Light" 
+                       Content="{Binding CurrentSongName}" 
+                       FontSize="12" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
+                
+                
+                
+                <!--S O N G   T I M E R-->
+                <Label Grid.Row="2" 
+                       FontFamily="Calibri Light" 
+                       Content="{Binding CurrentSongTime}"
+                       FontSize="10" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
             </Grid>
 
+            <!--util:SliderDragBehaviors.DragCompletedCommand="{Binding DragCompletedCommand}"-->
 
 
             <!--S O U N D  S L I D E R-->
@@ -104,6 +174,7 @@
                         SmallChange="0.01" 
                         LargeChange="0.1"
                         Maximum="1"
+                        Style="{StaticResource FlatSlider}"
                         Value="{Binding SoundSliderValue}" Margin="7,10">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
@@ -112,6 +183,9 @@
                     </i:Interaction.Triggers>
                 </Slider>
             </Border>
+
+
+
         </Grid>
     </Border>
 </UserControl>
