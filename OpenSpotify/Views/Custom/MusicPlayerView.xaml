@@ -6,14 +6,19 @@
              xmlns:local="clr-namespace:OpenSpotify.Views.Custom"
              xmlns:util="clr-namespace:OpenSpotify.Services.Util"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:viewModels="clr-namespace:OpenSpotify.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="170" d:DesignWidth="700">
+             d:DesignHeight="100" d:DesignWidth="550" Foreground="{x:Null}" Background="Transparent" >
+    <UserControl.Resources>
+        <util:PlayPauseConverter x:Key="PlayPauseConverter" 
+                                     TrueValue="/Assets/PlayerPause.png" 
+                                     FalseValue="/Assets/PlayerPlay.png"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+            <viewModels:MusicPlayerViewModel/>
+        </UserControl.DataContext>
 
-    <!--<UserControl.Resources>
-        <util:PlayPauseConverter x:Key="PlayPauseConverter"/>
-    </UserControl.Resources>-->
-
-    <Border CornerRadius="38" Background="#FF1E1E1E" Opacity="0.8">
+    <Border CornerRadius="38" Background="#FF1E1E1E" Opacity="0.88">
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -28,25 +33,33 @@
                           Grid.Column="0"
                           BorderThickness="0" 
                           Background="Transparent"
+                          BorderBrush="Transparent"
                           Command="{Binding PlayPauseCommand}"
-                          CommandParameter="{Binding ElementName=ToggleButtonPlayPause, Path=Is}"
+                          CommandParameter="{Binding ElementName=ToggleButtonPlayPause, Path=IsChecked}"
                           Style="{StaticResource {x:Type ToggleButton}}">
                 <ToggleButton.Content>
                     <Image Source="{Binding ElementName=ToggleButtonPlayPause, 
                                             Path=IsChecked, 
-                                            Converter={StaticResource PlayPauseConverter}}"/>
+                                            Converter={StaticResource PlayPauseConverter}}"
+                           Width="80"
+                           Height="80"/>
                 </ToggleButton.Content>
             </ToggleButton>
 
+
+
             <!-- S O U N D -->
             <ToggleButton x:Name="ToggleButtonSound"
-                          Grid.Column="2"
+                          Grid.Column="2" BorderBrush="Transparent"
                           BorderThickness="0" 
                           Command="{Binding SoundCommand}"
+                           CommandParameter="{Binding ElementName=ToggleButtonSound, Path=IsChecked}"
                           Background="Transparent"
                           Style="{StaticResource {x:Type ToggleButton}}">
                 <ToggleButton.Content>
-                    <Image Source="{Binding SoundImage}"/>
+                    <Image Source="{Binding SoundImage}"
+                           Width="80"
+                           Height="80"/>
                 </ToggleButton.Content>
             </ToggleButton>
 
@@ -71,23 +84,23 @@
                     </i:Interaction.Triggers>
                 </Slider>
             </Grid>
-            
+
+
+
             <!--S O U N D  S L I D E R-->
             <Border Grid.Column="2" 
                     CornerRadius="13" 
                     Width="30" 
-                    Margin="0,-200,0,200" 
+                    Margin="41,-158,42,133" 
+                    Visibility="{Binding SoundSliderVisibility}" 
                     Background="#FF1E1E1E" 
                     Opacity="0.8">
                 <Slider Orientation="Vertical" 
                         HorizontalAlignment="Center"
-                        Visibility="{Binding SoundSliderVisibility}" 
-                        Height="140">
-                   
-                </Slider>
+                        IsMoveToPointEnabled="True"
+                        IsSnapToTickEnabled="True" 
+                        Value="{Binding SoundSliderValue}" Margin="7,10"/>
             </Border>
-            
-
         </Grid>
     </Border>
 </UserControl>

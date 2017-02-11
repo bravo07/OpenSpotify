@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OpenSpotify.Views"
         xmlns:custom="clr-namespace:OpenSpotify.Views.Custom"
-        mc:Ignorable="d" WindowStyle="None"
-        Title="MusicView" Height="170" Width="700" ResizeMode="NoResize" Background="{x:Null}">
-    <Grid ClipToBounds="True">
-        <custom:MusicPlayerView/>
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d" WindowStyle="None"  MouseDown="MusicPlayerView_OnMouseDown" AllowsTransparency="True"
+        Title="MusicView" Height="300" Width="550" x:Name="Window" ResizeMode="NoResize" Background="Transparent" Foreground="{x:Null}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <custom:MusicPlayerView Grid.Row="1"/>
     </Grid>
 </Window>

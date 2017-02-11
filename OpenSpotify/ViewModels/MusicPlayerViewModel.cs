@@ -20,6 +20,12 @@ namespace OpenSpotify.ViewModels
             Initialize();
         }
 
+
+        public MusicPlayerViewModel()
+        {
+            Initialize();
+        }
+
         #region Fields
 
         private ApplicationModel _applicationModel;
@@ -29,6 +35,7 @@ namespace OpenSpotify.ViewModels
         private TimeSpan _totalTrackTime;
         private double _sliderTrackMaximum;
         private Visibility _soundSliderVisibility;
+        private bool _soundSliderValue;
 
         #endregion
 
@@ -95,23 +102,27 @@ namespace OpenSpotify.ViewModels
 
         #region Commands
 
+
         public CommandHandler<bool> PlayPauseCommand {
             get {
-                return new CommandHandler<bool>(state => {
-                    if (state) {
+                return new CommandHandler<bool>(state =>
+                {
+                    if (state)
+                    {
                         SoundPlayerElement.Pause();
                     }
-                    else {
+                    else
+                    {
                         SoundPlayerElement.Play();
                     }
                 });
             }
         }
 
-        public CommandHandler<object> SoundCommand {
+        public CommandHandler<bool> SoundCommand {
             get {
-                return new CommandHandler<object>(state =>
-                {
+                return new CommandHandler<bool>(state => {
+                    SoundSliderVisibility = state ? Visibility.Visible : Visibility.Collapsed;
                     SoundImage = SliderTrackValue > 50 ? SoundImage100 : SoundImage50;
                 });
             }
@@ -126,14 +137,26 @@ namespace OpenSpotify.ViewModels
             }
         }
 
+        public bool SoundSliderValue {
+            get { return _soundSliderValue; }
+            set {
+                _soundSliderValue = value;
+                OnPropertyChanged(nameof(SoundSliderValue));
+            }
+        }
+
         #endregion
 
         #region Functions 
 
         private void Initialize()
         {
+
+            SoundSliderVisibility = Visibility.Collapsed;
+            SoundImage = SoundImage100;
             SoundPlayerElement = new MediaElement();
             SoundPlayerElement.MediaOpened += SoundPlayerElementOnMediaOpened;
+            SoundPlayerElement.LoadedBehavior = MediaState.Manual;
         }
 
         private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs)

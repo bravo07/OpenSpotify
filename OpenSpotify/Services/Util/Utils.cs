@@ -52,9 +52,9 @@ namespace OpenSpotify.Services.Util
 
         #region Images
           
-        public static BitmapImage SoundImage100 => new BitmapImage(new Uri("Assets/PlayerSound100.png"));
-        public static BitmapImage SoundImage50 => new BitmapImage(new Uri("Assets/PlayerSound50.png"));
-        public static BitmapImage SoundImage10 => new BitmapImage(new Uri("Assets/PlayerSound10.png"));
+        public static BitmapImage SoundImage100 => new BitmapImage(new Uri("/Assets/PlayerSound100.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage SoundImage50 => new BitmapImage(new Uri("/Assets/PlayerSound50.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage SoundImage10 => new BitmapImage(new Uri("/Assets/PlayerSound10.png", UriKind.RelativeOrAbsolute));
         #endregion
 
         #region Check Internet
