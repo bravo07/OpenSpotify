@@ -19,6 +19,7 @@ namespace OpenSpotify.Models
         private SettingsModel _settings;
         private bool _isDownloadView;
         private Visibility _isListEmpty;
+        private string _statusText;
 
         #endregion 
 
@@ -57,19 +58,22 @@ namespace OpenSpotify.Models
             }
         }
 
+        public string StatusText {
+            get { return _statusText; }
+            set {
+                _statusText = value; 
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
+
         #endregion
 
         #region Functions
 
         private void Initialize() {
-            if (SongCollection == null)
-            {
-                SongCollection = new ObservableCollection<SongModel> {
-                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                    //new SongModel {SongName = "Test Song Name", ArtistName = "Test Artist Name"},
-                };
+
+            if (SongCollection == null) {
+                SongCollection = new ObservableCollection<SongModel>();
             }
 
             if (Settings == null)

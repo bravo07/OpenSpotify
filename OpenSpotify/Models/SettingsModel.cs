@@ -14,6 +14,8 @@ namespace OpenSpotify.Models {
         private BitrateModel _selectedBitrate;
         private FormatModel _selectedFormat;
         private string _musicPath;
+        private double _windowWidth;
+        private double _windowHeight;
 
         #endregion
 
@@ -50,6 +52,23 @@ namespace OpenSpotify.Models {
                 OnPropertyChanged(nameof(WindowLeft));
             }
         }
+
+        public double WindowHeight {
+            get { return _windowHeight; }
+            set {
+                _windowHeight = value; 
+                OnPropertyChanged(nameof(WindowHeight));
+            }
+        }
+
+        public double WindowWidth {
+            get { return _windowWidth; }
+            set {
+                _windowWidth = value;
+                OnPropertyChanged(nameof(WindowWidth));
+            }
+        }
+
 
         public BitrateModel SelectedBitrate {
             get { return _selectedBitrate; }

@@ -17,6 +17,7 @@
 
     <!--R E S O U R C E S-->
     <UserControl.Resources>
+        <SolidColorBrush x:Key="DarkRed" Color="#FFA71F12" />
         <util:PlayPauseConverter x:Key="PlayPauseConverter" 
                                  FalseValue="/Assets/PlayerPause.png" 
                                  TrueValue="/Assets/PlayerPlay.png"/>
@@ -26,7 +27,7 @@
     <!--M A I N   B O R D E R-->
     <Border x:Name="MainBorder" 
             CornerRadius="38" 
-            BorderBrush="Red" 
+            BorderBrush="{StaticResource DarkRed}" 
             BorderThickness="1"
             Background="#FF1E1E1E" 
             Opacity="0.88">

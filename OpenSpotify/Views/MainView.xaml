@@ -12,9 +12,12 @@
         Title="Open Spotify (BETA)"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
-        MinHeight="350" MinWidth="550" Height="400" Width="600"
+        MinHeight="350" 
+        MinWidth="560" 
+        Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
+        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}"
         AllowDrop="True" dd:DragDrop.IsDragSource="False"
-        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanMinimize"
+        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanResize"
         Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
@@ -25,6 +28,9 @@
     
     <!-- R E S O U R C E S --> 
     <Window.Resources>
+
+        <SolidColorBrush x:Key="DarkRed" Color="#FFA71F12" />
+
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
@@ -81,7 +87,7 @@
                                 DisplayMode="Overlay"
                                 OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
+                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}" Margin="0,0,0,20">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ItemClick">
                     <i:InvokeCommandAction Command="{Binding NavigationService.ItemClickCommand}" 
@@ -112,6 +118,7 @@
         </controls:HamburgerMenu>
 
 
+        <!--D R O P  L A B E L-->
         <Label HorizontalAlignment="Center" 
                Content="Drag Drop Songs here..." 
                FontSize="19" 
@@ -121,7 +128,27 @@
                FontFamily="Calibri Light" 
                VerticalAlignment="Center" 
                Visibility="{Binding ApplicationModel.IsListEmpty}"
-               Foreground="Red"/>
+               Foreground="{StaticResource DarkRed}"/>
+        
+        
+        <!--S T A T U S B A R -->
+        <Grid Background="{StaticResource DarkRed}" 
+              Height="20" 
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="1"
+                   Content="{Binding ApplicationModel.StatusText}"
+                   Foreground="White"
+                   FontSize="11"
+                   HorizontalContentAlignment="Right"
+                   FontFamily="CalibriLight"/>
+        </Grid>
     </Grid>
 </controls:MetroWindow>
+
+
 
