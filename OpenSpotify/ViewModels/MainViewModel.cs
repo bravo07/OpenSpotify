@@ -91,6 +91,7 @@ namespace OpenSpotify.ViewModels {
             get {
                 return new CommandHandler<object>(o => {
                     ApplicationService.SaveApplicationModel(ApplicationModel);
+                    Application.Current.Shutdown();
                 });
             }
         }
@@ -114,6 +115,7 @@ namespace OpenSpotify.ViewModels {
             DownloadService = new DownloadService(ApplicationModel);
             CollectionView = (CollectionView) CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
             CollectionView.Filter = SearchFilter;
+            ApplicationModel.StatusText = "Ready...";
         }
 
         private bool SearchFilter(object item) {
@@ -145,14 +147,16 @@ namespace OpenSpotify.ViewModels {
                 await Task.Run(() => {
                     var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
                     ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
-
+                    ApplicationModel.StatusText = $"{ApplicationModel.DroppedSongs.Count} Dropped...";
                     if (ApplicationModel.DroppedSongs == null) {
                         return;
                     }
-                    
-                    foreach (var droppedSong in ApplicationModel.DroppedSongs) {              
-                        DownloadService.Start(droppedSong);
+
+                    for(var i = 0; i < ApplicationModel.DroppedSongs.Count; i++) {
+                        DownloadService.Start(ApplicationModel.DroppedSongs[i]);
+                        ApplicationModel.StatusText = $"{i}/{ApplicationModel.DroppedSongs.Count} Done.";
                     }
+                    ApplicationModel.StatusText = "Ready...";
                 });
             }
         }

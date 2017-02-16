@@ -140,11 +140,11 @@
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Column="1"
+            <Label Grid.Column="0"
                    Content="{Binding ApplicationModel.StatusText}"
                    Foreground="White"
                    FontSize="11"
-                   HorizontalContentAlignment="Right"
+                   HorizontalContentAlignment="Left"
                    FontFamily="CalibriLight"/>
         </Grid>
     </Grid>
