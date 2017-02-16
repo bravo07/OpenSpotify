@@ -16,6 +16,7 @@ namespace OpenSpotify.Models {
         private string _musicPath;
         private double _windowWidth;
         private double _windowHeight;
+        private bool _deleteVideos;
 
         #endregion
 
@@ -93,6 +94,15 @@ namespace OpenSpotify.Models {
                 OnPropertyChanged(nameof(MusicPath));
             }
         }
+
+        public bool DeleteVideos {
+            get { return _deleteVideos; }
+            set {
+                _deleteVideos = value; 
+                OnPropertyChanged(nameof(DeleteVideos));
+            }
+        }
+
 
         [JsonIgnore]
         public bool IsReady => !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey);

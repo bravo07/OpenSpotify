@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -20,6 +21,9 @@ namespace OpenSpotify.Services.Util
 
         public static string TempPath { get; set; } =
             Path.Combine(ApplicationPath, "Temp");
+
+        public static string LogPath { get; set; } =
+            Path.Combine(ApplicationPath, "Logs");
 
         public static string ApplicationDataPath = Path.Combine(ApplicationPath, "ApplicationModel.json");
 
@@ -51,7 +55,7 @@ namespace OpenSpotify.Services.Util
         #endregion
 
         #region Images
-          
+
         public static BitmapImage SoundImage100 => new BitmapImage(new Uri("/Assets/PlayerSound100.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage SoundImage50 => new BitmapImage(new Uri("/Assets/PlayerSound50.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage SoundImage10 => new BitmapImage(new Uri("/Assets/PlayerSound10.png", UriKind.RelativeOrAbsolute));
@@ -87,7 +91,27 @@ namespace OpenSpotify.Services.Util
         {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
-        #endregion 
+        #endregion
+
+        #region Clear Temp
+
+        public static void ClearTemp()
+        {
+            try {
+
+                foreach (var file in Directory.GetFiles(TempPath)) {
+                    if (File.Exists(file)) {
+                        File.Delete(file);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        #endregion
 
         public static string RemoveSpecialCharacters(string source)
         {

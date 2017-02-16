@@ -23,7 +23,6 @@ namespace OpenSpotify.Services {
 
         public DownloadService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
-            InitalizeYouTubeService();
             InitializeFileWatcher();
         }
 
@@ -67,11 +66,13 @@ namespace OpenSpotify.Services {
         #region Initialization 
 
         private void InitalizeYouTubeService() {
-            YouTubeService = new YouTubeService(new BaseClientService.Initializer {
-                ApiKey = ApplicationModel.Settings.YoutubeApiKey,
-                ApplicationName = AppDomain.CurrentDomain.FriendlyName
-            });
-            YouTube = YouTube.Default;
+            if (YouTubeService == null) {
+                YouTubeService = new YouTubeService(new BaseClientService.Initializer {
+                    ApiKey = ApplicationModel.Settings.YoutubeApiKey,
+                    ApplicationName = AppDomain.CurrentDomain.FriendlyName
+                });
+                YouTube = YouTube.Default;
+            }
         }
 
         private void InitializeFileWatcher() {
@@ -91,6 +92,8 @@ namespace OpenSpotify.Services {
         }
 
         public async void Start(string songId) {
+
+            InitalizeYouTubeService();
             if (!IsInternetAvailable()) {
                 return;
             }
@@ -242,8 +245,19 @@ namespace OpenSpotify.Services {
                     var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
                     finishedSong.FullPath = fullPath;
                     finishedSong.Status = Finished;
-                    ApplicationModel.DownloadCollection.Remove(finishedSong);
-                    ApplicationModel.SongCollection.Add(finishedSong);
+
+                    if (ApplicationModel.DownloadCollection.Count == 1) {
+                        ApplicationModel.StatusText = "Ready...";
+                        ApplicationModel.DownloadCollection.Remove(finishedSong);
+                        ApplicationModel.SongCollection.Add(finishedSong);
+                    }
+                    else {
+
+                        ApplicationModel.DownloadCollection.Remove(finishedSong);
+                        ApplicationModel.StatusText = $"Downloading {ApplicationModel.DownloadCollection.Count}/" +
+                                                      $"{ApplicationModel.DroppedSongs.Count}";
+                        ApplicationModel.SongCollection.Add(finishedSong);
+                    }
                 });
             }
         }

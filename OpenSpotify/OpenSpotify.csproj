@@ -130,6 +130,7 @@
     <Compile Include="Services\Util\BindingProxy .cs" />
     <Compile Include="Services\Util\BooleanConverter.cs" />
     <Compile Include="Services\Util\ImageCoverter.cs" />
+    <Compile Include="Services\Util\LogException.cs" />
     <Compile Include="Services\Util\SliderDragBehaviors.cs" />
     <Compile Include="Services\Util\Utils.cs" />
     <Compile Include="Services\Util\Views.cs" />

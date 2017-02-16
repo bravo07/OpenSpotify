@@ -133,17 +133,24 @@
         
         <!--S T A T U S B A R -->
         <Grid Background="{StaticResource DarkRed}" 
-              Height="20" 
+              Height="23" 
               VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
             
+            <!--<Label Grid.Column="0"
+                   Content="Das ist ein Test Text"
+                   Foreground="White"
+                   FontSize="11" VerticalAlignment="Center"
+                   HorizontalContentAlignment="Left"
+                   FontFamily="CalibriLight"/>-->
+
             <Label Grid.Column="0"
                    Content="{Binding ApplicationModel.StatusText}"
                    Foreground="White"
-                   FontSize="11"
+                   FontSize="11" VerticalAlignment="Center"
                    HorizontalContentAlignment="Left"
                    FontFamily="CalibriLight"/>
         </Grid>

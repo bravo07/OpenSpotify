@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using Newtonsoft.Json;
 using OpenSpotify.Models;
 using static OpenSpotify.Services.Util.Utils;
@@ -21,7 +19,10 @@ namespace OpenSpotify.Services {
             if (!Directory.Exists(TempPath)) {
                 Directory.CreateDirectory(TempPath);
             }
-            ClearTemp();
+
+            if (!Directory.Exists(LogPath)) {
+                Directory.CreateDirectory(LogPath);
+            }
         }
 
         #region Load / Save Application
@@ -42,23 +43,5 @@ namespace OpenSpotify.Services {
             }
         }
         #endregion
-
-        #region Clear Temp
-
-        private static void ClearTemp() {
-            try {
-                foreach (var file in Directory.GetFiles(TempPath)) {
-                    if (File.Exists(file)) {
-                        File.Delete(file);
-                    }
-                }
-            }
-            catch (Exception ex) {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-            }
-        }
-
-        #endregion 
     }
 }

@@ -10,6 +10,7 @@ using GongSolutions.Wpf.DragDrop;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
+using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.ViewModels {
 
@@ -92,6 +93,10 @@ namespace OpenSpotify.ViewModels {
                 return new CommandHandler<object>(o => {
                     ApplicationService.SaveApplicationModel(ApplicationModel);
                     Application.Current.Shutdown();
+
+                    if (ApplicationModel.Settings.DeleteVideos) {
+                        ClearTemp();
+                    }
                 });
             }
         }
@@ -136,6 +141,7 @@ namespace OpenSpotify.ViewModels {
         public async void Drop(IDropInfo dropInfo) {
             
             if (!ApplicationModel.Settings.IsReady) {
+                ApplicationModel.StatusText = "No API Key or FFmpeg detected!.";
                 return;
             }
 
@@ -156,7 +162,7 @@ namespace OpenSpotify.ViewModels {
                         DownloadService.Start(ApplicationModel.DroppedSongs[i]);
                         ApplicationModel.StatusText = $"{i}/{ApplicationModel.DroppedSongs.Count} Done.";
                     }
-                    ApplicationModel.StatusText = "Ready...";
+                    ApplicationModel.StatusText = $"Downloading {ApplicationModel.DroppedSongs.Count}/{ApplicationModel.DroppedSongs.Count}";
                 });
             }
         }
