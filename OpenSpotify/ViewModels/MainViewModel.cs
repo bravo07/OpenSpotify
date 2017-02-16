@@ -115,12 +115,17 @@ namespace OpenSpotify.ViewModels {
         #region Functions
 
         private void Initialize() {
-            NavigationService = new NavigationService(ApplicationModel);
-            NavigationService.InitializeNavigation();
-            DownloadService = new DownloadService(ApplicationModel);
-            CollectionView = (CollectionView) CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
-            CollectionView.Filter = SearchFilter;
-            ApplicationModel.StatusText = "Ready...";
+            try {
+                NavigationService = new NavigationService(ApplicationModel);
+                NavigationService.InitializeNavigation();
+                DownloadService = new DownloadService(ApplicationModel);
+                CollectionView = (CollectionView)CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
+                CollectionView.Filter = SearchFilter;
+                ApplicationModel.StatusText = "Ready...";
+            }
+            catch (Exception ex) {
+                new LogException(ex);
+            }
         }
 
         private bool SearchFilter(object item) {
@@ -139,31 +144,36 @@ namespace OpenSpotify.ViewModels {
         }
 
         public async void Drop(IDropInfo dropInfo) {
-            
-            if (!ApplicationModel.Settings.IsReady) {
-                ApplicationModel.StatusText = "No API Key or FFmpeg detected!.";
-                return;
+
+            try {
+                if (!ApplicationModel.Settings.IsReady) {
+                    ApplicationModel.StatusText = "No API Key or FFmpeg detected!.";
+                    return;
+                }
+
+                ApplicationModel.DownloadCollection.Clear();
+
+                var dataObject = dropInfo.Data as IDataObject;
+                if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {
+
+                    await Task.Run(() => {
+                        var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
+                        ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
+                        ApplicationModel.StatusText = $"{ApplicationModel.DroppedSongs.Count} Dropped...";
+                        if (ApplicationModel.DroppedSongs == null) {
+                            return;
+                        }
+
+                        for (var i = 0; i < ApplicationModel.DroppedSongs.Count; i++) {
+                            DownloadService.Start(ApplicationModel.DroppedSongs[i]);
+                            ApplicationModel.StatusText = $"{i}/{ApplicationModel.DroppedSongs.Count} Done.";
+                        }
+                        ApplicationModel.StatusText = $"Downloading {ApplicationModel.DroppedSongs.Count}/{ApplicationModel.DroppedSongs.Count}";
+                    });
+                }
             }
-
-            ApplicationModel.DownloadCollection.Clear();
-
-            var dataObject = dropInfo.Data as IDataObject;
-            if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {
-
-                await Task.Run(() => {
-                    var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
-                    ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
-                    ApplicationModel.StatusText = $"{ApplicationModel.DroppedSongs.Count} Dropped...";
-                    if (ApplicationModel.DroppedSongs == null) {
-                        return;
-                    }
-
-                    for(var i = 0; i < ApplicationModel.DroppedSongs.Count; i++) {
-                        DownloadService.Start(ApplicationModel.DroppedSongs[i]);
-                        ApplicationModel.StatusText = $"{i}/{ApplicationModel.DroppedSongs.Count} Done.";
-                    }
-                    ApplicationModel.StatusText = $"Downloading {ApplicationModel.DroppedSongs.Count}/{ApplicationModel.DroppedSongs.Count}";
-                });
+            catch (Exception ex) {
+                new LogException(ex);
             }
         }
 

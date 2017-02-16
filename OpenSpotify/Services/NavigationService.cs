@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using OpenSpotify.Models;
@@ -111,32 +112,37 @@ namespace OpenSpotify.Services {
             get {
                 return new CommandHandler<object>(o => {
 
-                    switch (SelectedItem.Label) {
+                    try {
+                        switch (SelectedItem.Label) {
 
-                        case nameof(Downloads):
-                            ContentWindow = DownloadView;
-                            DownloadsViewModel.ApplicationModel = ApplicationModel;
-                            DownloadView.DataContext = DownloadsViewModel;
-                            ApplicationModel.IsDownloadView = true;
-                            ApplicationModel.IsListEmpty = Visibility.Collapsed;
-                            return;
+                            case nameof(Downloads):
+                                ContentWindow = DownloadView;
+                                DownloadsViewModel.ApplicationModel = ApplicationModel;
+                                DownloadView.DataContext = DownloadsViewModel;
+                                ApplicationModel.IsDownloadView = true;
+                                ApplicationModel.IsListEmpty = Visibility.Collapsed;
+                                return;
 
-                        case nameof(Settings):
-                            ContentWindow = SettingsView;
-                            SettingsViewModel.ApplicationModel = ApplicationModel;
-                            SettingsView.DataContext = SettingsViewModel;
-                            ApplicationModel.IsDownloadView = false;
-                            ApplicationModel.IsListEmpty = Visibility.Collapsed;
-                            return;
+                            case nameof(Settings):
+                                ContentWindow = SettingsView;
+                                SettingsViewModel.ApplicationModel = ApplicationModel;
+                                SettingsView.DataContext = SettingsViewModel;
+                                ApplicationModel.IsDownloadView = false;
+                                ApplicationModel.IsListEmpty = Visibility.Collapsed;
+                                return;
 
-                        case nameof(Home):
-                            ContentWindow = HomeView;
-                            HomeViewModel.ApplicationModel = ApplicationModel;
-                            HomeView.DataContext = HomeViewModel;
-                            ApplicationModel.IsDownloadView = false;
-                            ApplicationModel.IsListEmpty = 
-                                ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
-                            break;
+                            case nameof(Home):
+                                ContentWindow = HomeView;
+                                HomeViewModel.ApplicationModel = ApplicationModel;
+                                HomeView.DataContext = HomeViewModel;
+                                ApplicationModel.IsDownloadView = false;
+                                ApplicationModel.IsListEmpty =
+                                    ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                        }
+                    }
+                    catch (Exception ex) {
+                        new LogException(ex);
                     }
                 });
             }
@@ -147,19 +153,24 @@ namespace OpenSpotify.Services {
 
         public void InitializeNavigation() {
 
-            SettingsView = new SettingsView();
-            SettingsViewModel = new SettingsViewModel(ApplicationModel);
-            SettingsView.DataContext = SettingsViewModel;
+            try {
+                SettingsView = new SettingsView();
+                SettingsViewModel = new SettingsViewModel(ApplicationModel);
+                SettingsView.DataContext = SettingsViewModel;
 
-            DownloadView = new DownloadView();
-            DownloadsViewModel = new DownloadsViewModel(ApplicationModel);
-            DownloadView.DataContext = DownloadsViewModel;
+                DownloadView = new DownloadView();
+                DownloadsViewModel = new DownloadsViewModel(ApplicationModel);
+                DownloadView.DataContext = DownloadsViewModel;
 
-            HomeView = new HomeView();
-            HomeViewModel = new HomeViewModel(ApplicationModel);
-            HomeView.DataContext = HomeViewModel;
+                HomeView = new HomeView();
+                HomeViewModel = new HomeViewModel(ApplicationModel);
+                HomeView.DataContext = HomeViewModel;
 
-            ContentWindow = HomeView;
+                ContentWindow = HomeView;
+            }
+            catch (Exception ex) {
+                new LogException(ex);
+            }
         }
         #endregion 
     }

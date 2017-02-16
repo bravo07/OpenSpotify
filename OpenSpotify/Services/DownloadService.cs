@@ -67,11 +67,16 @@ namespace OpenSpotify.Services {
 
         private void InitalizeYouTubeService() {
             if (YouTubeService == null) {
-                YouTubeService = new YouTubeService(new BaseClientService.Initializer {
-                    ApiKey = ApplicationModel.Settings.YoutubeApiKey,
-                    ApplicationName = AppDomain.CurrentDomain.FriendlyName
-                });
-                YouTube = YouTube.Default;
+                try {
+                    YouTubeService = new YouTubeService(new BaseClientService.Initializer {
+                        ApiKey = ApplicationModel.Settings.YoutubeApiKey,
+                        ApplicationName = AppDomain.CurrentDomain.FriendlyName
+                    });
+                    YouTube = YouTube.Default;
+                }
+                catch (Exception ex) {
+                    new LogException(ex);
+                }
             }
         }
 
@@ -93,28 +98,33 @@ namespace OpenSpotify.Services {
 
         public async void Start(string songId) {
 
-            InitalizeYouTubeService();
-            if (!IsInternetAvailable()) {
-                return;
-            }
-
-            var song = DownloadSongInformation(songId);
-            song.Status = LoadingSongInformation;
-            song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
-
-            if (string.IsNullOrEmpty(song.YouTubeUri)) {
-                song.Status = FailedLoadingSongInformation;
-                return;
-            }
-
-            Application.Current.Dispatcher.Invoke(() => {      
-                if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
-                    song.Status = Downloading;
-                    ApplicationModel.DownloadCollection.Add(song);
+            try {
+                InitalizeYouTubeService();
+                if (!IsInternetAvailable()) {
+                    return;
                 }
-            });
 
-            DownloadSongs(song);
+                var song = DownloadSongInformation(songId);
+                song.Status = LoadingSongInformation;
+                song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
+
+                if (string.IsNullOrEmpty(song.YouTubeUri)) {
+                    song.Status = FailedLoadingSongInformation;
+                    return;
+                }
+
+                Application.Current.Dispatcher.Invoke(() => {
+                    if (ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
+                        song.Status = Downloading;
+                        ApplicationModel.DownloadCollection.Add(song);
+                    }
+                });
+
+                DownloadSongs(song);
+            }
+            catch (Exception ex) {
+                new LogException(ex);
+            }
         }
         #endregion
 
@@ -148,8 +158,7 @@ namespace OpenSpotify.Services {
                 return songModel;
             }
             catch (Exception ex) {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
+                new LogException(ex);
                 return null;
             }
         }
@@ -159,29 +168,35 @@ namespace OpenSpotify.Services {
 
         public async Task<string> SearchForSong(string songName, string artist) {
 
-            var searchListRequest = YouTubeService.Search.List(SearchInfo);
-            searchListRequest.Q = $"{songName} {artist}"; // Search Term
-            searchListRequest.MaxResults = 50;
+            try {
+                var searchListRequest = YouTubeService.Search.List(SearchInfo);
+                searchListRequest.Q = $"{songName} {artist}"; // Search Term
+                searchListRequest.MaxResults = 50;
 
-            var searchListResponse = await searchListRequest.ExecuteAsync();
+                var searchListResponse = await searchListRequest.ExecuteAsync();
 
-            var matchingItems = searchListResponse.Items.Where(x =>
-                x.Snippet.Title.Contains(songName, StringComparison.OrdinalIgnoreCase) ||
-                x.Snippet.Title.Contains(artist, StringComparison.OrdinalIgnoreCase)).ToList();
+                var matchingItems = searchListResponse.Items.Where(x =>
+                    x.Snippet.Title.Contains(songName, StringComparison.OrdinalIgnoreCase) ||
+                    x.Snippet.Title.Contains(artist, StringComparison.OrdinalIgnoreCase)).ToList();
 
-            if (matchingItems.Count == 0) {
-                return string.Empty;
-            }
-            
-            //Checks Content for VEVO
-            if (matchingItems.Count > 1) {
-                var vevoMatches = matchingItems.Where(x => x.Snippet.ChannelTitle.Contains(Vevo)).ToList();
-                if (vevoMatches.Count > 0) {
-                    return YouTubeUri + CheckVevoMatches(vevoMatches).Id.VideoId;
+                if (matchingItems.Count == 0) {
+                    return string.Empty;
                 }
-            }
 
-            return YouTubeUri + matchingItems[0].Id.VideoId;
+                //Checks Content for VEVO
+                if (matchingItems.Count > 1) {
+                    var vevoMatches = matchingItems.Where(x => x.Snippet.ChannelTitle.Contains(Vevo)).ToList();
+                    if (vevoMatches.Count > 0) {
+                        return YouTubeUri + CheckVevoMatches(vevoMatches).Id.VideoId;
+                    }
+                }
+
+                return YouTubeUri + matchingItems[0].Id.VideoId;
+            }
+            catch (Exception ex) {
+                new LogException(ex);
+                return null;
+            }
         }
 
         private SearchResult CheckVevoMatches(IReadOnlyList<SearchResult> vevoResults) {
@@ -210,8 +225,7 @@ namespace OpenSpotify.Services {
                 song.Status = Converting;
             }
             catch (Exception ex) {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
+                new LogException(ex);
             }
         }
 
@@ -227,38 +241,43 @@ namespace OpenSpotify.Services {
         /// <param name="sender"></param>
         /// <param name="fileSystemEventArgs"></param>
         private void FileSystemMusicWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
+            try {
 
-            var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
-            if (lastWriteTime.Subtract(LastMusic).Ticks > 0) {
-                var finishedSong =
-                    ApplicationModel.DownloadCollection.FirstOrDefault(
-                        x => x.FileName.Contains(Path.GetFileNameWithoutExtension(
-                            fileSystemEventArgs.Name), StringComparison.OrdinalIgnoreCase));
-                if (finishedSong == null) {
-                    return;
+                var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
+                if (lastWriteTime.Subtract(LastMusic).Ticks > 0) {
+                    var finishedSong =
+                        ApplicationModel.DownloadCollection.FirstOrDefault(
+                            x => x.FileName.Contains(Path.GetFileNameWithoutExtension(
+                                fileSystemEventArgs.Name), StringComparison.OrdinalIgnoreCase));
+                    if (finishedSong == null) {
+                        return;
+                    }
+
+                    Application.Current.Dispatcher.Invoke(() => {
+
+                        ConvertService.KillFFmpegProcess();
+
+                        var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
+                        finishedSong.FullPath = fullPath;
+                        finishedSong.Status = Finished;
+
+                        if (ApplicationModel.DownloadCollection.Count == 1) {
+                            ApplicationModel.StatusText = "Ready...";
+                            ApplicationModel.DownloadCollection.Remove(finishedSong);
+                            ApplicationModel.SongCollection.Add(finishedSong);
+                        }
+                        else {
+
+                            ApplicationModel.DownloadCollection.Remove(finishedSong);
+                            ApplicationModel.StatusText = $"Downloading {ApplicationModel.DownloadCollection.Count}/" +
+                                                          $"{ApplicationModel.DroppedSongs.Count}";
+                            ApplicationModel.SongCollection.Add(finishedSong);
+                        }
+                    });
                 }
-
-                Application.Current.Dispatcher.Invoke(() => {
-
-                    ConvertService.KillFFmpegProcess();
-
-                    var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
-                    finishedSong.FullPath = fullPath;
-                    finishedSong.Status = Finished;
-
-                    if (ApplicationModel.DownloadCollection.Count == 1) {
-                        ApplicationModel.StatusText = "Ready...";
-                        ApplicationModel.DownloadCollection.Remove(finishedSong);
-                        ApplicationModel.SongCollection.Add(finishedSong);
-                    }
-                    else {
-
-                        ApplicationModel.DownloadCollection.Remove(finishedSong);
-                        ApplicationModel.StatusText = $"Downloading {ApplicationModel.DownloadCollection.Count}/" +
-                                                      $"{ApplicationModel.DroppedSongs.Count}";
-                        ApplicationModel.SongCollection.Add(finishedSong);
-                    }
-                });
+            }
+            catch (Exception ex) {
+                new LogException(ex);
             }
         }
 
@@ -271,18 +290,23 @@ namespace OpenSpotify.Services {
         /// <param name="fileSystemEventArgs"></param>
         private void FileSystemDownloadWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
 
-            var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
-            if (lastWriteTime.Subtract(LastDownload).Ticks > 0) {
-                if (ConvertService == null) {
-                    ConvertService = new ConvertService(ApplicationModel) {
-                        SongFileName = fileSystemEventArgs.FullPath
-                    };
-                    ConvertService.StartFFmpeg();
+            try {
+                var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
+                if (lastWriteTime.Subtract(LastDownload).Ticks > 0) {
+                    if (ConvertService == null) {
+                        ConvertService = new ConvertService(ApplicationModel) {
+                            SongFileName = fileSystemEventArgs.FullPath
+                        };
+                        ConvertService.StartFFmpeg();
+                    }
+                    else {
+                        ConvertService.SongFileName = fileSystemEventArgs.FullPath;
+                        ConvertService.StartFFmpeg();
+                    }
                 }
-                else {
-                    ConvertService.SongFileName = fileSystemEventArgs.FullPath;
-                    ConvertService.StartFFmpeg();
-                }
+            }
+            catch (Exception ex) {
+                new LogException(ex);
             }
         }
         #endregion 
