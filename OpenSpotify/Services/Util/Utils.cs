@@ -109,7 +109,7 @@ namespace OpenSpotify.Services.Util {
                 }
             }
             catch (Exception ex) {
-                new LogException(ex)
+                new LogException(ex);
             }
         }
 
