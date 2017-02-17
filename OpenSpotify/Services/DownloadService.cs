@@ -8,7 +8,6 @@ using System.Windows;
 using Newtonsoft.Json;
 using OpenSpotify.Models;
 using VideoLibrary;
-using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
@@ -241,8 +240,8 @@ namespace OpenSpotify.Services {
         /// <param name="sender"></param>
         /// <param name="fileSystemEventArgs"></param>
         private void FileSystemMusicWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
-            try {
 
+            try {
                 var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
                 if (lastWriteTime.Subtract(LastMusic).Ticks > 0) {
                     var finishedSong =
@@ -254,7 +253,6 @@ namespace OpenSpotify.Services {
                     }
 
                     Application.Current.Dispatcher.Invoke(() => {
-
                         ConvertService.KillFFmpegProcess();
 
                         var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
@@ -267,7 +265,6 @@ namespace OpenSpotify.Services {
                             ApplicationModel.SongCollection.Add(finishedSong);
                         }
                         else {
-
                             ApplicationModel.DownloadCollection.Remove(finishedSong);
                             ApplicationModel.StatusText = $"Downloading {ApplicationModel.DownloadCollection.Count}/" +
                                                           $"{ApplicationModel.DroppedSongs.Count}";

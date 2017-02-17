@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,8 +9,8 @@ using OpenSpotify.Services.Util;
 using static OpenSpotify.Services.Util.Utils;
 
 // ReSharper disable ExplicitCallerInfoArgument
-
 namespace OpenSpotify.ViewModels {
+
     public class MusicPlayerViewModel : BaseViewModel {
 
         public MusicPlayerViewModel(ApplicationModel applicationModel, SongModel currentSong) {
@@ -367,12 +366,20 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        private void LoadLastSong()
-        {
+        private void LoadLastSong() {
+
             if (ApplicationModel.SongCollection.Count < 1) {
                 return;
             }
-            
+
+            if (IndexOfLastSong > ApplicationModel.SongCollection.Count) {
+                IndexOfLastSong = 0;
+            }
+
+            if (IndexOfLastSong == 0) {
+                IndexOfLastSong = 1;
+            }
+
             var nextSong = ApplicationModel.SongCollection[IndexOfLastSong - 1];
             if (nextSong != null) {
 
