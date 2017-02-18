@@ -108,9 +108,7 @@ namespace OpenSpotify.Services.Util {
                     }
                 }
             }
-            catch (Exception ex) {
-                new LogException(ex);
-            }
+            catch (Exception) { }
         }
 
         #endregion

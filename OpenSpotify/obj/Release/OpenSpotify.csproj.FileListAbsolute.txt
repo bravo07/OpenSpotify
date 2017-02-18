@@ -1,0 +1,13 @@
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\OpenSpotify.csprojResolveAssemblyReference.cache
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\MainView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\SettingsView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\Custom\MusicPlayerView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\DownloadView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\HomeView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\MainView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\MusicView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\Views\SettingsView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\App.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\GeneratedInternalTypeHelper.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\OpenSpotify_MarkupCompile.cache
+D:\Development\OpenSpotify\OpenSpotify\obj\Release\OpenSpotify_MarkupCompile.lref

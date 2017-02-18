@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using Newtonsoft.Json;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenSpotify.Models
-{
-
-    public class ApplicationModel : BaseModel
-    {
-
+namespace OpenSpotify.Models {
+    public class ApplicationModel : BaseModel {
         public ApplicationModel() {
             Initialize();
         }
@@ -20,8 +16,7 @@ namespace OpenSpotify.Models
         private bool _isDownloadView;
         private Visibility _isListEmpty;
         private string _statusText;
-
-        #endregion 
+        #endregion
 
         #region Properties
 
@@ -32,18 +27,12 @@ namespace OpenSpotify.Models
                 OnPropertyChanged(nameof(Settings));
             }
         }
-
-        public ObservableCollection<SongModel> SongCollection { get; set; }
-
-        [JsonIgnore]
-        public ObservableCollection<SongModel> DownloadCollection { get; set; } =
-           new ObservableCollection<SongModel>();
-
-        public ObservableCollection<string> DroppedSongs { get; set; } = new ObservableCollection<string>();
-
+        
         [JsonIgnore]
         public bool IsDownloadView {
-            get { return _isDownloadView; }
+            get {
+                return _isDownloadView;
+            }
             set {
                 _isDownloadView = value;
                 OnPropertyChanged(nameof(IsDownloadView));
@@ -51,7 +40,9 @@ namespace OpenSpotify.Models
         }
 
         public Visibility IsListEmpty {
-            get { return _isListEmpty; }
+            get {
+                return _isListEmpty;
+            }
             set {
                 _isListEmpty = value;
                 OnPropertyChanged(nameof(IsListEmpty));
@@ -59,36 +50,55 @@ namespace OpenSpotify.Models
         }
 
         public string StatusText {
-            get { return _statusText; }
+            get {
+                return _statusText;
+            }
             set {
-                _statusText = value; 
+                _statusText = value;
                 OnPropertyChanged(nameof(StatusText));
             }
         }
+
+        public Services.Util.Views CurrentView {
+            get; set;
+        }
+
+        public ObservableCollection<SongModel> SongCollection { get; set; }
+
+        [JsonIgnore]
+        public ObservableCollection<SongModel> DownloadCollection { get; set; } =
+            new ObservableCollection<SongModel>();
+
+        [JsonIgnore]
+        public ObservableCollection<string> DroppedSongs { get; set; } =
+            new ObservableCollection<string>();
 
         #endregion
 
         #region Functions
 
         private void Initialize() {
-
             if (SongCollection == null) {
                 SongCollection = new ObservableCollection<SongModel>();
             }
 
-            if (Settings == null)
-            {
+            if (Settings == null) {
                 Settings = new SettingsModel();
             }
 
             DroppedSongs.CollectionChanged += (sender, args) => {
-                IsListEmpty = DroppedSongs.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                    IsListEmpty = DroppedSongs.Count == 0 && CurrentView == Services.Util.Views.Home
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
             };
 
             DownloadCollection.CollectionChanged += (sender, args) => {
-                IsListEmpty = DownloadCollection.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                    IsListEmpty = DownloadCollection.Count == 0 && CurrentView == Services.Util.Views.Home
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
             };
         }
-        #endregion 
+
+        #endregion
     }
 }

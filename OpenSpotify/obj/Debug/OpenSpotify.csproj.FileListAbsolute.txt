@@ -32,41 +32,6 @@ C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\libvideo.dll
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.exe.config
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.exe
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.pdb
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.baml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.baml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\App.baml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\App.g.cs
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.cache
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.lref
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.exe
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.pdb
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\libvideo.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Microsoft.Expression.Interactions.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Newtonsoft.Json.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\System.Windows.Interactivity.dll
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.pdb
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.xml
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.pdb
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.xml
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.pdb
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.xml
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Microsoft.Expression.Interactions.xml
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Newtonsoft.Json.xml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.baml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.g.resources
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.Properties.Resources.resources
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csproj.GenerateResource.Cache
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.dll
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.dll
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.dll
@@ -92,6 +57,10 @@ C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
 C:\Users\Valon\Documents\Visual Studio 2015\Projects\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.exe.config
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.exe
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\OpenSpotify.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.PlatformServices.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Core.dll
@@ -99,7 +68,14 @@ D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\log4net.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Microsoft.Expression.Interactions.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Newtonsoft.Json.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\System.Windows.Interactivity.dll
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.dll
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\GongSolutions.Wpf.DragDrop.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.pdb
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.Auth.pdb
@@ -113,7 +89,34 @@ D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.PlatformServices.xm
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.pdb
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Google.Apis.YouTube.v3.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\log4net.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.pdb
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\MahApps.Metro.IconPacks.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Microsoft.Expression.Interactions.xml
+D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Newtonsoft.Json.xml
 D:\Development\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
-D:\Development\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csprojResolveAssemblyReference.cache
-D:\Development\OpenSpotify\OpenSpotify\bin\Debug\libvideo.pdb
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\MusicPlayerView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MusicView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\App.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.cache
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify_MarkupCompile.lref
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\App.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\ResourceDictionary.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\MusicPlayerView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\Views\MusicView.baml
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.g.resources
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.Properties.Resources.resources
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csproj.GenerateResource.Cache
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.exe
+D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.pdb

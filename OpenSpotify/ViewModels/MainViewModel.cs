@@ -152,6 +152,7 @@ namespace OpenSpotify.ViewModels {
                 }
 
                 ApplicationModel.DownloadCollection.Clear();
+                ApplicationModel.DroppedSongs.Clear();
 
                 var dataObject = dropInfo.Data as IDataObject;
                 if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {

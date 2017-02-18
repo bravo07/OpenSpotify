@@ -3,16 +3,14 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Forms;
 using OpenSpotify.Models;
+using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
 using static OpenSpotify.Services.Util.Utils;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
-
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.ViewModels {
-
     public class SettingsViewModel : BaseViewModel {
-
         public SettingsViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
@@ -22,6 +20,7 @@ namespace OpenSpotify.ViewModels {
 
         private ApplicationModel _applicationModel;
         private BitrateModel _selectedBitrate;
+
         #endregion
 
         #region Properties
@@ -30,13 +29,16 @@ namespace OpenSpotify.ViewModels {
             get { return _applicationModel; }
             set {
                 _applicationModel = value;
-                OnPropertyChanged(nameof(SettingsViewModel));
+                OnPropertyChanged(nameof(ApplicationModel));
+                Validate();
             }
         }
+
 
         public ObservableCollection<BitrateModel> BitrateCollection { get; set; }
 
         public ObservableCollection<FormatModel> FormatCollection { get; set; }
+
         #endregion
 
         #region Commands
@@ -81,32 +83,45 @@ namespace OpenSpotify.ViewModels {
                             MessageBoxIcon.Information);
                     }
                     else {
-                        MessageBox.Show("No Settings available!", "Information", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        MessageBox.Show("No Settings available!", "Information", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 });
             }
         }
+
         #endregion
 
-        #region Fields
-
-        private void Initialize() {
-
+        #region Functions
+        
+        private void Initialize()
+        {
             BitrateCollection = new ObservableCollection<BitrateModel> {
-                new BitrateModel { BitrateName = "320 kBit/s", Bitrate = "320K"},
-                new BitrateModel { BitrateName = "256 kBit/s", Bitrate = "256K"},
-                new BitrateModel { BitrateName = "192 kBit/s", Bitrate = "192K"},
-                new BitrateModel { BitrateName = "128 kBit/s", Bitrate = "128K"},
+                new BitrateModel {BitrateName = "320 kBit/s", Bitrate = "320K"},
+                new BitrateModel {BitrateName = "256 kBit/s", Bitrate = "256K"},
+                new BitrateModel {BitrateName = "192 kBit/s", Bitrate = "192K"},
+                new BitrateModel {BitrateName = "128 kBit/s", Bitrate = "128K"},
             };
 
             FormatCollection = new ObservableCollection<FormatModel> {
-                new FormatModel { FormatName = "Mp3", Format = ".mp3"},
-                new FormatModel { FormatName = "Wav", Format = ".wav"},
+                new FormatModel {FormatName = "Mp3", Format = ".mp3"},
+                new FormatModel {FormatName = "Wav", Format = ".wav"},
             };
 
             ApplicationModel.Settings.SelectedBitrate = BitrateCollection[0];
             ApplicationModel.Settings.SelectedFormat = FormatCollection[0];
-        } 
+        }
+
+        private void Validate() {
+            if (string.IsNullOrEmpty(ApplicationModel.Settings.YoutubeApiKey) ||
+                string.IsNullOrEmpty(ApplicationModel.Settings.FFmpegPath)) {
+                return;
+            }
+
+            ApplicationModel.StatusText = "Ready.";
+            ApplicationService.SaveApplicationModel(ApplicationModel);
+        }
+
         #endregion
     }
 }
