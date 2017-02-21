@@ -20,8 +20,11 @@ namespace OpenSpotify.Services {
 
     public class DownloadService : BaseService {
 
-        public DownloadService(ApplicationModel applicationModel) {
+        public DownloadService(ApplicationModel applicationModel,
+            NavigationService navigationService) {
+
             ApplicationModel = applicationModel;
+            NavigationService = navigationService;
             InitializeFileWatcher();
         }
 
@@ -29,11 +32,28 @@ namespace OpenSpotify.Services {
 
         private YouTubeService _youTubeService;
         private YouTube _youTube;
+        private NavigationService _navigationService;
+        private ApplicationModel _applicationModel;
+
         #endregion
 
         #region Properties
 
-        public ApplicationModel ApplicationModel { get; set; }
+        public ApplicationModel ApplicationModel {
+            get { return _applicationModel; }
+            set {
+                _applicationModel = value; 
+                OnPropertyChanged(nameof(ApplicationModel));
+            }
+        }
+
+        public NavigationService NavigationService {
+            get { return _navigationService; }
+            set {
+                _navigationService = value; 
+                OnPropertyChanged(nameof(NavigationService));
+            }
+        }
 
         public YouTubeService YouTubeService {
             get { return _youTubeService; }
@@ -244,10 +264,9 @@ namespace OpenSpotify.Services {
             try {
                 var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
                 if (lastWriteTime.Subtract(LastMusic).Ticks > 0) {
-                    var finishedSong =
-                        ApplicationModel.DownloadCollection.FirstOrDefault(
-                            x => x.FileName.Contains(Path.GetFileNameWithoutExtension(
-                                fileSystemEventArgs.Name), StringComparison.OrdinalIgnoreCase));
+
+                    var finishedSong = ApplicationModel.DownloadCollection.FirstOrDefault(
+                        x => x.FileName.Contains(Path.GetFileNameWithoutExtension(fileSystemEventArgs.Name), StringComparison.OrdinalIgnoreCase));
                     if (finishedSong == null) {
                         return;
                     }
@@ -263,6 +282,8 @@ namespace OpenSpotify.Services {
                             ApplicationModel.StatusText = "Ready...";
                             ApplicationModel.DownloadCollection.Remove(finishedSong);
                             ApplicationModel.SongCollection.Add(finishedSong);
+                            ApplicationModel.IsListEmpty = Visibility.Visible;
+                            NavigationService.ContentWindow = NavigationService.HomeView;
                         }
                         else {
                             ApplicationModel.DownloadCollection.Remove(finishedSong);

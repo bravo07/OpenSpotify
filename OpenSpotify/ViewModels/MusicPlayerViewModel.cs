@@ -7,8 +7,8 @@ using System.Windows.Threading;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
 using static OpenSpotify.Services.Util.Utils;
-
 // ReSharper disable ExplicitCallerInfoArgument
+
 namespace OpenSpotify.ViewModels {
 
     public class MusicPlayerViewModel : BaseViewModel {
@@ -19,7 +19,8 @@ namespace OpenSpotify.ViewModels {
             Initialize();
         }
 
-        public MusicPlayerViewModel() {}
+        public MusicPlayerViewModel() {
+        }
 
         #region Fields
 
@@ -153,7 +154,7 @@ namespace OpenSpotify.ViewModels {
         public string CurrentSongTime {
             get { return _currentSongTime; }
             set {
-                _currentSongTime = value; 
+                _currentSongTime = value;
                 OnPropertyChanged(nameof(CurrentSongTime));
             }
         }
@@ -161,7 +162,6 @@ namespace OpenSpotify.ViewModels {
         #endregion
 
         #region Commands
-
 
         public CommandHandler<bool> PlayPauseCommand {
             get {
@@ -179,7 +179,6 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<bool> SoundCommand {
             get {
                 return new CommandHandler<bool>(state => {
-
                     if (!state && SoundSliderValue == 0) {
                         SoundImage = SoundImageOff;
                     }
@@ -194,23 +193,18 @@ namespace OpenSpotify.ViewModels {
 
         public CommandHandler<object> ValueChangedCommand {
             get {
-                return new CommandHandler<object>(state => {
-                    SoundPlayerElement.Position = TimeSpan.FromSeconds(SliderTrackValue);
-                });
+                return
+                    new CommandHandler<object>(
+                        state => { SoundPlayerElement.Position = TimeSpan.FromSeconds(SliderTrackValue); });
             }
         }
 
 
         public CommandHandler<object> GotFocusCommand {
-            get {
-                return new CommandHandler<object>(state => {
-                    SoundSliderVisibility = Visibility.Collapsed;
-                });
-            }
+            get { return new CommandHandler<object>(state => { SoundSliderVisibility = Visibility.Collapsed; }); }
         }
 
         public CommandHandler<object> DragCompletedCommand {
-
             get {
                 return new CommandHandler<object>(state => {
                     IsDragging = false;
@@ -220,11 +214,8 @@ namespace OpenSpotify.ViewModels {
         }
 
         public CommandHandler<object> SoundValueChangedCommand {
-
             get {
-
                 return new CommandHandler<object>(state => {
-
                     SoundPlayerElement.Volume = SoundSliderValue;
 
                     if (SoundSliderValue == 0) {
@@ -254,7 +245,6 @@ namespace OpenSpotify.ViewModels {
         }
 
         public CommandHandler<object> PlayerBackCommand {
-
             get {
                 return new CommandHandler<object>(state => {
                     Reset();
@@ -264,7 +254,6 @@ namespace OpenSpotify.ViewModels {
         }
 
         public CommandHandler<object> PlayerNextCommand {
-
             get {
                 return new CommandHandler<object>(state => {
                     Reset();
@@ -274,7 +263,6 @@ namespace OpenSpotify.ViewModels {
         }
 
         public CommandHandler<UserControl> ClosePlayerCommand {
-
             get {
                 return new CommandHandler<UserControl>(userControl => {
                     var parentWin = Window.GetWindow(userControl);
@@ -283,21 +271,29 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+        public CommandHandler<object> SoundSliderLostFocusCommand {
+            get { return new CommandHandler<object>(o => { SoundSliderVisibility = Visibility.Collapsed; }); }
+        }
+
+        public CommandHandler<object> SoundSliderMouseLeaveCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    SoundSliderVisibility = Visibility.Collapsed;
+                });
+            }
+        }
         #endregion
 
         #region Functions 
 
         private void Initialize() {
-
             SoundSliderVisibility = Visibility.Collapsed;
             SoundImage = SoundImage100;
             SoundSliderValue = 0.2;
-
-            InitializeMediaElement(CurrentSong);  
+            InitializeMediaElement(CurrentSong);
         }
 
         private void InitializeMediaElement(SongModel song) {
-
             if (ApplicationModel.SongCollection.Count > 0) {
                 IndexOfLastSong = ApplicationModel.SongCollection.IndexOf(song);
             }
@@ -318,13 +314,19 @@ namespace OpenSpotify.ViewModels {
             GetCurrentSongName(song);
             SoundPlayerElement.Play();
             SoundPlayerElement.MediaOpened += SoundPlayerElementOnMediaOpened;
+            SoundPlayerElement.MediaEnded += SoundPlayerElementMediaEnded;
 
             SoundElementTimer.Tick += SoundElementTimerTick;
             SoundElementTimer.Start();
         }
 
-        private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs) {
+        private void SoundPlayerElementMediaEnded(object sender, RoutedEventArgs e) {
+            if (ApplicationModel.Settings.AutoPlay) {
+                LoadNextSong();
+            }
+        }
 
+        private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs) {
             if (SoundPlayerElement.NaturalDuration.HasTimeSpan) {
                 var naturalDurationTimeSpan = SoundPlayerElement.NaturalDuration.TimeSpan;
                 SliderTrackMaximum = naturalDurationTimeSpan.TotalSeconds;
@@ -346,7 +348,7 @@ namespace OpenSpotify.ViewModels {
 
         private void Reset() {
             SoundPlayerElement.Stop();
-            
+
             SoundPlayerElement.Close();
             SliderTrackValue = 0;
         }
@@ -367,7 +369,6 @@ namespace OpenSpotify.ViewModels {
         }
 
         private void LoadLastSong() {
-
             if (ApplicationModel.SongCollection.Count < 1) {
                 return;
             }
@@ -382,7 +383,6 @@ namespace OpenSpotify.ViewModels {
 
             var nextSong = ApplicationModel.SongCollection[IndexOfLastSong - 1];
             if (nextSong != null) {
-
                 if (!File.Exists(nextSong.FullPath)) {
                     var song = ApplicationModel.SongCollection[IndexOfLastSong + 1];
                     InitializeMediaElement(song);

@@ -17,6 +17,7 @@ namespace OpenSpotify.Models {
         private double _windowWidth;
         private double _windowHeight;
         private bool _deleteVideos;
+        private bool _autoPlay;
 
         #endregion
 
@@ -100,6 +101,14 @@ namespace OpenSpotify.Models {
             set {
                 _deleteVideos = value; 
                 OnPropertyChanged(nameof(DeleteVideos));
+            }
+        }
+
+        public bool AutoPlay {
+            get { return _autoPlay; }
+            set {
+                _autoPlay = value;
+                OnPropertyChanged(nameof(AutoPlay));
             }
         }
 

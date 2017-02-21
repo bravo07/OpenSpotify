@@ -47,3 +47,7 @@ Temporary Items
 .apdisk
 *.lref
 *.opendb
+*.pdb
+*.baml
+*.resources
+*.txt

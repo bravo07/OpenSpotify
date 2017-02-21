@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OpenSpotify.Views"
         xmlns:custom="clr-namespace:OpenSpotify.Views.Custom"
-        x:Name="MusicPlayerView"
+        x:Name="MusicPlayerView" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" ShowInTaskbar="False"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d" WindowStyle="None"  MouseDown="MusicPlayerView_OnMouseDown" AllowsTransparency="True"
         Title="MusicView" Height="300" Width="550" ResizeMode="NoResize" Background="Transparent" Foreground="{x:Null}">
     <Grid>
@@ -15,7 +15,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <custom:MusicPlayerView Grid.Row="1"/>
+        <custom:MusicPlayerView Grid.Row="1"  ClipToBounds="True"/>
     </Grid>
 </Window>
 

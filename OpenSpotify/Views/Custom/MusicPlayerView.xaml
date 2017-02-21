@@ -59,11 +59,6 @@
                                             Converter={StaticResource PlayPauseConverter}}"
                            Width="80"
                            Height="80">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="GotFocus">
-                                <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
                     </Image>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -82,11 +77,6 @@
                     <Image Source="{Binding SoundImage}"
                            Width="80"
                            Height="80">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="GotFocus">
-                                <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
                     </Image>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -113,9 +103,6 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction Command="{Binding ValueChangedCommand}"/>
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="GotFocus">
-                            <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Slider>
@@ -179,7 +166,7 @@
                     Margin="41,-158,42,133" 
                     Visibility="{Binding SoundSliderVisibility}" 
                     Background="#FF1E1E1E" 
-                    Opacity="0.8">
+                    Opacity="0.8" >
                 <Slider Orientation="Vertical" 
                         HorizontalAlignment="Center"
                         IsMoveToPointEnabled="True"
@@ -195,6 +182,11 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Slider>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <i:InvokeCommandAction Command="{Binding SoundSliderMouseLeaveCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Border>
 
 

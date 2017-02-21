@@ -118,10 +118,12 @@ namespace OpenSpotify.ViewModels {
             try {
                 NavigationService = new NavigationService(ApplicationModel);
                 NavigationService.InitializeNavigation();
-                DownloadService = new DownloadService(ApplicationModel);
+                DownloadService = new DownloadService(ApplicationModel, NavigationService);
                 CollectionView = (CollectionView)CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
                 CollectionView.Filter = SearchFilter;
                 ApplicationModel.StatusText = "Ready...";
+                ApplicationModel.IsListEmpty = Visibility.Visible;
+                NavigationService.ContentWindow = NavigationService.HomeView;
             }
             catch (Exception ex) {
                 new LogException(ex);
@@ -153,6 +155,8 @@ namespace OpenSpotify.ViewModels {
 
                 ApplicationModel.DownloadCollection.Clear();
                 ApplicationModel.DroppedSongs.Clear();
+
+                NavigationService.ContentWindow = NavigationService.HomeView;
 
                 var dataObject = dropInfo.Data as IDataObject;
                 if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using OpenSpotify.Models;
 using OpenSpotify.Services.Util;
@@ -6,6 +7,9 @@ using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.Services {
     public class ApplicationService {
+
+        #region Initalization
+
         public static void InitializeApplicationDirectorys() {
             try {
                 if (!Directory.Exists(ApplicationPath)) {
@@ -29,6 +33,8 @@ namespace OpenSpotify.Services {
             }
         }
 
+        #endregion
+
         #region Load / Save Application
 
         public static ApplicationModel LoadApplicationModel() {
@@ -38,7 +44,9 @@ namespace OpenSpotify.Services {
                 }
 
                 using (var streamReader = new StreamReader(ApplicationDataPath)) {
-                    return JsonConvert.DeserializeObject<ApplicationModel>(streamReader.ReadToEnd());
+                    var appModel = JsonConvert.DeserializeObject<ApplicationModel>(streamReader.ReadToEnd());
+                    CheckSongs(ref appModel);
+                    return appModel;
                 }
             }
             catch (System.Exception ex) {
@@ -55,6 +63,18 @@ namespace OpenSpotify.Services {
             }
             catch (System.Exception ex) {
                 new LogException(ex);
+            }
+        }
+
+        #endregion
+
+        #region CheckSongs
+
+        private static void CheckSongs(ref ApplicationModel applicationModel) {
+            for (var i = applicationModel.SongCollection.Count - 1; i >= 0; i--) {
+                if (!File.Exists(applicationModel.SongCollection[i].FullPath)) {
+                    applicationModel.SongCollection.RemoveAt(i);
+                }
             }
         }
 

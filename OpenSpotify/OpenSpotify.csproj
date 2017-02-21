@@ -263,6 +263,11 @@
     <Resource Include="Assets\PlayerBack.png" />
     <Resource Include="Assets\PlayerNext.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\AutoPlay.png" />
+    <Resource Include="Assets\DragDrop.png" />
+    <Content Include="libvideo.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

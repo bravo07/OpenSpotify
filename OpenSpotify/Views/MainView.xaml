@@ -118,19 +118,25 @@
         </controls:HamburgerMenu>
 
 
-        <!--D R O P  L A B E L-->
-        <Label HorizontalAlignment="Center" 
+        <!--D R O P  L A B E L  /  I M A G E -->
+        <StackPanel Orientation="Vertical" 
+                    Visibility="{Binding ApplicationModel.IsListEmpty}" 
+                    VerticalAlignment="Center" >
+            <Image Source="../Assets/DragDrop.png"
+                   Height="60" 
+                   Width="60" />
+
+            <Label HorizontalAlignment="Center" 
                Content="Drag Drop Songs here..." 
                FontSize="19" 
                AllowDrop="True" 
                dd:DragDrop.IsDragSource="False"
                dd:DragDrop.IsDropTarget="True"
-               FontFamily="Calibri Light" 
-               VerticalAlignment="Center" 
-               Visibility="{Binding ApplicationModel.IsListEmpty}"
+               FontFamily="Calibri Light"        
                Foreground="{StaticResource DarkRed}"/>
-        
-        
+        </StackPanel>
+
+
         <!--S T A T U S B A R -->
         <Grid Background="{StaticResource DarkRed}" 
               Height="23" 
@@ -140,13 +146,6 @@
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
             
-            <!--<Label Grid.Column="0"
-                   Content="Das ist ein Test Text"
-                   Foreground="White"
-                   FontSize="11" VerticalAlignment="Center"
-                   HorizontalContentAlignment="Left"
-                   FontFamily="CalibriLight"/>-->
-
             <Label Grid.Column="0"
                    Content="{Binding ApplicationModel.StatusText}"
                    Foreground="White"
