@@ -35,6 +35,7 @@ namespace OpenSpotify.Models {
             get { return _youtubeApiKey; }
             set {
                 _youtubeApiKey = value;
+                SaveModelEventHandler?.Invoke();
                 OnPropertyChanged(nameof(YoutubeApiKey));
             }
         }
@@ -123,7 +124,12 @@ namespace OpenSpotify.Models {
             return !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey)
                 ? string.Empty
                 : "No FFmpeg or ApiKey";
-        } 
+        }
+
+        public delegate void SaveModel();
+
+        public static SaveModel SaveModelEventHandler;
+
         #endregion
     }
 }

@@ -10,6 +10,8 @@ using GongSolutions.Wpf.DragDrop;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
+using static OpenSpotify.Models.SettingsModel;
+using static OpenSpotify.Services.ApplicationService;
 using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.ViewModels {
@@ -91,7 +93,7 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<object> ViewClosingCommand {
             get {
                 return new CommandHandler<object>(o => {
-                    ApplicationService.SaveApplicationModel(ApplicationModel);
+                    SaveApplicationModel(ApplicationModel);
                     Application.Current.Shutdown();
 
                     if (ApplicationModel.Settings.DeleteVideos) {
@@ -124,6 +126,10 @@ namespace OpenSpotify.ViewModels {
                 ApplicationModel.StatusText = "Ready...";
                 ApplicationModel.IsListEmpty = Visibility.Visible;
                 NavigationService.ContentWindow = NavigationService.HomeView;
+
+                SaveModelEventHandler += () => {
+                    SaveApplicationModel(ApplicationModel);
+                };
             }
             catch (Exception ex) {
                 new LogException(ex);

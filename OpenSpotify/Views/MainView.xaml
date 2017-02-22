@@ -9,7 +9,7 @@
         xmlns:dd="urn:gong-wpf-dragdrop"
         x:Name="MetroWindow"
         mc:Ignorable="d" GlowBrush="Red" 
-        Title="Open Spotify (BETA)"
+        Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         MinHeight="350" 

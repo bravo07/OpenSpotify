@@ -20,7 +20,7 @@ namespace OpenSpotify.Services.Util {
             StringBuilder.Append($"\nSource: {Exception.Source}");
             StringBuilder.Append($"\nStacktrace: {Exception.StackTrace}");
 
-            using (var streamWriter = new StreamWriter(Path.Combine(TempPath, $"{Guid.NewGuid()}.txt"))) {
+            using (var streamWriter = new StreamWriter(Path.Combine(LogPath, $"{Guid.NewGuid()}.txt"))) {
                 streamWriter.Write(StringBuilder.ToString());
             }
         }
