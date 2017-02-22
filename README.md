@@ -1,6 +1,6 @@
 <img src="https://github.com/ValonK/OpenSpotify/blob/master/Logo.png?raw=true" align="right" style="height: 50px"/>
 
-# OpenSpotify (BETA) Downloader
+# OpenSpotify Downloader
 Thanks for checking out OpenSpotify Downloader. We hope it'll be to be your go-to tool for Downloading Music.
 
 ## What you need
