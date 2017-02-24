@@ -96,6 +96,7 @@
                                     </i:Interaction.Triggers>
                                 </Image>
                             </StackPanel>
+                            
                         </Grid>
                     </Grid>
                 </DataTemplate>

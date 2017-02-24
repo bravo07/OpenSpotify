@@ -10,7 +10,9 @@ using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.ViewModels {
+
     public class SettingsViewModel : BaseViewModel {
+
         public SettingsViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
@@ -51,6 +53,7 @@ namespace OpenSpotify.ViewModels {
                         InitialDirectory =
                             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)
                     };
+
                     if (openFileDialog.ShowDialog() == true) {
                         ApplicationModel.Settings.FFmpegPath = openFileDialog.FileName;
                     }
@@ -79,11 +82,11 @@ namespace OpenSpotify.ViewModels {
                 return new CommandHandler<object>(o => {
                     if (File.Exists(ApplicationDataPath)) {
                         File.Delete(ApplicationDataPath);
-                        MessageBox.Show("Settings Deleted!", "Information", MessageBoxButtons.OK,
+                        MessageBox.Show(@"Settings Deleted!", @"Information", MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
                     }
                     else {
-                        MessageBox.Show("No Settings available!", "Information", MessageBoxButtons.OK,
+                        MessageBox.Show(@"No Settings available!", @"Information", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                     }
                 });

@@ -2,23 +2,35 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Media.Imaging;
+using OpenSpotify.Models;
 
-namespace OpenSpotify.Services.Util {
-    public class Utils {
+namespace OpenSpotify.Services.Util
+{
+    public class Utils
+    {
 
         #region Properties
 
-        public static string ApplicationPath { get; set; } =
+        public static string ApplicationPath {
+            get; set;
+        } =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OpenSpotify");
 
-        public static string MusicPath { get; set; } =
+        public static string MusicPath {
+            get; set;
+        } =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "OpenSpotify");
 
-        public static string TempPath { get; set; } =
+        public static string TempPath {
+            get; set;
+        } =
             Path.Combine(ApplicationPath, "Temp");
 
-        public static string LogPath { get; set; } =
+        public static string LogPath {
+            get; set;
+        } =
             Path.Combine(ApplicationPath, "Logs");
 
         public static string ApplicationDataPath = Path.Combine(ApplicationPath, "ApplicationModel.json");
@@ -65,6 +77,17 @@ namespace OpenSpotify.Services.Util {
         public static BitmapImage SoundImageOff
             => new BitmapImage(new Uri("/Assets/PlayerSoundOff.png", UriKind.RelativeOrAbsolute));
 
+        public static BitmapImage StatusImageDownload
+            => new BitmapImage(new Uri("/Assets/DownloadList.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage StatusImageConvert
+            => new BitmapImage(new Uri("/Assets/Convert.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage StatusImageFailed
+            => new BitmapImage(new Uri("/Assets/Failed.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage StatusImageDone
+            => new BitmapImage(new Uri("/Assets/Done.png", UriKind.RelativeOrAbsolute));
         #endregion
 
         #region Check Internet
@@ -78,7 +101,8 @@ namespace OpenSpotify.Services.Util {
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int reservedValue);
 
-        public static bool IsInternetAvailable() {
+        public static bool IsInternetAvailable()
+        {
             int description;
             return InternetGetConnectedState(out description, 0);
         }
@@ -92,7 +116,8 @@ namespace OpenSpotify.Services.Util {
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static string PrepareId(string id) {
+        public static string PrepareId(string id)
+        {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
 
@@ -100,7 +125,8 @@ namespace OpenSpotify.Services.Util {
 
         #region Clear Temp
 
-        public static void ClearTemp() {
+        public static void ClearTemp()
+        {
             try {
                 foreach (var file in Directory.GetFiles(TempPath)) {
                     if (File.Exists(file)) {
@@ -113,13 +139,34 @@ namespace OpenSpotify.Services.Util {
 
         #endregion
 
-        public static string RemoveSpecialCharacters(string source) {
+        public static void SetStatusImage(SongModel song, Status status) {
+            Application.Current.Dispatcher.Invoke(() => {
+                switch (status) {
+                    case Status.Downloading:
+                        song.StatusImage = StatusImageDownload;
+                        break;
+                    case Status.Converting:
+                        song.StatusImage = StatusImageConvert;
+                        break;
+                    case Status.Done:
+                        song.StatusImage = StatusImageDone;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(status), status, null);
+                }
+            });
+        }
+
+        public static string RemoveSpecialCharacters(string source)
+        {
             return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }
     }
 
-    public static class StringExtensions {
-        public static bool Contains(this string source, string toCheck, StringComparison comp) {
+    public static class StringExtensions
+    {
+        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        {
             return source.IndexOf(toCheck, comp) >= 0;
         }
     }

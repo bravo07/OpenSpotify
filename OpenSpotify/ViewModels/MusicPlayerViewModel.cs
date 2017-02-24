@@ -340,9 +340,8 @@ namespace OpenSpotify.ViewModels {
         private void SoundElementTimerTick(object sender, EventArgs e) {
             SliderTrackValue = SoundPlayerElement.Position.TotalSeconds;
             if (SoundPlayerElement.NaturalDuration.HasTimeSpan) {
-                CurrentSongTime =
-                    $@"{TimeSpan.FromMinutes(SoundPlayerElement.Position.Minutes):mm}:{TimeSpan.FromSeconds(
-                        SoundPlayerElement.Position.Seconds):ss} / {SoundPlayerElement.NaturalDuration.TimeSpan:mm\:ss}";
+                CurrentSongTime = $@"{TimeSpan.FromMinutes(SoundPlayerElement.Position.Minutes):mm}:{TimeSpan.FromSeconds(
+                                  SoundPlayerElement.Position.Seconds):ss} / {SoundPlayerElement.NaturalDuration.TimeSpan:mm\:ss}";
             }
         }
 

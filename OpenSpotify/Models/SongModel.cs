@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
+
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenSpotify.Models {
@@ -18,6 +21,7 @@ namespace OpenSpotify.Models {
         private double _statusValue;
         private string _fileName;
         private string _fullPath;
+        private BitmapImage _statusImage;
 
         #endregion
 
@@ -111,6 +115,15 @@ namespace OpenSpotify.Models {
             set {
                 _fileName = value;
                 OnPropertyChanged(nameof(FileName));
+            }
+        }
+
+        [JsonIgnore]
+        public BitmapImage StatusImage {
+            get { return _statusImage; }
+            set {
+                _statusImage = value;
+                OnPropertyChanged(nameof(StatusImage));
             }
         }
 
