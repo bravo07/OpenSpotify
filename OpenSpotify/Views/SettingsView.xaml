@@ -7,94 +7,150 @@
              mc:Ignorable="d">
     <Grid>
 
-        <StackPanel Orientation="Vertical" Margin="70,10,0,0">
+        <StackPanel Orientation="Vertical" 
+                    Margin="70,10,0,0">
 
-            <Label Content="General" FontSize="20" FontFamily="Calibri Light"/>
-            <StackPanel Orientation="Horizontal">
-                <Image Source="../Assets/Directory.png" Height="20" Width="20"/>
-                <TextBox controls:TextBoxHelper.Watermark="FFmpeg Path" Width="400" Text="{Binding ApplicationModel.Settings.FFmpegPath}" IsReadOnly="True" Margin="5"/>
-                <Button Content="..." Margin="5" Command="{Binding FFmpegPathCommand}" Width="50"/>
-            </StackPanel>
+            <Label Content="General" 
+                   FontSize="20" 
+                   FontFamily="Calibri Light"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <Image Source="../Assets/Music.png" Height="20" Width="20"/>
-                <TextBox controls:TextBoxHelper.Watermark="Music Path" Width="400" Text="{Binding ApplicationModel.Settings.MusicPath}" IsReadOnly="True" Margin="5"/>
-                <Button Content="..." Margin="5" Command="{Binding MusicPathCommand}" Width="50"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <Image Source="../Assets/ApiKey.png" Height="20" Width="20"/>
-                <TextBox controls:TextBoxHelper.Watermark="Youtube ApiKey" Width="400" Text="{Binding ApplicationModel.Settings.YoutubeApiKey, Delay=500}" Margin="5"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <Image Source="../Assets/Delete.png" Height="20" Width="20"/>
-                <Button Margin="5,2,0,0" Content="Delete Settings" FontFamily="Calibri Light" Command="{Binding DeleteSettingsCommand}"/>
-                <Image Source="../Assets/Delete.png" Height="20" Width="20" Margin="20,0,0,0"/>
-                <CheckBox Margin="5,0,0,0" Content="Delete Temp Videos with App start" IsChecked="{Binding ApplicationModel.Settings.DeleteVideos}" FontFamily="Calibri Light"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Image Source="../Assets/AutoPlay.png" Height="20" Width="20"/>
-                <CheckBox Margin="5,0,0,0" Content="Auto Play Music Player" IsChecked="{Binding ApplicationModel.Settings.AutoPlay}" FontFamily="Calibri Light"/>
-
-            </StackPanel>
             
-            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
-                <Label Content="FFmpeg" FontSize="20" FontFamily="Calibri Light"/>
-                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                    <Label Content="Bitrate" FontSize="15" FontFamily="Calibri Light"/>
-                    <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
-                    <Label Content="Format" FontSize="15" FontFamily="Calibri Light"/>
-                    <controls:SplitButton ItemsSource="{Binding FormatCollection}" DisplayMemberPath="FormatName" SelectedItem="{Binding ApplicationModel.Settings.SelectedFormat}"/>
+            <!--FFMPEG P A T H-->
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Assets/Directory.png" 
+                       Height="20" 
+                       Width="20"/>
+                <TextBox controls:TextBoxHelper.Watermark="FFmpeg Path" 
+                         Width="400" 
+                         Text="{Binding ApplicationModel.Settings.FFmpegPath}" 
+                         IsReadOnly="True"
+                         Margin="5"/>
+                
+                <Button Content="..." 
+                        Margin="5" 
+                        Command="{Binding FFmpegPathCommand}"
+                        Width="50"/>
+            </StackPanel>
+
+           
+            
+            <!--M U S I C    P A T H-->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,5,0,0">
+                <Image Source="../Assets/Music.png" 
+                       Height="20" 
+                       Width="20"/>
+                <TextBox controls:TextBoxHelper.Watermark="Music Path" 
+                         Width="400" 
+                         Text="{Binding ApplicationModel.Settings.MusicPath}" 
+                         IsReadOnly="True" 
+                         Margin="5"/>
+                <Button Content="..."
+                        Margin="5"
+                        Command="{Binding MusicPathCommand}" 
+                        Width="50"/>
+            </StackPanel>
+
+            
+            
+            <!--M U S I C    P A T H-->
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,5,0,0">
+                <Image Source="../Assets/ApiKey.png" 
+                       Height="20" 
+                       Width="20"/>
+                <TextBox controls:TextBoxHelper.Watermark="Youtube ApiKey" 
+                         Width="400" 
+                         Text="{Binding ApplicationModel.Settings.YoutubeApiKey, Delay=500}"
+                         Margin="5"/>
+            </StackPanel>
+
+            
+            
+            <!--D E L E T E   S E T T I N G S-->
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0,5,0,0">
+                <Image Source="../Assets/Delete.png" 
+                       Height="20" 
+                       Width="20"/>
+                <Button Margin="5,2,0,0"
+                        Content="Delete Settings" 
+                        FontFamily="Calibri Light" 
+                        Command="{Binding DeleteSettingsCommand}"/>
+                <Image Source="../Assets/Delete.png" 
+                       Height="20" 
+                       Width="20" 
+                       Margin="142,0,0,0"/>
+                <CheckBox Margin="5,0,0,0" 
+                          Content="Delete Temp Videos with App start" 
+                          IsChecked="{Binding ApplicationModel.Settings.DeleteVideos}" 
+                          FontFamily="Calibri Light"/>
+            </StackPanel>
+
+
+
+            <!--M U S I C    P A T H-->
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <Image Source="../Assets/AutoPlay.png" 
+                           Height="20" 
+                           Width="20"/>
+                    <CheckBox Margin="5,0,0,0" 
+                              Content="Auto Play Music Player" 
+                              IsChecked="{Binding ApplicationModel.Settings.AutoPlay}"
+                              FontFamily="Calibri Light"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" 
+                            Margin="88,10,0,0">
+                    <Image Source="../Assets/StartWith.png" 
+                           Height="25" 
+                           Width="25"/>
+                    <CheckBox Margin="5,0,0,0" 
+                              Content="Start with Windows" 
+                              IsChecked="{Binding StartWithWindows}"
+                              FontFamily="Calibri Light"/>
+                </StackPanel>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <Image Source="../Assets/Delete.png" 
+                           Height="20" 
+                           Width="20"/>
+                    <CheckBox Margin="5,0,0,0" 
+                              Content="Remove Downloaded Songs from List" 
+                              IsChecked="{Binding ApplicationModel.Settings.RemoveSongsFromList}"
+                              FontFamily="Calibri Light"/>
+                </StackPanel>
+            </StackPanel>
+
+
+
+            <StackPanel Orientation="Vertical" 
+                        Margin="0,10,0,0">
+                <Label Content="FFmpeg" 
+                       FontSize="20" 
+                       FontFamily="Calibri Light"/>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,5,0,0">
+                    <Label Content="Bitrate" 
+                           FontSize="15"
+                           FontFamily="Calibri Light"/>
+                    <controls:SplitButton ItemsSource="{Binding BitrateCollection}"
+                                          DisplayMemberPath="Bitrate" 
+                                          SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
+                    <Label Content="Format" 
+                           FontSize="15" 
+                           FontFamily="Calibri Light"/>
+                    <controls:SplitButton ItemsSource="{Binding FormatCollection}" 
+                                          DisplayMemberPath="FormatName" 
+                                          SelectedItem="{Binding ApplicationModel.Settings.SelectedFormat}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Margin="0,10,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="0.2*"/>
-                </Grid.ColumnDefinitions>
-
-                <Image Source="../Assets/Directory.png" Height="25" Width="25" Margin="50,0,0,0"/>
-                <TextBox Grid.Column="1" controls:TextBoxHelper.Watermark="FFmpeg Path" Text="{Binding ApplicationModel.Settings.FFmpegPath}" IsReadOnly="True" Margin="5"/>
-                <Button Grid.Column="2" Content="..." Margin="5" Command="{Binding FFmpegPathCommand}"/>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="0.2*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="../Assets/ApiKey.png" Height="25" Width="25"  Margin="50,0,0,0"/>
-                <TextBox Grid.Column="1" controls:TextBoxHelper.Watermark="Youtube ApiKey" Text="{Binding ApplicationModel.Settings.YoutubeApiKey ,UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="1" Margin="50,0,0,0">
-            <StackPanel Orientation="Vertical">
-                <Label Content="FFmpeg" FontSize="20" FontFamily="Calibri Light"/>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Bitrate" FontSize="15" FontFamily="Calibri Light"/>
-                    <controls:SplitButton ItemsSource="{Binding BitrateCollection}" DisplayMemberPath="Bitrate" SelectedItem="{Binding ApplicationModel.Settings.SelectedBitrate}"/>
-                </StackPanel>
-            </StackPanel>
-        </Grid>-->
     </Grid>
 </UserControl>

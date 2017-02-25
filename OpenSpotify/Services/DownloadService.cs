@@ -275,12 +275,17 @@ namespace OpenSpotify.Services {
 
                         if(ApplicationModel.DownloadCollection.Count == 1) {
                             ApplicationModel.StatusText = "Ready...";
-                            //ApplicationModel.DownloadCollection.Remove(finishedSong);
+
+                            if (ApplicationModel.Settings.RemoveSongsFromList) {
+                                ApplicationModel.DownloadCollection.Remove(finishedSong);
+                            }
                             ApplicationModel.SongCollection.Add(finishedSong);
                             NavigationService.ContentWindow = NavigationService.HomeView;
                         }
                         else {
-                            //ApplicationModel.DownloadCollection.Remove(finishedSong);
+                            if (ApplicationModel.Settings.RemoveSongsFromList) {
+                                ApplicationModel.DownloadCollection.Remove(finishedSong);
+                            }
                             ApplicationModel.StatusText = $"Downloading {ApplicationModel.DownloadCollection.Count}/" +
                                                           $"{ApplicationModel.DroppedSongs.Count}";
                             ApplicationModel.SongCollection.Add(finishedSong);

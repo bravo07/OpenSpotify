@@ -18,6 +18,8 @@ namespace OpenSpotify.Models {
         private double _windowHeight;
         private bool _deleteVideos;
         private bool _autoPlay;
+        private bool _startWithWindows;
+        private bool _removeSongsFromList;
 
         #endregion
 
@@ -113,6 +115,21 @@ namespace OpenSpotify.Models {
             }
         }
 
+        public bool StartWithWindows {
+            get { return _startWithWindows; }
+            set {
+                _startWithWindows = value;
+                OnPropertyChanged(nameof(StartWithWindows));
+            }
+        }
+
+        public bool RemoveSongsFromList {
+            get { return _removeSongsFromList; }
+            set {
+                _removeSongsFromList = value;
+                OnPropertyChanged(nameof(RemoveSongsFromList));
+            }
+        }
 
         [JsonIgnore]
         public bool IsReady => !string.IsNullOrEmpty(FFmpegPath) && !string.IsNullOrEmpty(YoutubeApiKey);

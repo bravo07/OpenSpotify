@@ -22,6 +22,7 @@ namespace OpenSpotify.ViewModels {
 
         private ApplicationModel _applicationModel;
         private BitrateModel _selectedBitrate;
+        private bool _startWithWindows;
 
         #endregion
 
@@ -35,6 +36,24 @@ namespace OpenSpotify.ViewModels {
                 Validate();
             }
         }
+
+        public bool StartWithWindows {
+            get { return _startWithWindows; }
+            set {
+                _startWithWindows = value;
+
+                ApplicationModel.Settings.StartWithWindows = _startWithWindows;
+                if (_startWithWindows) {
+                    StartUpManager.AddApplicationToCurrentUserStartup();
+                }
+                else {
+                    StartUpManager.RemoveApplicationFromCurrentUserStartup();
+                }
+
+                OnPropertyChanged(nameof(StartWithWindows));
+            }
+        }
+
 
 
         public ObservableCollection<BitrateModel> BitrateCollection { get; set; }

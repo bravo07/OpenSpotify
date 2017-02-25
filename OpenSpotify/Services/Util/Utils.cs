@@ -139,9 +139,14 @@ namespace OpenSpotify.Services.Util
 
         #endregion
 
-        public static void SetStatusImage(SongModel song, Status status) {
-            Application.Current.Dispatcher.Invoke(() => {
-                switch (status) {
+        #region Set Status Image
+
+        public static void SetStatusImage(SongModel song, Status status)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                switch (status)
+                {
                     case Status.Downloading:
                         song.StatusImage = StatusImageDownload;
                         break;
@@ -156,6 +161,7 @@ namespace OpenSpotify.Services.Util
                 }
             });
         }
+        #endregion
 
         public static string RemoveSpecialCharacters(string source)
         {
