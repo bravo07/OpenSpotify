@@ -63,6 +63,9 @@
     <Reference Include="Google.Apis.YouTube.v3, Version=1.21.0.760, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.YouTube.v3.1.21.0.760\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
     </Reference>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net45\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
     <Reference Include="libvideo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\valon\Desktop\libvideo-master\src\libvideo\bin\Release\libvideo.dll</HintPath>
@@ -126,6 +129,8 @@
     <Compile Include="Services\Util\ImageCoverter.cs" />
     <Compile Include="Services\Util\LogException.cs" />
     <Compile Include="Services\Util\SliderDragBehaviors.cs" />
+    <Compile Include="Services\Util\StartUpManager.cs" />
+    <Compile Include="Services\Util\Status.cs" />
     <Compile Include="Services\Util\Utils.cs" />
     <Compile Include="Services\Util\Views.cs" />
     <Compile Include="ViewModels\DownloadsViewModel.cs" />
@@ -266,6 +271,8 @@
   <ItemGroup>
     <Resource Include="Assets\AutoPlay.png" />
     <Resource Include="Assets\DragDrop.png" />
+    <Resource Include="Assets\Logo.ico" />
+    <Resource Include="Assets\StartWith.png" />
     <Content Include="libvideo.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

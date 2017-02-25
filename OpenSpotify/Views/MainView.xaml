@@ -81,10 +81,10 @@
     <Grid>
         
         <!--T R A Y  I C O N-->
-        <tb:TaskbarIcon x:Name="myNotifyIcon"
+        <tb:TaskbarIcon 
                     Visibility="Visible"
-                    ToolTipText="OpenSpotify"
-                    IconSource="/Assets/Logo.ico"
+                    ToolTipText="OpenSpotify" 
+                    IconSource="../Assets/Logo.ico"
                     DoubleClickCommand="{Binding TaskbarDoubleClickCommand}" 
                     DoubleClickCommandParameter="{Binding ElementName=Window}"
                     MenuActivation="LeftOrRightClick"
@@ -94,13 +94,13 @@
                     <MenuItem Header="Show" 
                               Command="{Binding ShowCommand}">
                         <MenuItem.Icon>
-                            <Image Source="/Assets/StartWith.png"/>
+                            <Image Source="../Assets/StartWith.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     
                     <MenuItem Header="Open Music Folder" Command="{Binding OpenMusicCommand}">
                         <MenuItem.Icon>
-                            <Image Source="/Assets/Open.png"/>
+                            <Image Source="../Assets/Open.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
