@@ -5,28 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:dd="urn:gong-wpf-dragdrop"
-        x:Name="MetroWindow"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d" GlowBrush="Red" 
         Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
         MinHeight="350" 
         MinWidth="560" 
+        ShowInTaskbar="{Binding ShowInTaskbar}"
+        WindowState="{Binding WindowState}"
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
         Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}"
         AllowDrop="True" dd:DragDrop.IsDragSource="False"
-        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanResize"
-        Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame">
+        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanResize" 
+        Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame" x:Name="Window">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding ViewClosingCommand}"/>
+            <ei:CallMethodAction MethodName="ViewClosing" TargetObject="{Binding}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-
-    
-    <!-- R E S O U R C E S --> 
+    <!-- R E S O U R C E S -->
     <Window.Resources>
 
         <SolidColorBrush x:Key="DarkRed" Color="#FFA71F12" />
@@ -76,9 +76,42 @@
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    
-    
+
+
     <Grid>
+        
+        <!--T R A Y  I C O N-->
+        <tb:TaskbarIcon x:Name="myNotifyIcon"
+                    Visibility="Visible"
+                    ToolTipText="OpenSpotify"
+                    IconSource="/Assets/Logo.ico"
+                    DoubleClickCommand="{Binding TaskbarDoubleClickCommand}" 
+                    DoubleClickCommandParameter="{Binding ElementName=Window}"
+                    MenuActivation="LeftOrRightClick"
+                    PopupActivation="DoubleClick">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Show" 
+                              Command="{Binding ShowCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/Assets/StartWith.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Open Music Folder" Command="{Binding OpenMusicCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="/Assets/Open.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Close" Command="{Binding CloseAppCommand}">
+                        <MenuItem.Icon>
+                            <Image Source="../Assets/Remove.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
 
         <!-- M A I N M E N U -->
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
@@ -95,7 +128,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 
-            
+
             <!--  I T E M S  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
@@ -105,7 +138,7 @@
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
 
-            
+
             <!--  C O N T E N T  -->
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
@@ -145,7 +178,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Label Grid.Column="0"
                    Content="{Binding ApplicationModel.StatusText}"
                    Foreground="White"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -31,6 +32,8 @@ namespace OpenSpotify.ViewModels {
         private string _searchText;
         private CollectionView _collectionView;
         private int _selectedPageIndex;
+        private WindowState _windowState;
+        private bool _showInTaskbar;
 
         #endregion
 
@@ -85,23 +88,25 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
+        public WindowState WindowState {
+            get { return _windowState; }
+            set {
+                _windowState = value;
+                OnPropertyChanged(nameof(WindowState));
+            }
+        }
+
+        public bool ShowInTaskbar {
+            get { return _showInTaskbar; }
+            set {
+                _showInTaskbar = value; 
+                OnPropertyChanged(nameof(ShowInTaskbar));
+            }
+        }
 
         #endregion
 
         #region Commands
-
-        public CommandHandler<object> ViewClosingCommand {
-            get {
-                return new CommandHandler<object>(o => {
-                    SaveApplicationModel(ApplicationModel);
-                    Application.Current.Shutdown();
-
-                    if (ApplicationModel.Settings.DeleteVideos) {
-                        ClearTemp();
-                    }
-                });
-            }
-        }
 
         public CommandHandler<object> OpenMusicCommand {
             get {
@@ -109,6 +114,36 @@ namespace OpenSpotify.ViewModels {
                     if (Directory.Exists(ApplicationModel.Settings.MusicPath)) {
                         Process.Start(ApplicationModel.Settings.MusicPath);
                     }
+                });
+            }
+        }
+
+        public CommandHandler<Window> TaskbarDoubleClickCommand {
+            get {
+                return new CommandHandler<Window>(window => {
+                    Application.Current.Dispatcher.Invoke(() => {
+                        window.Show();
+                        window.WindowState = WindowState.Normal;
+                        ShowInTaskbar = true;
+                    });
+                });
+            }
+        }
+
+        public CommandHandler<object> CloseAppCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    SaveApplicationModel(ApplicationModel);
+                    Application.Current.Shutdown();
+                });
+            }
+        }
+
+        public CommandHandler<object> ShowCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    WindowState = WindowState.Normal;
+                    ShowInTaskbar = true;
                 });
             }
         }
@@ -126,6 +161,7 @@ namespace OpenSpotify.ViewModels {
                 ApplicationModel.StatusText = "Ready...";
                 ApplicationModel.IsListEmpty = Visibility.Visible;
                 NavigationService.ContentWindow = NavigationService.HomeView;
+                ShowInTaskbar = true;
 
                 SaveModelEventHandler += () => {
                     SaveApplicationModel(ApplicationModel);
@@ -195,6 +231,18 @@ namespace OpenSpotify.ViewModels {
             ApplicationModel.DroppedSongs = applicationModelDroppedSongs;
         }
 
+        public void ViewClosing(object sender, CancelEventArgs e)
+        {
+            SaveApplicationModel(ApplicationModel);
+            WindowState = WindowState.Minimized;
+            e.Cancel = true;
+            ShowInTaskbar = false;
+
+            if (ApplicationModel.Settings.DeleteVideos)
+            {
+                ClearTemp();
+            }
+        }
         #endregion
     }
 }
