@@ -55,3 +55,7 @@ Temporary Items
 *.lref
 *.cache
 *.cache
+*.pdb
+OpenSpotify/bin/Debug/OpenSpotify.pdb
+*.cache
+*.cache

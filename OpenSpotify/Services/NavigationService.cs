@@ -122,25 +122,26 @@ namespace OpenSpotify.Services {
                                 ApplicationModel.CurrentView = Downloads;
                                 ApplicationModel.IsDownloadView = true;
                                 ApplicationModel.IsListEmpty = Visibility.Collapsed;
-                                return;
+                                break;
 
                             case nameof(Settings):
                                 ContentWindow = SettingsView;
                                 SettingsViewModel.ApplicationModel = ApplicationModel;
                                 SettingsView.DataContext = SettingsViewModel;
-                                ApplicationModel.CurrentView = Downloads;
+                                ApplicationModel.CurrentView = Settings;
                                 ApplicationModel.IsDownloadView = false;
                                 ApplicationModel.IsListEmpty = Visibility.Collapsed;
-                                return;
+                                break;
 
                             case nameof(Home):
                                 ContentWindow = HomeView;
                                 HomeViewModel.ApplicationModel = ApplicationModel;
                                 HomeView.DataContext = HomeViewModel;
-                                ApplicationModel.CurrentView = Downloads;
+                                ApplicationModel.CurrentView = Home;
                                 ApplicationModel.IsDownloadView = false;
                                 ApplicationModel.IsListEmpty =
-                                    ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
+                                    ApplicationModel.DownloadCollection.Count > 0 ? 
+                                        Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }
                     }

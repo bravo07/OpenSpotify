@@ -144,7 +144,6 @@ namespace OpenSpotify.Models {
         }
 
         public delegate void SaveModel();
-
         public static SaveModel SaveModelEventHandler;
 
         #endregion

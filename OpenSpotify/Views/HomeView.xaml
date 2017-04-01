@@ -14,7 +14,6 @@
 
 
     <Grid Margin="48,10,0,0">
-     
         <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

@@ -119,15 +119,29 @@ namespace OpenSpotify.ViewModels {
         private void Initialize()
         {
             BitrateCollection = new ObservableCollection<BitrateModel> {
-                new BitrateModel {BitrateName = "320 kBit/s", Bitrate = "320K"},
-                new BitrateModel {BitrateName = "256 kBit/s", Bitrate = "256K"},
-                new BitrateModel {BitrateName = "192 kBit/s", Bitrate = "192K"},
-                new BitrateModel {BitrateName = "128 kBit/s", Bitrate = "128K"},
+                new BitrateModel {
+                    BitrateName = "320 kBit/s", Bitrate = "320K"
+                },
+                new BitrateModel {
+                    BitrateName = "256 kBit/s", Bitrate = "256K"
+                },
+                new BitrateModel {
+                    BitrateName = "192 kBit/s", Bitrate = "192K"
+                },
+                new BitrateModel {
+                    BitrateName = "128 kBit/s", Bitrate = "128K"
+                },
             };
 
             FormatCollection = new ObservableCollection<FormatModel> {
-                new FormatModel {FormatName = "Mp3", Format = ".mp3"},
-                new FormatModel {FormatName = "Wav", Format = ".wav"},
+                new FormatModel {
+                    FormatName = "Mp3",
+                    Format = ".mp3"
+                },
+                new FormatModel {
+                    FormatName = "Wav",
+                    Format = ".wav"
+                },
             };
 
             ApplicationModel.Settings.SelectedBitrate = BitrateCollection[0];

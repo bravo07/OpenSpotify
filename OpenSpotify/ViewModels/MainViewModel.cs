@@ -11,14 +11,13 @@ using GongSolutions.Wpf.DragDrop;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
+using OpenSpotify.Views;
 using static OpenSpotify.Models.SettingsModel;
 using static OpenSpotify.Services.ApplicationService;
 using static OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.ViewModels {
-
     public class MainViewModel : BaseViewModel, IDropTarget {
-
         public MainViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
@@ -75,7 +74,7 @@ namespace OpenSpotify.ViewModels {
         public CollectionView CollectionView {
             get { return _collectionView; }
             set {
-                _collectionView = value; 
+                _collectionView = value;
                 OnPropertyChanged(nameof(CollectionView));
             }
         }
@@ -83,7 +82,7 @@ namespace OpenSpotify.ViewModels {
         public int SelectedPageIndex {
             get { return _selectedPageIndex; }
             set {
-                _selectedPageIndex = value; 
+                _selectedPageIndex = value;
                 OnPropertyChanged(nameof(SelectedPageIndex));
             }
         }
@@ -99,7 +98,7 @@ namespace OpenSpotify.ViewModels {
         public bool ShowInTaskbar {
             get { return _showInTaskbar; }
             set {
-                _showInTaskbar = value; 
+                _showInTaskbar = value;
                 OnPropertyChanged(nameof(ShowInTaskbar));
             }
         }
@@ -114,6 +113,15 @@ namespace OpenSpotify.ViewModels {
                     if (Directory.Exists(ApplicationModel.Settings.MusicPath)) {
                         Process.Start(ApplicationModel.Settings.MusicPath);
                     }
+                });
+            }
+        }
+
+        public CommandHandler<object> OpenSettingsCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    var settings = new SettingView(ApplicationModel);
+                    settings.ShowDialog();
                 });
             }
         }
@@ -147,6 +155,7 @@ namespace OpenSpotify.ViewModels {
                 });
             }
         }
+
         #endregion
 
         #region Functions
@@ -156,16 +165,14 @@ namespace OpenSpotify.ViewModels {
                 NavigationService = new NavigationService(ApplicationModel);
                 NavigationService.InitializeNavigation();
                 DownloadService = new DownloadService(ApplicationModel, NavigationService);
-                CollectionView = (CollectionView)CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
+                CollectionView = (CollectionView) CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
                 CollectionView.Filter = SearchFilter;
                 ApplicationModel.StatusText = "Ready...";
                 ApplicationModel.IsListEmpty = Visibility.Visible;
                 NavigationService.ContentWindow = NavigationService.HomeView;
                 ShowInTaskbar = true;
 
-                SaveModelEventHandler += () => {
-                    SaveApplicationModel(ApplicationModel);
-                };
+                SaveModelEventHandler += () => { SaveApplicationModel(ApplicationModel); };
             }
             catch (Exception ex) {
                 new LogException(ex);
@@ -188,7 +195,6 @@ namespace OpenSpotify.ViewModels {
         }
 
         public async void Drop(IDropInfo dropInfo) {
-
             try {
                 if (!ApplicationModel.Settings.IsReady) {
                     ApplicationModel.StatusText = "No API Key or FFmpeg detected!.";
@@ -202,9 +208,8 @@ namespace OpenSpotify.ViewModels {
 
                 var dataObject = dropInfo.Data as IDataObject;
                 if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {
-
                     await Task.Run(() => {
-                        var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
+                        var filenames = (string) dataObject.GetData(DataFormats.StringFormat, true);
                         ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
                         ApplicationModel.StatusText = $"{ApplicationModel.DroppedSongs.Count} Dropped...";
                         if (ApplicationModel.DroppedSongs == null) {
@@ -215,7 +220,8 @@ namespace OpenSpotify.ViewModels {
                             DownloadService.Start(ApplicationModel.DroppedSongs[i]);
                             ApplicationModel.StatusText = $"{i}/{ApplicationModel.DroppedSongs.Count} Done.";
                         }
-                        ApplicationModel.StatusText = $"Downloading {ApplicationModel.DroppedSongs.Count}/{ApplicationModel.DroppedSongs.Count}";
+                        ApplicationModel.StatusText =
+                            $"Downloading {ApplicationModel.DroppedSongs.Count}/{ApplicationModel.DroppedSongs.Count}";
                     });
                 }
             }
@@ -224,22 +230,20 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        private void ToCollection(IEnumerable<string> split, ObservableCollection<string> applicationModelDroppedSongs) {          
+        private void ToCollection(IEnumerable<string> split, ObservableCollection<string> applicationModelDroppedSongs) {
             foreach (var songId in split) {
                 applicationModelDroppedSongs.Add(songId);
             }
             ApplicationModel.DroppedSongs = applicationModelDroppedSongs;
         }
 
-        public void ViewClosing(object sender, CancelEventArgs e)
-        {
+        public void ViewClosing(object sender, CancelEventArgs e) {
             SaveApplicationModel(ApplicationModel);
             WindowState = WindowState.Minimized;
             e.Cancel = true;
             ShowInTaskbar = false;
 
-            if (ApplicationModel.Settings.DeleteVideos)
-            {
+            if (ApplicationModel.Settings.DeleteVideos) {
                 ClearTemp();
             }
         }

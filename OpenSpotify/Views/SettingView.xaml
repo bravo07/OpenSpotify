@@ -1,21 +1,33 @@
-﻿<UserControl x:Class="OpenSpotify.Views.SettingsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d">
+﻿<controls:MetroWindow  x:Class="OpenSpotify.Views.SettingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OpenSpotify.Views"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="SettingView"
+        MinHeight="410" 
+        MinWidth="560" 
+        Height="410" 
+        Width="591"
+        BorderBrush="#FFA71F12"
+        Icon="/OpenSpotify;component/Logo.ico" 
+        IconScalingMode="NoScaleSmallerFrame">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="DarkRed" Color="#FFA71F12" />
+    </Window.Resources>
+
     <Grid>
-
-        <StackPanel Orientation="Vertical" 
-                    Margin="70,10,0,0">
-
+        <StackPanel Orientation="Vertical"
+                    Margin="15">
             <Label Content="General" 
                    FontSize="20" 
                    FontFamily="Calibri Light"/>
 
-            
-            <!--FFMPEG P A T H-->
+
+            <!--FF M P E G P A T H-->
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Assets/Directory.png" 
                        Height="20" 
@@ -25,15 +37,15 @@
                          Text="{Binding ApplicationModel.Settings.FFmpegPath}" 
                          IsReadOnly="True"
                          Margin="5"/>
-                
+
                 <Button Content="..." 
                         Margin="5" 
                         Command="{Binding FFmpegPathCommand}"
                         Width="50"/>
             </StackPanel>
 
-           
-            
+
+
             <!--M U S I C    P A T H-->
             <StackPanel Orientation="Horizontal"
                         Margin="0,5,0,0">
@@ -51,8 +63,8 @@
                         Width="50"/>
             </StackPanel>
 
-            
-            
+
+
             <!--M U S I C    P A T H-->
             <StackPanel Orientation="Horizontal" 
                         Margin="0,5,0,0">
@@ -65,8 +77,8 @@
                          Margin="5"/>
             </StackPanel>
 
-            
-            
+
+
             <!--D E L E T E   S E T T I N G S-->
             <StackPanel Orientation="Horizontal" 
                         Margin="0,5,0,0">
@@ -88,7 +100,6 @@
             </StackPanel>
 
 
-
             <!--M U S I C    P A T H-->
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal"
@@ -101,7 +112,7 @@
                               IsChecked="{Binding ApplicationModel.Settings.AutoPlay}"
                               FontFamily="Calibri Light"/>
                 </StackPanel>
-                
+
                 <StackPanel Orientation="Horizontal" 
                             Margin="88,10,0,0">
                     <Image Source="../Assets/StartWith.png" 
@@ -151,6 +162,25 @@
                                           SelectedItem="{Binding ApplicationModel.Settings.SelectedFormat}"/>
                 </StackPanel>
             </StackPanel>
+
+           
         </StackPanel>
+
+        <!--S T A T U S B A R -->
+        <Grid Background="{StaticResource DarkRed}" 
+              Height="23" 
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Content="{Binding ApplicationModel.StatusText}"
+                   Foreground="White"
+                   FontSize="11" VerticalAlignment="Center"
+                   HorizontalContentAlignment="Left"
+                   FontFamily="CalibriLight"/>
+        </Grid>
     </Grid>
-</UserControl>
+</controls:MetroWindow>

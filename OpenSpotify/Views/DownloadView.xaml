@@ -8,11 +8,14 @@
              x:Name="UserControl"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <util:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
+        <util:BindingProxy x:Key="DataContextProxy"
+                           Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
         <ListBox ItemsSource="{Binding ApplicationModel.SongCollection}"
-                 Margin="48,10,0,0" TextSearch.TextPath="Name" IsTextSearchEnabled="True">
+                 Margin="48,10,0,0" 
+                 TextSearch.TextPath="Name"
+                 IsTextSearchEnabled="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

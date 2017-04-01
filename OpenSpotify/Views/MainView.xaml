@@ -8,6 +8,7 @@
         xmlns:dd="urn:gong-wpf-dragdrop"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:views="clr-namespace:OpenSpotify.Views"
         mc:Ignorable="d" GlowBrush="Red" 
         Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
@@ -18,43 +19,66 @@
         WindowState="{Binding WindowState}"
         Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
         Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}"
-        AllowDrop="True" dd:DragDrop.IsDragSource="False"
-        dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}" ResizeMode="CanResize" 
-        Icon="/OpenSpotify;component/Logo.ico" IconScalingMode="NoScaleSmallerFrame" x:Name="Window">
+        AllowDrop="True"
+        dd:DragDrop.IsDragSource="False"
+        dd:DragDrop.IsDropTarget="True"
+        dd:DragDrop.DropHandler="{Binding}" 
+        ResizeMode="CanResize" 
+        Icon="/OpenSpotify;component/Logo.ico" 
+        IconScalingMode="NoScaleSmallerFrame" 
+        x:Name="Window">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <ei:CallMethodAction MethodName="ViewClosing" TargetObject="{Binding}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <!-- R E S O U R C E S -->
+    
+    <!-- R E S O U R C E S -->  
     <Window.Resources>
-
+        
         <SolidColorBrush x:Key="DarkRed" Color="#FFA71F12" />
 
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
+        <DataTemplate x:Key="HamburgerMenuItem"
+                      DataType="{x:Type controls:HamburgerMenuItem}">
+            
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ContentControl Grid.Column="0" Content="{Binding Tag}" Focusable="False"
-                                Foreground="White" IsTabStop="False" />
-                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="16"
-                           Foreground="White" Text="{Binding Label}" />
+                
+                <ContentControl Grid.Column="0" 
+                                Content="{Binding Tag}" 
+                                Focusable="False"
+                                Foreground="White" 
+                                IsTabStop="False" />
+                
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center" 
+                           FontSize="16"
+                           Foreground="White"
+                           Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
+        <DataTemplate x:Key="HamburgerMenuImageItem" 
+                      DataType="{x:Type controls:HamburgerMenuGlyphItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Margin="12" HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Source="{Binding Glyph}" Stretch="UniformToFill" />
-                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="16"
-                           Foreground="White" Text="{Binding Label}" />
+                <Image Margin="12"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Source="{Binding Glyph}"
+                       Stretch="UniformToFill" />
+                <TextBlock Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="White"
+                           Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -70,6 +94,12 @@
                      Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Command="{Binding OpenMusicCommand}">
                 <Image Source="../Assets/Directory.png" 
+                       Stretch="Uniform"
+                       Height="17"
+                       Width="17"/>
+            </Button>
+            <Button Command="{Binding OpenSettingsCommand}">
+                <Image Source="../Assets/Settings.png" 
                        Stretch="Uniform"
                        Height="17"
                        Width="17"/>
@@ -103,7 +133,9 @@
                             <Image Source="../Assets/Open.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    
                     <Separator/>
+                    
                     <MenuItem Header="Close" Command="{Binding CloseAppCommand}">
                         <MenuItem.Icon>
                             <Image Source="../Assets/Remove.png"/>
@@ -115,12 +147,13 @@
 
         <!-- M A I N M E N U -->
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                Content="{Binding NavigationService.ContentWindow}"
-                                SelectedItem="{Binding NavigationService.SelectedItem}"
+                                Content="{Binding NavigationService.ContentWindow, Mode=TwoWay}"
+                                SelectedItem="{Binding NavigationService.SelectedItem, Mode=TwoWay}"
                                 DisplayMode="Overlay"
                                 OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}" Margin="0,0,0,20">
+                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}" 
+                                Margin="0,0,0,20">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ItemClick">
                     <i:InvokeCommandAction Command="{Binding NavigationService.ItemClickCommand}" 
@@ -129,32 +162,35 @@
             </i:Interaction.Triggers>
 
 
-            <!--  I T E M S  -->
+              <!--I T E M S-->  
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Home.png" Label="Home"/>
-                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Download.png" Label="Downloads"/>
-                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Settings.png" Label="Settings" />
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Home.png" 
+                                                     Label="Home"/>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Download.png"
+                                                     Label="Downloads"/>
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
 
 
-            <!--  C O N T E N T  -->
+              <!--C O N T E N T-->  
             <controls:HamburgerMenu.ContentTemplate>
                 <DataTemplate>
                     <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" 
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    Content="{Binding NavigationService.ContentWindow}"/>
+                                    Content="{Binding NavigationService.ContentWindow, Mode=TwoWay}"/>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>
 
-
+        
         <!--D R O P  L A B E L  /  I M A G E -->
         <StackPanel Orientation="Vertical" 
                     Visibility="{Binding ApplicationModel.IsListEmpty}" 
-                    VerticalAlignment="Center" >
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">
+            
             <Image Source="../Assets/DragDrop.png"
                    Height="60" 
                    Width="60" />

@@ -87,15 +87,15 @@ namespace OpenSpotify.Models {
             }
 
             DroppedSongs.CollectionChanged += (sender, args) => {
-                    IsListEmpty = DroppedSongs.Count == 0 && CurrentView == Services.Util.Views.Home
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
+                IsListEmpty = DroppedSongs.Count == 0 && CurrentView == Services.Util.Views.Home
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
             };
 
             DownloadCollection.CollectionChanged += (sender, args) => {
-                    IsListEmpty = DownloadCollection.Count == 0 && CurrentView == Services.Util.Views.Home
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
+                IsListEmpty = DownloadCollection.Count == 0 && CurrentView == Services.Util.Views.Home
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
             };
         }
 

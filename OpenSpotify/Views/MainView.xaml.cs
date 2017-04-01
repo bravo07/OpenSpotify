@@ -1,4 +1,5 @@
-﻿using OpenSpotify.Models;
+﻿using System.Windows.Controls;
+using OpenSpotify.Models;
 using OpenSpotify.ViewModels;
 
 namespace OpenSpotify.Views {
