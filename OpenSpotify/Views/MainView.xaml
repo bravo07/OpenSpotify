@@ -9,7 +9,8 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:views="clr-namespace:OpenSpotify.Views"
-        mc:Ignorable="d" GlowBrush="Red" 
+        mc:Ignorable="d"
+        GlowBrush="Red" 
         Title="Open Spotify"
         Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
         Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
@@ -26,7 +27,7 @@
         ResizeMode="CanResize" 
         Icon="/OpenSpotify;component/Logo.ico" 
         IconScalingMode="NoScaleSmallerFrame" 
-        x:Name="Window">
+        x:Name="MetroWindow">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <ei:CallMethodAction MethodName="ViewClosing" TargetObject="{Binding}" />
@@ -98,12 +99,6 @@
                        Height="17"
                        Width="17"/>
             </Button>
-            <Button Command="{Binding OpenSettingsCommand}">
-                <Image Source="../Assets/Settings.png" 
-                       Stretch="Uniform"
-                       Height="17"
-                       Width="17"/>
-            </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
@@ -169,6 +164,8 @@
                                                      Label="Home"/>
                     <controls:HamburgerMenuGlyphItem Glyph="/Assets/Download.png"
                                                      Label="Downloads"/>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Settings.png"
+                                                     Label="Settings"/>
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
 
@@ -179,7 +176,7 @@
                     <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" 
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    Content="{Binding NavigationService.ContentWindow, Mode=TwoWay}"/>
+                                    Content="{Binding NavigationService.ContentWindow}"/>
                 </DataTemplate>
             </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>

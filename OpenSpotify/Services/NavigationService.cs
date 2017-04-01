@@ -8,9 +8,11 @@ using OpenSpotify.ViewModels;
 using OpenSpotify.Views;
 using static OpenSpotify.Services.Util.Views;
 
-namespace OpenSpotify.Services {
+namespace OpenSpotify.Services
+{
 
-    public class NavigationService : BaseService {
+    public class NavigationService : BaseService
+    {
 
         public NavigationService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
@@ -83,7 +85,7 @@ namespace OpenSpotify.Services {
         public HomeViewModel HomeViewModel {
             get { return _homeViewModel; }
             set {
-                _homeViewModel = value; 
+                _homeViewModel = value;
                 OnPropertyChanged(nameof(HomeViewModel));
             }
         }
@@ -91,7 +93,7 @@ namespace OpenSpotify.Services {
         public SettingsViewModel SettingsViewModel {
             get { return _settingsViewModel; }
             set {
-                _settingsViewModel = value; 
+                _settingsViewModel = value;
                 OnPropertyChanged(nameof(SettingsViewModel));
             }
         }
@@ -122,7 +124,7 @@ namespace OpenSpotify.Services {
                                 ApplicationModel.CurrentView = Downloads;
                                 ApplicationModel.IsDownloadView = true;
                                 ApplicationModel.IsListEmpty = Visibility.Collapsed;
-                                break;
+                                return;
 
                             case nameof(Settings):
                                 ContentWindow = SettingsView;
@@ -131,17 +133,16 @@ namespace OpenSpotify.Services {
                                 ApplicationModel.CurrentView = Settings;
                                 ApplicationModel.IsDownloadView = false;
                                 ApplicationModel.IsListEmpty = Visibility.Collapsed;
-                                break;
+                                return;
 
                             case nameof(Home):
                                 ContentWindow = HomeView;
                                 HomeViewModel.ApplicationModel = ApplicationModel;
                                 HomeView.DataContext = HomeViewModel;
-                                ApplicationModel.CurrentView = Home;
+                                ApplicationModel.CurrentView = Downloads;
                                 ApplicationModel.IsDownloadView = false;
                                 ApplicationModel.IsListEmpty =
-                                    ApplicationModel.DownloadCollection.Count > 0 ? 
-                                        Visibility.Collapsed : Visibility.Visible;
+                                    ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }
                     }

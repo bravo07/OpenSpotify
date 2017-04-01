@@ -117,15 +117,6 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<object> OpenSettingsCommand {
-            get {
-                return new CommandHandler<object>(o => {
-                    var settings = new SettingView(ApplicationModel);
-                    settings.ShowDialog();
-                });
-            }
-        }
-
         public CommandHandler<Window> TaskbarDoubleClickCommand {
             get {
                 return new CommandHandler<Window>(window => {
