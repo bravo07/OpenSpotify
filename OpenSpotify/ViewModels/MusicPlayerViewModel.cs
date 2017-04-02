@@ -207,7 +207,6 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-
         public CommandHandler<object> GotFocusCommand {
             get {
                 return new CommandHandler<object>(state => {
@@ -303,7 +302,7 @@ namespace OpenSpotify.ViewModels
         #region Functions 
 
         private void Initialize() {
-            SoundSliderVisibility = Visibility.Visible;
+            SoundSliderVisibility = Visibility.Collapsed;
             SoundImage = SoundImage100;
             SoundSliderValue = 0.2;
             InitializeMediaElement(CurrentSong);
@@ -377,7 +376,10 @@ namespace OpenSpotify.ViewModels
                 IndexOfLastSong = 0;
             }
 
-            var nextSong = ApplicationModel.SongCollection[IndexOfLastSong + 1];
+            var nextSong = ApplicationModel.SongCollection.Count <= 1 ?
+                ApplicationModel.SongCollection[IndexOfLastSong] :
+                ApplicationModel.SongCollection[IndexOfLastSong + 1];
+
             if (nextSong != null) {
                 InitializeMediaElement(nextSong);
             }

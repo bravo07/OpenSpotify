@@ -68,8 +68,6 @@ namespace OpenSpotify.ViewModels
                         return;
                     }
 
-
-
                     if (Application.Current.Windows.Cast<Window>().All(w => w.GetType() != typeof(MusicView))) {
                         MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
                         MusicView = new MusicView {DataContext = MusicPlayerViewModel};
