@@ -9,9 +9,11 @@ using OpenSpotify.Services.Util;
 using static OpenSpotify.Services.Util.Utils;
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenSpotify.ViewModels {
+namespace OpenSpotify.ViewModels
+{
 
-    public class MusicPlayerViewModel : BaseViewModel {
+    public class MusicPlayerViewModel : BaseViewModel
+    {
 
         public MusicPlayerViewModel(ApplicationModel applicationModel, SongModel currentSong) {
             ApplicationModel = applicationModel;
@@ -179,6 +181,7 @@ namespace OpenSpotify.ViewModels {
         public CommandHandler<bool> SoundCommand {
             get {
                 return new CommandHandler<bool>(state => {
+
                     if (!state && SoundSliderValue == 0) {
                         SoundImage = SoundImageOff;
                     }
@@ -186,7 +189,12 @@ namespace OpenSpotify.ViewModels {
                         SoundImage = SoundImage100;
                     }
 
-                    SoundSliderVisibility = state ? Visibility.Visible : Visibility.Collapsed;
+                    if (!state && SoundSliderVisibility == Visibility.Collapsed) {
+                        SoundSliderVisibility = Visibility.Visible;
+                    }
+                    else {
+                        SoundSliderVisibility = state ? Visibility.Visible : Visibility.Collapsed;
+                    }
                 });
             }
         }
@@ -201,7 +209,11 @@ namespace OpenSpotify.ViewModels {
 
 
         public CommandHandler<object> GotFocusCommand {
-            get { return new CommandHandler<object>(state => { SoundSliderVisibility = Visibility.Collapsed; }); }
+            get {
+                return new CommandHandler<object>(state => {
+                    SoundSliderVisibility = Visibility.Collapsed;
+                });
+            }
         }
 
         public CommandHandler<object> DragCompletedCommand {
@@ -272,7 +284,11 @@ namespace OpenSpotify.ViewModels {
         }
 
         public CommandHandler<object> SoundSliderLostFocusCommand {
-            get { return new CommandHandler<object>(o => { SoundSliderVisibility = Visibility.Collapsed; }); }
+            get {
+                return new CommandHandler<object>(o => {
+                    SoundSliderVisibility = Visibility.Collapsed;
+                });
+            }
         }
 
         public CommandHandler<object> SoundSliderMouseLeaveCommand {
@@ -287,7 +303,7 @@ namespace OpenSpotify.ViewModels {
         #region Functions 
 
         private void Initialize() {
-            SoundSliderVisibility = Visibility.Collapsed;
+            SoundSliderVisibility = Visibility.Visible;
             SoundImage = SoundImage100;
             SoundSliderValue = 0.2;
             InitializeMediaElement(CurrentSong);
