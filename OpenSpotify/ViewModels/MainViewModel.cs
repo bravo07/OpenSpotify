@@ -11,7 +11,6 @@ using GongSolutions.Wpf.DragDrop;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
-using OpenSpotify.Views;
 using static OpenSpotify.Models.SettingsModel;
 using static OpenSpotify.Services.ApplicationService;
 using static OpenSpotify.Services.Util.Utils;
@@ -199,7 +198,9 @@ namespace OpenSpotify.ViewModels {
 
                 var dataObject = dropInfo.Data as IDataObject;
                 if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {
+
                     await Task.Run(() => {
+
                         var filenames = (string) dataObject.GetData(DataFormats.StringFormat, true);
                         ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
                         ApplicationModel.StatusText = $"{ApplicationModel.DroppedSongs.Count} Dropped...";

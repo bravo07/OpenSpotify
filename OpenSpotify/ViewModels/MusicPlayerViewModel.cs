@@ -277,7 +277,7 @@ namespace OpenSpotify.ViewModels
             get {
                 return new CommandHandler<UserControl>(userControl => {
                     var parentWin = Window.GetWindow(userControl);
-                    parentWin?.Close();
+                    parentWin?.Hide();
                 });
             }
         }

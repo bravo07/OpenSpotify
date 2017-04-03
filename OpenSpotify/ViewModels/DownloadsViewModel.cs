@@ -7,21 +7,17 @@ using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
 using OpenSpotify.Views;
 
-namespace OpenSpotify.ViewModels
-{
+namespace OpenSpotify.ViewModels {
 
-    public class DownloadsViewModel : BaseViewModel
-    {
-
-        private ApplicationModel _applicationModel;
-        private MusicView _musicView;
-        private MusicPlayerViewModel _musicPlayerViewModel;
-
-        public DownloadsViewModel(ApplicationModel applicationModel)
-        {
+    public class DownloadsViewModel : BaseViewModel {
+        public DownloadsViewModel(ApplicationModel applicationModel) {
             Initialize();
             ApplicationModel = applicationModel;
         }
+
+        private ApplicationModel _applicationModel;
+        private MusicPlayerViewModel _musicPlayerViewModel;
+        private MusicView _musicView;
 
         #region Properties
 
@@ -56,27 +52,16 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<SongModel> PlaySongCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
+                    if(!File.Exists(selectedSong.FullPath)) return;
 
-                    if (!File.Exists(selectedSong.FullPath)) {
-                        return;
+                    var existingWindow = Application.Current.Windows.Cast<Window>().SingleOrDefault(w => w.Name == nameof(MusicView));
+                    if(existingWindow != null) {
+                        existingWindow.DataContext = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+                        existingWindow.Activate();
                     }
-
-                    if (MusicPlayerViewModel == null) {
-                        MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
-                        MusicView.DataContext = MusicPlayerViewModel;
-                        MusicView.Show();
-                        return;
+                    else {
+                        CreateView(selectedSong);
                     }
-
-                    if (Application.Current.Windows.Cast<Window>().All(w => w.GetType() != typeof(MusicView))) {
-                        MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
-                        MusicView = new MusicView {DataContext = MusicPlayerViewModel};
-                        MusicView.Show();
-                        return;
-                    }
-
-                    MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
-                    MusicView.DataContext = MusicPlayerViewModel;
                 });
             }
         }
@@ -84,9 +69,7 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<SongModel> OpenYoutubeCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
-                    if (selectedSong.YouTubeUri == null) {
-                        return;
-                    }
+                    if(selectedSong.YouTubeUri == null) return;
 
                     Process.Start(selectedSong.YouTubeUri);
                 });
@@ -97,7 +80,7 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<SongModel> OpenFileInDirectoryCommand {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
-                    if (!File.Exists(selectedSong.FullPath)) {
+                    if(!File.Exists(selectedSong.FullPath)) {
                         ApplicationModel.SongCollection.Remove(selectedSong);
                         ApplicationService.SaveApplicationModel(ApplicationModel);
                         return;
@@ -124,17 +107,21 @@ namespace OpenSpotify.ViewModels
                 });
             }
         }
+
         #endregion
 
         #region Functions
 
-        private void Initialize()
-        {
-            if (MusicView == null) {
-                MusicView = new MusicView();
-            }
+        private void Initialize() {
+            if(MusicView == null) MusicView = new MusicView();
         }
 
-        #endregion 
+        private void CreateView(SongModel selectedSong) {
+            MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+            MusicView.DataContext = MusicPlayerViewModel;
+            MusicView.Show();
+        }
+
+        #endregion
     }
 }
