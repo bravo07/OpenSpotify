@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,8 +17,10 @@ using OpenSpotify.Services.Util;
 using VideoLibrary;
 using static OpenSpotify.Services.Util.Utils;
 
-namespace OpenSpotify.Services {
-    public class DownloadService : BaseService {
+namespace OpenSpotify.Services
+{
+    public class DownloadService : BaseService
+    {
         public DownloadService(ApplicationModel applicationModel,
             NavigationService navigationService) {
             ApplicationModel = applicationModel;
@@ -30,7 +33,7 @@ namespace OpenSpotify.Services {
         public SongModel DownloadSongInformation(string id) {
             try {
                 string loadedData;
-                using(var webClient = new WebClient()) {
+                using (var webClient = new WebClient()) {
                     loadedData = webClient.DownloadString(SongInformationUri + PrepareId(id));
                 }
 
@@ -45,14 +48,14 @@ namespace OpenSpotify.Services {
                 };
 
                 var artistBuilder = new StringBuilder();
-                foreach(var artist in desirializedInfo["artists"]) {
+                foreach (var artist in desirializedInfo["artists"]) {
                     songModel.Artists.Add((string)artist["name"]);
                     artistBuilder.Append($"{artist["name"]},");
                 }
                 songModel.ArtistName = artistBuilder.ToString();
                 return songModel;
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 new LogException(ex);
                 return null;
             }
@@ -63,12 +66,12 @@ namespace OpenSpotify.Services {
         #region Download Songs
 
         private void DownloadSongs(SongModel song) {
-            if(!IsInternetAvailable())
+            if (!IsInternetAvailable())
                 return;
 
             try {
                 var video = YouTube.GetVideo(song.YouTubeUri);
-                if(video == null) {
+                if (video == null) {
                     song.Status = FailedYoutTubeUri;
                     return;
                 }
@@ -81,7 +84,13 @@ namespace OpenSpotify.Services {
                 song.Status = Converting;
                 SetStatusImage(song, Status.Converting);
             }
-            catch(Exception ex) {}
+            catch (Exception ex) {
+#if !DEBUG
+                new LogException(ex);
+#endif 
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         #endregion
@@ -144,17 +153,21 @@ namespace OpenSpotify.Services {
         #region Initialization 
 
         private void InitalizeYouTubeService() {
-            if(YouTubeService == null)
-                try {
-                    YouTubeService = new YouTubeService(new BaseClientService.Initializer {
-                        ApiKey = ApplicationModel.Settings.YoutubeApiKey,
-                        ApplicationName = AppDomain.CurrentDomain.FriendlyName
-                    });
-                    YouTube = YouTube.Default;
-                }
-                catch(Exception ex) {
+            if(YouTubeService != null) return;
+            try {
+                YouTubeService = new YouTubeService(new BaseClientService.Initializer {
+                    ApiKey = ApplicationModel.Settings.YoutubeApiKey,
+                    ApplicationName = AppDomain.CurrentDomain.FriendlyName
+                });
+                YouTube = YouTube.Default;
+            }
+            catch (Exception ex) {
+#if !DEBUG
                     new LogException(ex);
-                }
+#endif      
+                Debug.Write(ex.Message);
+                Debug.Write(ex.StackTrace);
+            }
         }
 
         private void InitializeFileWatcher() {
@@ -176,31 +189,38 @@ namespace OpenSpotify.Services {
         public async void Start(string songId) {
             try {
                 InitalizeYouTubeService();
-                if(!IsInternetAvailable())
+                if (!IsInternetAvailable())
                     return;
 
                 var song = DownloadSongInformation(songId);
                 song.Status = LoadingSongInformation;
                 song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
 
-                if(string.IsNullOrEmpty(song.YouTubeUri) ||
+                if (string.IsNullOrEmpty(song.YouTubeUri) ||
                     song.YouTubeUri.Length <= YouTubeUri.Length) {
                     song.Status = FailedLoadingSongInformation;
                     return;
                 }
 
                 Application.Current.Dispatcher.Invoke(() => {
-                    if(ApplicationModel.DownloadCollection.All(i => i.Id != song.Id)) {
-                        song.Status = Downloading;
-                        SetStatusImage(song, Status.Downloading);
-                        ApplicationModel.DownloadCollection.Add(song);
+
+                    if(ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) {
+                        return;
                     }
+
+                    song.Status = Downloading;
+                    SetStatusImage(song, Status.Downloading);
+                    ApplicationModel.DownloadCollection.Add(song);
                 });
 
                 DownloadSongs(song);
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
+#if !DEBUG
                 new LogException(ex);
+#endif
+                Debug.Write(ex.Message);
+                Debug.Write(ex.StackTrace);
             }
         }
 
@@ -220,19 +240,19 @@ namespace OpenSpotify.Services {
                     x.Snippet.Title.Contains(songName, StringComparison.OrdinalIgnoreCase) ||
                     x.Snippet.Title.Contains(artist, StringComparison.OrdinalIgnoreCase)).ToList();
 
-                if(matchingItems.Count == 0)
+                if (matchingItems.Count == 0)
                     return string.Empty;
 
                 //Checks Content for VEVO
-                if(matchingItems.Count > 1) {
+                if (matchingItems.Count > 1) {
                     var vevoMatches = matchingItems.Where(x => x.Snippet.ChannelTitle.Contains(Vevo)).ToList();
-                    if(vevoMatches.Count > 0)
+                    if (vevoMatches.Count > 0)
                         return YouTubeUri + CheckVevoMatches(vevoMatches).Id.VideoId;
                 }
 
                 return YouTubeUri + matchingItems[0].Id.VideoId;
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 new LogException(ex);
                 return null;
             }
@@ -257,12 +277,12 @@ namespace OpenSpotify.Services {
         private void FileSystemMusicWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
             try {
                 var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
-                if(lastWriteTime.Subtract(LastMusic).Ticks > 0) {
+                if (lastWriteTime.Subtract(LastMusic).Ticks > 0) {
                     var finishedSong = ApplicationModel.DownloadCollection.FirstOrDefault(
                         x =>
                             x.FileName.Contains(Path.GetFileNameWithoutExtension(fileSystemEventArgs.Name),
                                 StringComparison.OrdinalIgnoreCase));
-                    if(finishedSong == null)
+                    if (finishedSong == null)
                         return;
 
                     Application.Current.Dispatcher.Invoke(() => {
@@ -273,7 +293,7 @@ namespace OpenSpotify.Services {
                         finishedSong.Status = Finished;
                         SetStatusImage(finishedSong, Status.Done);
 
-                        if(ApplicationModel.DownloadCollection.Count == 1) {
+                        if (ApplicationModel.DownloadCollection.Count == 1) {
                             ApplicationModel.StatusText = "Ready...";
 
                             if (ApplicationModel.Settings.RemoveSongsFromList) {
@@ -293,7 +313,7 @@ namespace OpenSpotify.Services {
                     });
                 }
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
             }
         }
 
@@ -307,8 +327,8 @@ namespace OpenSpotify.Services {
         private void FileSystemDownloadWatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs) {
             try {
                 var lastWriteTime = File.GetLastWriteTime(fileSystemEventArgs.FullPath);
-                if(lastWriteTime.Subtract(LastDownload).Ticks > 0)
-                    if(ConvertService == null) {
+                if (lastWriteTime.Subtract(LastDownload).Ticks > 0)
+                    if (ConvertService == null) {
                         ConvertService = new ConvertService(ApplicationModel) {
                             SongFileName = fileSystemEventArgs.FullPath
                         };
@@ -319,7 +339,7 @@ namespace OpenSpotify.Services {
                         ConvertService.StartFFmpeg();
                     }
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 new LogException(ex);
             }
         }
