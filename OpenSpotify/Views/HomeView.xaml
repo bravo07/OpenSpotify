@@ -98,7 +98,8 @@
                                            FontFamily="Calibri Light">                                          
                                         <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" CommandParameter="{Binding}"/>
+                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" 
+                                                                   CommandParameter="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBlock>
@@ -109,7 +110,16 @@
                                            Width="20"
                                            Stretch="Fill"
                                            VerticalAlignment="Bottom" 
-                                           HorizontalAlignment="Right"/>
+                                           HorizontalAlignment="Right">
+                                       <i:Interaction.Triggers>
+                                           <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=UserControl, Path=DataContext.PlaySongCommand}"
+                                                                      CommandParameter="{Binding}"/>
+                                           </i:EventTrigger>
+                                       </i:Interaction.Triggers> 
+                                        
+                                        
+                                    </Image>
                                     
                                     <TextBlock Text="{Binding Status,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                            Foreground="#FF727272"  

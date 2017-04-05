@@ -8,6 +8,7 @@ namespace OpenSpotify.Services.Util {
     public enum Status {
         Downloading,
         Converting, 
-        Done
+        Done,
+        Failed
     }
 }

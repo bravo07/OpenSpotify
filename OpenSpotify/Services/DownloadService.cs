@@ -76,18 +76,12 @@ namespace OpenSpotify.Services
                     return;
                 }
 
-                song.FileName =
-                    Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
-                File.WriteAllBytes(
-                    TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)),
-                    video.GetBytes());
-                song.Status = Converting;
-                Application.Current.Dispatcher.Invoke(() => {
-                    song.StatusImage = StatusImageConvert;
-                });
-                SetStatusImage(song, Status.Converting);
+                song.FileName = Path.GetFileNameWithoutExtension(RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)));
+                File.WriteAllBytes(TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)),video.GetBytes());
+                SetStatus(song, Status.Converting);
             }
             catch (Exception ex) {
+                SetStatus(song, Status.Failed);
 #if !DEBUG
                 new LogException(ex);
 #endif
@@ -206,10 +200,11 @@ namespace OpenSpotify.Services
                 }
 
                 Application.Current.Dispatcher.Invoke(() => {
-                    if (ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) return;
+                    if(ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) {
+                        return;
+                    }
 
-                    song.Status = Downloading;
-                    SetStatusImage(song, Status.Downloading);
+                    SetStatus(song, Status.Downloading);
                     ApplicationModel.DownloadCollection.Add(song);
                 });
 
@@ -290,8 +285,7 @@ namespace OpenSpotify.Services
 
                         var fullPath = Path.Combine(MusicPath, Path.GetFileName(fileSystemEventArgs.FullPath));
                         finishedSong.FullPath = fullPath;
-                        finishedSong.Status = Finished;
-                        SetStatusImage(finishedSong, Status.Done);
+                        SetStatus(finishedSong, Status.Done);
 
                         if (ApplicationModel.DownloadCollection.Count == 1) {
                             ApplicationModel.StatusText = "Ready...";

@@ -65,6 +65,10 @@ namespace OpenSpotify.ViewModels {
             get {
                 return new CommandHandler<SongModel>(selectedSong => {
 
+                    if(selectedSong.Status != "Done!") {
+                        return;
+                    }
+
                     if (!File.Exists(selectedSong.FullPath)) {
                         return;
                     }

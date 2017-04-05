@@ -84,10 +84,10 @@ namespace OpenSpotify.Services.Util
             => new BitmapImage(new Uri("/Assets/Convert.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage StatusImageFailed
-            => new BitmapImage(new Uri("/Assets/Failed.png", UriKind.RelativeOrAbsolute));
+            => new BitmapImage(new Uri("/Assets/Remove.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage StatusImageDone
-            => new BitmapImage(new Uri("/Assets/Done.png", UriKind.RelativeOrAbsolute));
+            => new BitmapImage(new Uri("/Assets/Play.png", UriKind.RelativeOrAbsolute));
         #endregion
 
         #region Check Internet
@@ -101,8 +101,7 @@ namespace OpenSpotify.Services.Util
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int reservedValue);
 
-        public static bool IsInternetAvailable()
-        {
+        public static bool IsInternetAvailable() {
             int description;
             return InternetGetConnectedState(out description, 0);
         }
@@ -116,8 +115,7 @@ namespace OpenSpotify.Services.Util
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static string PrepareId(string id)
-        {
+        public static string PrepareId(string id) {
             return id.Substring(id.LastIndexOf("k/", StringComparison.Ordinal) + 2);
         }
 
@@ -125,8 +123,7 @@ namespace OpenSpotify.Services.Util
 
         #region Clear Temp
 
-        public static void ClearTemp()
-        {
+        public static void ClearTemp() {
             try {
                 foreach (var file in Directory.GetFiles(TempPath)) {
                     if (File.Exists(file)) {
@@ -141,19 +138,24 @@ namespace OpenSpotify.Services.Util
 
         #region Set Status Image
 
-        public static void SetStatusImage(SongModel song, Status status) {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                switch (status)
-                {
+        public static void SetStatus(SongModel song, Status status) {
+            Application.Current.Dispatcher.Invoke(() => {
+                switch (status) {
                     case Status.Downloading:
+                        song.Status = "Downloading...";
                         song.StatusImage = StatusImageDownload;
                         break;
                     case Status.Converting:
+                        song.Status = "Converting...";
                         song.StatusImage = StatusImageConvert;
                         break;
                     case Status.Done:
+                        song.Status = "Done!";
                         song.StatusImage = StatusImageDone;
+                        break;
+                    case Status.Failed:
+                        song.Status = "Failed!";
+                        song.StatusImage = StatusImageFailed;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(status), status, null);
@@ -162,16 +164,14 @@ namespace OpenSpotify.Services.Util
         }
         #endregion
 
-        public static string RemoveSpecialCharacters(string source)
-        {
+        public static string RemoveSpecialCharacters(string source) {
             return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }
     }
 
     public static class StringExtensions
     {
-        public static bool Contains(this string source, string toCheck, StringComparison comp)
-        {
+        public static bool Contains(this string source, string toCheck, StringComparison comp) {
             return source.IndexOf(toCheck, comp) >= 0;
         }
     }
