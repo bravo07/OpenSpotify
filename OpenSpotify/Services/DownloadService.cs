@@ -56,6 +56,7 @@ namespace OpenSpotify.Services
                 return songModel;
             }
             catch (Exception ex) {
+                AddFailedSong(song);
                 new LogException(ex);
                 return null;
             }
@@ -186,8 +187,10 @@ namespace OpenSpotify.Services
         public async void Start(string songId) {
             try {
                 InitalizeYouTubeService();
-                if (!IsInternetAvailable())
+                if(!IsInternetAvailable()) {
+                    ApplicationModel.StatusText = "No Internet Connection";
                     return;
+                }
 
                 var song = DownloadSongInformation(songId);
                 song.Status = LoadingSongInformation;
@@ -339,5 +342,17 @@ namespace OpenSpotify.Services
         }
 
         #endregion
+
+
+
+        public void AddFailedSong(string artist, string songName) {
+
+            var song = new SongModel {
+                SongName = songName,
+                ArtistName = artist
+            };
+            ApplicationModel.DownloadCollection.Add(song);
+            SetStatus(song, Status.Failed);
+        }
     }
 }

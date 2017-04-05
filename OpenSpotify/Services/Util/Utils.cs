@@ -164,6 +164,7 @@ namespace OpenSpotify.Services.Util
         }
         #endregion
 
+
         public static string RemoveSpecialCharacters(string source) {
             return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }

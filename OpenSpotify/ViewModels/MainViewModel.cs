@@ -170,7 +170,7 @@ namespace OpenSpotify.ViewModels {
         }
 
         private bool SearchFilter(object item) {
-            if (string.IsNullOrEmpty(SearchText)) {
+            if (String.IsNullOrEmpty(SearchText)) {
                 return true;
             }
             var songModel = item as SongModel;
@@ -239,6 +239,8 @@ namespace OpenSpotify.ViewModels {
                 ClearTemp();
             }
         }
+
+
         #endregion
     }
 }
