@@ -159,7 +159,7 @@ namespace OpenSpotify.ViewModels {
                 CollectionView.Filter = SearchFilter;
                 ApplicationModel.StatusText = "Ready...";
                 ApplicationModel.IsListEmpty = Visibility.Visible;
-                NavigationService.ContentWindow = NavigationService.HomeView;
+                NavigationService.ContentWindow = NavigationService.SpotifyView;
                 ShowInTaskbar = true;
 
                 SaveModelEventHandler += () => { SaveApplicationModel(ApplicationModel); };
@@ -194,7 +194,7 @@ namespace OpenSpotify.ViewModels {
                 ApplicationModel.DownloadCollection.Clear();
                 ApplicationModel.DroppedSongs.Clear();
 
-                NavigationService.ContentWindow = NavigationService.HomeView;
+                NavigationService.ContentWindow = NavigationService.SpotifyView;
 
                 var dataObject = dropInfo.Data as IDataObject;
                 if (dataObject != null && dataObject.GetDataPresent(DataFormats.StringFormat, true)) {

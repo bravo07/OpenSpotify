@@ -4,10 +4,10 @@ using OpenSpotify.ViewModels;
 
 namespace OpenSpotify.Views {
     /// <summary>
-    /// Interaktionslogik für HomeView.xaml
+    /// Interaktionslogik für SpotifyView.xaml
     /// </summary>
-    public partial class HomeView  {
-        public HomeView() {
+    public partial class SpotifyView  {
+        public SpotifyView() {
             InitializeComponent();
         }
     }

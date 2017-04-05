@@ -25,10 +25,12 @@ namespace OpenSpotify.Services
         private ApplicationModel _applicationModel;
         private HamburgerMenuGlyphItem _selectedItem;
         private UserControl _contentWindow;
-        private HomeView _homeView;
-        private HomeViewModel _homeViewModel;
+        private SpotifyView _spotifyView;
+        private SpotifyViewModel _spotifyViewModel;
         private SettingsViewModel _settingsViewModel;
         private DownloadsViewModel _downloadsViewModel;
+        private YouTubeView _youTubeView;
+        private YouTubeViewModel _youTubeViewModel;
 
         #endregion
 
@@ -58,11 +60,19 @@ namespace OpenSpotify.Services
             }
         }
 
-        public HomeView HomeView {
-            get { return _homeView; }
+        public SpotifyView SpotifyView {
+            get { return _spotifyView; }
             set {
-                _homeView = value;
-                OnPropertyChanged(nameof(HomeView));
+                _spotifyView = value;
+                OnPropertyChanged(nameof(SpotifyView));
+            }
+        }
+
+        public YouTubeView YouTubeView {
+            get { return _youTubeView; }
+            set {
+                _youTubeView = value;
+                OnPropertyChanged(nameof(YouTube));
             }
         }
 
@@ -82,11 +92,19 @@ namespace OpenSpotify.Services
             }
         }
 
-        public HomeViewModel HomeViewModel {
-            get { return _homeViewModel; }
+        public SpotifyViewModel SpotifyViewModel {
+            get { return _spotifyViewModel; }
             set {
-                _homeViewModel = value;
-                OnPropertyChanged(nameof(HomeViewModel));
+                _spotifyViewModel = value;
+                OnPropertyChanged(nameof(SpotifyViewModel));
+            }
+        }
+
+        public YouTubeViewModel YouTubeViewModel {
+            get { return _youTubeViewModel; }
+            set {
+                _youTubeViewModel = value; 
+                OnPropertyChanged(nameof(YouTubeViewModel));
             }
         }
 
@@ -135,10 +153,19 @@ namespace OpenSpotify.Services
                                 ApplicationModel.IsListEmpty = Visibility.Collapsed;
                                 return;
 
-                            case nameof(Home):
-                                ContentWindow = HomeView;
-                                HomeViewModel.ApplicationModel = ApplicationModel;
-                                HomeView.DataContext = HomeViewModel;
+                            case nameof(YouTube):
+                                ContentWindow = YouTubeView;
+                                YouTubeViewModel.ApplicationModel = ApplicationModel;
+                                YouTubeView.DataContext = YouTubeViewModel;
+                                ApplicationModel.CurrentView = YouTube;
+                                ApplicationModel.IsDownloadView = false;
+                                ApplicationModel.IsListEmpty = Visibility.Collapsed;
+                                return;
+
+                            case nameof(Spotify):
+                                ContentWindow = SpotifyView;
+                                SpotifyViewModel.ApplicationModel = ApplicationModel;
+                                SpotifyView.DataContext = SpotifyViewModel;
                                 ApplicationModel.CurrentView = Downloads;
                                 ApplicationModel.IsDownloadView = false;
                                 ApplicationModel.IsListEmpty =
@@ -167,11 +194,15 @@ namespace OpenSpotify.Services
                 DownloadsViewModel = new DownloadsViewModel(ApplicationModel);
                 DownloadView.DataContext = DownloadsViewModel;
 
-                HomeView = new HomeView();
-                HomeViewModel = new HomeViewModel(ApplicationModel);
-                HomeView.DataContext = HomeViewModel;
+                SpotifyView = new SpotifyView();
+                SpotifyViewModel = new SpotifyViewModel(ApplicationModel);
+                SpotifyView.DataContext = SpotifyViewModel;
 
-                ContentWindow = HomeView;
+                YouTubeView = new YouTubeView();
+                YouTubeViewModel = new YouTubeViewModel(ApplicationModel);
+                YouTubeView.DataContext = YouTubeViewModel;
+
+                ContentWindow = SpotifyView;
             }
             catch (Exception ex) {
                 new LogException(ex);

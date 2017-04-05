@@ -56,7 +56,6 @@ namespace OpenSpotify.Services
                 return songModel;
             }
             catch (Exception ex) {
-                AddFailedSong(song);
                 new LogException(ex);
                 return null;
             }
@@ -224,12 +223,12 @@ namespace OpenSpotify.Services
 
         #endregion
 
-        #region Search YouTube 
+        #region SearchQuery YouTube 
 
         public async Task<string> SearchForSong(string songName, string artist) {
             try {
                 var searchListRequest = YouTubeService.Search.List(SearchInfo);
-                searchListRequest.Q = $"{songName} {artist}"; // Search Term
+                searchListRequest.Q = $"{songName} {artist}"; // SearchQuery Term
                 searchListRequest.MaxResults = 50;
 
                 var searchListResponse = await searchListRequest.ExecuteAsync();
@@ -296,7 +295,7 @@ namespace OpenSpotify.Services
                             if (ApplicationModel.Settings.RemoveSongsFromList)
                                 ApplicationModel.DownloadCollection.Remove(finishedSong);
                             ApplicationModel.SongCollection.Add(finishedSong);
-                            NavigationService.ContentWindow = NavigationService.HomeView;
+                            NavigationService.ContentWindow = NavigationService.SpotifyView;
                         }
                         else {
                             if (ApplicationModel.Settings.RemoveSongsFromList)

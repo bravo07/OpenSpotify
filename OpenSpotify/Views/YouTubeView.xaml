@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="OpenSpotify.Views.YouTubeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OpenSpotify.Views"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:util="clr-namespace:OpenSpotify.Services.Util"
+             xmlns:calcBinding="clr-namespace:CalcBinding;assembly=CalcBinding"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <util:ImageCoverter x:Key="ImageCoverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="48,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox controls:TextBoxHelper.Watermark="SearchQuery..."
+                     controls:TextBoxHelper.ClearTextButton="True"
+                     controls:TextBoxHelper.AutoWatermark="True"
+                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     KeyDown="UIElement_OnKeyDown"/>
+            
+            <Button Grid.Column="1"
+                    Width="80"
+                    Margin="7,0,0,0"
+                    Command="{Binding DownloadCommand}">
+                <StackPanel>
+                    <Image Source="/Assets/Search.png" Height="15" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ListBox Grid.Row="1"
+                 Margin="0,5,0,0"
+                 Visibility="{calcBinding:Binding !IsSearching, FalseToVisibility=Collapsed}"
+                 ItemsSource="{Binding ApplicationModel.YouTubeCollection}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="{Binding CoverImage, Converter={StaticResource ImageCoverter}}" 
+                               Height="80"
+                               Width="80"
+                               Stretch="Uniform"/>
+
+
+                        <Grid Grid.Column="1" 
+                              Grid.ColumnSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" 
+                                        Orientation="Vertical" 
+                                        Margin="5,0,0,0">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Margin"
+                                                Value="0,1,0,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Foreground="White" 
+                                           Text="{Binding SongName}" 
+                                           FontSize="16" 
+                                           FontFamily="Calibri Light"/>
+
+                                <TextBlock Foreground="#FFB8B8B8"
+                                           Text="{Binding ArtistName}" 
+                                           FontSize="15"
+                                           FontFamily="Calibri Light"/>
+
+                                <TextBlock Text="{Binding YouTubeUri}" 
+                                           Foreground="#FF838383" 
+                                           FontSize="14" 
+                                           FontFamily="Calibri Light">                                          
+                                        <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" 
+                                                                   CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding StatusImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                           Height="20" 
+                                           Width="20"
+                                           Stretch="Fill"
+                                           VerticalAlignment="Bottom" 
+                                           HorizontalAlignment="Right">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=UserControl, Path=DataContext.PlaySongCommand}"
+                                                                      CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+
+
+                                    </Image>
+
+                                    <TextBlock Text="{Binding Status,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           Foreground="#FF727272"  
+                                           FontSize="12"  VerticalAlignment="Center"
+                                           FontFamily="Calibri Light"/>
+                                </StackPanel>
+                            </StackPanel>
+
+
+                            <Button HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Background="Red"
+                                    BorderBrush="Transparent"
+                                    Foreground="White"
+                                    Content="Download"
+                                    Width="70"
+                                    FontFamily="Calibri Light"
+                                    Height="15"/>
+
+                            <!--<StackPanel HorizontalAlignment="Right" 
+                                        VerticalAlignment="Top" 
+                                        Orientation="Horizontal">
+                                <Image Source="../Assets/Remove.png"
+                                       Margin="3" 
+                                       Width="15"
+                                       Height="15">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.RemoveSongCommand}"
+                                                                   CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                            </StackPanel>-->
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Grid Grid.Row="1"
+              Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <controls:ProgressRing IsActive="True" />
+        </Grid>
+    </Grid>
+</UserControl>

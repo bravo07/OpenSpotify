@@ -8,13 +8,13 @@ using OpenSpotify.Views;
 
 namespace OpenSpotify.ViewModels {
 
-    public class HomeViewModel : BaseViewModel {
+    public class SpotifyViewModel : BaseViewModel {
 
         private ApplicationModel _applicationModel;
         private MusicView _musicView;
         private MusicPlayerViewModel _musicPlayerViewModel;
 
-        public HomeViewModel(ApplicationModel applicationModel) {
+        public SpotifyViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
         }

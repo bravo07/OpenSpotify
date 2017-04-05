@@ -1,6 +1,7 @@
 ﻿namespace OpenSpotify.Services.Util {
     public enum Views {
-        Home,
+        Spotify,
+        YouTube,
         Settings,
         Downloads
     }

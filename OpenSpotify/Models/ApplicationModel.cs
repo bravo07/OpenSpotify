@@ -65,6 +65,8 @@ namespace OpenSpotify.Models {
 
         public ObservableCollection<SongModel> SongCollection { get; set; }
 
+        public ObservableCollection<SongModel> YouTubeCollection { get; set; }
+
         [JsonIgnore]
         public ObservableCollection<SongModel> DownloadCollection { get; set; } =
             new ObservableCollection<SongModel>();
@@ -82,18 +84,22 @@ namespace OpenSpotify.Models {
                 SongCollection = new ObservableCollection<SongModel>();
             }
 
+            if (YouTubeCollection == null) {
+                YouTubeCollection  = new ObservableCollection<SongModel>();
+            }
+
             if (Settings == null) {
                 Settings = new SettingsModel();
             }
 
             DroppedSongs.CollectionChanged += (sender, args) => {
-                IsListEmpty = DroppedSongs.Count == 0 && CurrentView == Services.Util.Views.Home
+                IsListEmpty = DroppedSongs.Count == 0 && CurrentView == Services.Util.Views.Spotify
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             };
 
             DownloadCollection.CollectionChanged += (sender, args) => {
-                IsListEmpty = DownloadCollection.Count == 0 && CurrentView == Services.Util.Views.Home
+                IsListEmpty = DownloadCollection.Count == 0 && CurrentView == Services.Util.Views.Spotify
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             };

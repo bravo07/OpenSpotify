@@ -62,3 +62,5 @@ OpenSpotify/bin/Debug/OpenSpotify.pdb
 *.exe
 OpenSpotify/bin/Debug/OpenSpotify.pdb
 *.cache
+*.cache
+OpenSpotify/obj/Debug/CoreCompileInputs.cache
