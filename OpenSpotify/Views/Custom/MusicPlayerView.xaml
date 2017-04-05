@@ -36,7 +36,7 @@
                 <ColumnDefinition Width="0.35*"/>
             </Grid.ColumnDefinitions>
 
-            <ContentControl Content="{Binding SoundPlayerElement}"
+            <ContentControl Content="{Binding MediaElementPlayer}"
                             Background="Transparent" 
                             Width="0" 
                             Height="0"/>

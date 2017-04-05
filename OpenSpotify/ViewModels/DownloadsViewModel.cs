@@ -56,7 +56,8 @@ namespace OpenSpotify.ViewModels {
 
                     var existingWindow = Application.Current.Windows.Cast<Window>().SingleOrDefault(w => w.Name == nameof(MusicView));
                     if(existingWindow != null) {
-                        existingWindow.DataContext = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+                        var viewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
+                        existingWindow.DataContext = viewModel;
                         existingWindow.Activate();
                     }
                     else {

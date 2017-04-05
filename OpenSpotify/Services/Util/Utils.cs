@@ -78,7 +78,7 @@ namespace OpenSpotify.Services.Util
             => new BitmapImage(new Uri("/Assets/PlayerSoundOff.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage StatusImageDownload
-            => new BitmapImage(new Uri("/Assets/DownloadList.png", UriKind.RelativeOrAbsolute));
+            => new BitmapImage(new Uri("/Assets/Download.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage StatusImageConvert
             => new BitmapImage(new Uri("/Assets/Convert.png", UriKind.RelativeOrAbsolute));
@@ -141,8 +141,7 @@ namespace OpenSpotify.Services.Util
 
         #region Set Status Image
 
-        public static void SetStatusImage(SongModel song, Status status)
-        {
+        public static void SetStatusImage(SongModel song, Status status) {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 switch (status)

@@ -28,7 +28,7 @@ namespace OpenSpotify.ViewModels
 
         private ApplicationModel _applicationModel;
         private ImageSource _soundImage;
-        private MediaElement _soundPlayerElement;
+        private MediaElement _mediaElementPlayer;
         private double _sliderTrackValue;
         private TimeSpan _totalTrackTime;
         private double _sliderTrackMaximum;
@@ -69,11 +69,11 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-        public MediaElement SoundPlayerElement {
-            get { return _soundPlayerElement; }
+        public MediaElement MediaElementPlayer {
+            get { return _mediaElementPlayer; }
             set {
-                _soundPlayerElement = value;
-                OnPropertyChanged(nameof(SoundPlayerElement));
+                _mediaElementPlayer = value;
+                OnPropertyChanged(nameof(MediaElementPlayer));
             }
         }
 
@@ -169,10 +169,10 @@ namespace OpenSpotify.ViewModels
             get {
                 return new CommandHandler<bool>(state => {
                     if (state) {
-                        SoundPlayerElement.Pause();
+                        MediaElementPlayer.Pause();
                     }
                     else {
-                        SoundPlayerElement.Play();
+                        MediaElementPlayer.Play();
                     }
                 });
             }
@@ -203,7 +203,7 @@ namespace OpenSpotify.ViewModels
             get {
                 return
                     new CommandHandler<object>(
-                        state => { SoundPlayerElement.Position = TimeSpan.FromSeconds(SliderTrackValue); });
+                        state => { MediaElementPlayer.Position = TimeSpan.FromSeconds(SliderTrackValue); });
             }
         }
 
@@ -219,7 +219,7 @@ namespace OpenSpotify.ViewModels
             get {
                 return new CommandHandler<object>(state => {
                     IsDragging = false;
-                    SoundPlayerElement.Position = TimeSpan.FromSeconds(SliderTrackValue);
+                    MediaElementPlayer.Position = TimeSpan.FromSeconds(SliderTrackValue);
                 });
             }
         }
@@ -227,28 +227,28 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<object> SoundValueChangedCommand {
             get {
                 return new CommandHandler<object>(state => {
-                    SoundPlayerElement.Volume = SoundSliderValue;
+                    MediaElementPlayer.Volume = SoundSliderValue;
 
                     if (SoundSliderValue == 0) {
-                        SoundPlayerElement.Volume = 0;
+                        MediaElementPlayer.Volume = 0;
                         SoundImage = SoundImageOff;
                         return;
                     }
 
                     if (SoundSliderValue <= 0.1) {
-                        SoundPlayerElement.Volume = 0.1;
+                        MediaElementPlayer.Volume = 0.1;
                         SoundImage = SoundImage10;
                         return;
                     }
 
                     if (SoundSliderValue <= 0.5) {
-                        SoundPlayerElement.Volume = 0.5;
+                        MediaElementPlayer.Volume = 0.5;
                         SoundImage = SoundImage50;
                         return;
                     }
 
                     if (SoundSliderValue > 0.5) {
-                        SoundPlayerElement.Volume = 0.8;
+                        MediaElementPlayer.Volume = 0.8;
                         SoundImage = SoundImage100;
                     }
                 });
@@ -277,6 +277,7 @@ namespace OpenSpotify.ViewModels
             get {
                 return new CommandHandler<UserControl>(userControl => {
                     var parentWin = Window.GetWindow(userControl);
+                    MediaElementPlayer.Stop();
                     parentWin?.Hide();
                 });
             }
@@ -317,7 +318,7 @@ namespace OpenSpotify.ViewModels
                 return;
             }
 
-            SoundPlayerElement = new MediaElement {
+            MediaElementPlayer = new MediaElement {
                 LoadedBehavior = MediaState.Manual,
                 Source = new Uri(song.FullPath, UriKind.RelativeOrAbsolute)
             };
@@ -327,9 +328,9 @@ namespace OpenSpotify.ViewModels
             };
 
             GetCurrentSongName(song);
-            SoundPlayerElement.Play();
-            SoundPlayerElement.MediaOpened += SoundPlayerElementOnMediaOpened;
-            SoundPlayerElement.MediaEnded += SoundPlayerElementMediaEnded;
+            MediaElementPlayer.Play();
+            MediaElementPlayer.MediaOpened += SoundPlayerElementOnMediaOpened;
+            MediaElementPlayer.MediaEnded += SoundPlayerElementMediaEnded;
 
             SoundElementTimer.Tick += SoundElementTimerTick;
             SoundElementTimer.Start();
@@ -342,28 +343,28 @@ namespace OpenSpotify.ViewModels
         }
 
         private void SoundPlayerElementOnMediaOpened(object sender, RoutedEventArgs routedEventArgs) {
-            if (SoundPlayerElement.NaturalDuration.HasTimeSpan) {
-                var naturalDurationTimeSpan = SoundPlayerElement.NaturalDuration.TimeSpan;
+            if (MediaElementPlayer.NaturalDuration.HasTimeSpan) {
+                var naturalDurationTimeSpan = MediaElementPlayer.NaturalDuration.TimeSpan;
                 SliderTrackMaximum = naturalDurationTimeSpan.TotalSeconds;
                 SmallChange = 1;
                 LargeChange = Math.Min(10, naturalDurationTimeSpan.Seconds / 10);
             }
             SoundElementTimer.Start();
-            SoundPlayerElement.Play();
+            MediaElementPlayer.Play();
         }
 
         private void SoundElementTimerTick(object sender, EventArgs e) {
-            SliderTrackValue = SoundPlayerElement.Position.TotalSeconds;
-            if (SoundPlayerElement.NaturalDuration.HasTimeSpan) {
-                CurrentSongTime = $@"{TimeSpan.FromMinutes(SoundPlayerElement.Position.Minutes):mm}:{TimeSpan.FromSeconds(
-                                  SoundPlayerElement.Position.Seconds):ss} / {SoundPlayerElement.NaturalDuration.TimeSpan:mm\:ss}";
+            SliderTrackValue = MediaElementPlayer.Position.TotalSeconds;
+            if (MediaElementPlayer.NaturalDuration.HasTimeSpan) {
+                CurrentSongTime = $@"{TimeSpan.FromMinutes(MediaElementPlayer.Position.Minutes):mm}:{TimeSpan.FromSeconds(
+                                  MediaElementPlayer.Position.Seconds):ss} / {MediaElementPlayer.NaturalDuration.TimeSpan:mm\:ss}";
             }
         }
 
         private void Reset() {
-            SoundPlayerElement.Stop();
+            MediaElementPlayer.Stop();
 
-            SoundPlayerElement.Close();
+            MediaElementPlayer.Close();
             SliderTrackValue = 0;
         }
 

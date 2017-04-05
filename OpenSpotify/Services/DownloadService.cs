@@ -82,12 +82,15 @@ namespace OpenSpotify.Services
                     TempPath + "\\" + RemoveSpecialCharacters(video.FullName.Replace(" ", string.Empty)),
                     video.GetBytes());
                 song.Status = Converting;
+                Application.Current.Dispatcher.Invoke(() => {
+                    song.StatusImage = StatusImageConvert;
+                });
                 SetStatusImage(song, Status.Converting);
             }
             catch (Exception ex) {
 #if !DEBUG
                 new LogException(ex);
-#endif 
+#endif
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
@@ -153,7 +156,7 @@ namespace OpenSpotify.Services
         #region Initialization 
 
         private void InitalizeYouTubeService() {
-            if(YouTubeService != null) return;
+            if (YouTubeService != null) return;
             try {
                 YouTubeService = new YouTubeService(new BaseClientService.Initializer {
                     ApiKey = ApplicationModel.Settings.YoutubeApiKey,
@@ -164,7 +167,7 @@ namespace OpenSpotify.Services
             catch (Exception ex) {
 #if !DEBUG
                     new LogException(ex);
-#endif      
+#endif
                 Debug.Write(ex.Message);
                 Debug.Write(ex.StackTrace);
             }
@@ -197,16 +200,13 @@ namespace OpenSpotify.Services
                 song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
 
                 if (string.IsNullOrEmpty(song.YouTubeUri) ||
-                    song.YouTubeUri.Length <= YouTubeUri.Length) {
+                   song.YouTubeUri.Length <= YouTubeUri.Length) {
                     song.Status = FailedLoadingSongInformation;
                     return;
                 }
 
                 Application.Current.Dispatcher.Invoke(() => {
-
-                    if(ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) {
-                        return;
-                    }
+                    if (ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) return;
 
                     song.Status = Downloading;
                     SetStatusImage(song, Status.Downloading);
@@ -296,16 +296,14 @@ namespace OpenSpotify.Services
                         if (ApplicationModel.DownloadCollection.Count == 1) {
                             ApplicationModel.StatusText = "Ready...";
 
-                            if (ApplicationModel.Settings.RemoveSongsFromList) {
+                            if (ApplicationModel.Settings.RemoveSongsFromList)
                                 ApplicationModel.DownloadCollection.Remove(finishedSong);
-                            }
                             ApplicationModel.SongCollection.Add(finishedSong);
                             NavigationService.ContentWindow = NavigationService.HomeView;
                         }
                         else {
-                            if (ApplicationModel.Settings.RemoveSongsFromList) {
+                            if (ApplicationModel.Settings.RemoveSongsFromList)
                                 ApplicationModel.DownloadCollection.Remove(finishedSong);
-                            }
                             ApplicationModel.StatusText = $"Downloading {ApplicationModel.DownloadCollection.Count}/" +
                                                           $"{ApplicationModel.DroppedSongs.Count}";
                             ApplicationModel.SongCollection.Add(finishedSong);
@@ -314,6 +312,8 @@ namespace OpenSpotify.Services
                 }
             }
             catch (Exception ex) {
+                Debug.Write(ex.Message);
+                Debug.Write(ex.StackTrace);
             }
         }
 
