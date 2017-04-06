@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
@@ -7,15 +10,19 @@ namespace OpenSpotify.ViewModels
 {
     public class YouTubeViewModel : BaseViewModel
     {
-        private ApplicationModel _applicationModel;
-        private string _searchText;
-        private bool _isSearching;
-
         public YouTubeViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
         }
 
+        #region Fields
+
+        private ApplicationModel _applicationModel;
+        private string _searchText;
+        private bool _isSearching;
+        #endregion
+
+        #region Properties
         public ApplicationModel ApplicationModel {
             get { return _applicationModel; }
             set {
@@ -43,51 +50,50 @@ namespace OpenSpotify.ViewModels
         }
 
         public SearchService SearchService { get; set; }
-        #region Commands
+        #endregion
 
-        public CommandHandler<object> DownloadCommand {
+        #region Commands
+        
+        public CommandHandler<object> SearchCommand {
             get {
-                return new CommandHandler<object>(o => {
-                    SearchService.Search(SearchText);
+                return new CommandHandler<object>(async o => {
+                    IsSearching = true;
+                    AddMatches(await SearchService.Search(SearchText));
+                    IsSearching = false;
                 });
             }
         }
 
-        #endregion 
+        public CommandHandler<object> ClearSearchBoxCommand {
+            get {
+                return new CommandHandler<object>(o => {
+                    ApplicationModel.YouTubeCollection.Clear();
+                });
+            }
+        }
+
+        public CommandHandler<SongModel> OpenYoutubeCommand {
+            get {
+                return new CommandHandler<SongModel>(song => {
+                    Process.Start(song.YouTubeUri);
+                });
+            }
+        }
+        #endregion
+
+        #region Functions
 
         private void Initialize() {
-
             if (SearchService == null) {
                 SearchService = new SearchService(ApplicationModel);
             }
-
-
-
-            //DebugCollection = new ObservableCollection<SongModel> {
-            //    new SongModel {
-            //        SongName = "Test SongName",
-            //        YouTubeUri = "http://www.adasdasd.com/asdasdasd",
-            //        Status = "Downloading",
-            //        ArtistName = "TestArtist"
-            //    },
-            //    new SongModel {
-            //        SongName = "Test SongName",
-            //        YouTubeUri = "http://www.adasdasd.com/asdasdasd",
-            //        Status = "Downloading",
-            //        ArtistName = "TestArtist"
-            //    },new SongModel {
-            //        SongName = "Test SongName",
-            //        YouTubeUri = "http://www.adasdasd.com/asdasdasd",
-            //        Status = "Downloading",
-            //        ArtistName = "TestArtist"
-            //    },
-            //    new SongModel {
-            //        SongName = "Test SongName",
-            //        YouTubeUri = "http://www.adasdasd.com/asdasdasd",
-            //        Status = "Downloading",
-            //        ArtistName = "TestArtist"
-            //    },
-            //};
         }
+
+        private void AddMatches(IEnumerable<SongModel> matchList) {
+            foreach (var match in matchList) {
+                ApplicationModel.YouTubeCollection.Add(match);
+            }
+        } 
+        #endregion
     }
 }

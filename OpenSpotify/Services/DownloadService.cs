@@ -342,8 +342,6 @@ namespace OpenSpotify.Services
 
         #endregion
 
-
-
         public void AddFailedSong(string artist, string songName) {
 
             var song = new SongModel {

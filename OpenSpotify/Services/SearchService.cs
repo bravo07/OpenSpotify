@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using OpenSpotify.Models;
-using OpenSpotify.Services.Util;
 using VideoLibrary;
 using static OpenSpotify.Services.Util.Utils;
 
-namespace OpenSpotify.Services
-{
-    public class SearchService : BaseService
-    {
-        private string _searchQuery;
+namespace OpenSpotify.Services {
+
+    public class SearchService : BaseService {
 
         public SearchService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
         }
+
+        #region Fields
+
+        private string _searchQuery;
+
+        #endregion
+
+        #region Properties
 
         public ApplicationModel ApplicationModel { get; set; }
 
@@ -29,11 +33,12 @@ namespace OpenSpotify.Services
 
         public YouTubeService YouTubeService { get; set; }
 
-        public void Initialize() {
+        #endregion
 
-            if (YouTubeService != null) {
-                return;
-            }
+        #region Functions
+
+        public void Initialize() {
+            if(YouTubeService != null) return;
 
             YouTubeService = new YouTubeService(new BaseClientService.Initializer {
                 ApiKey = ApplicationModel.Settings.YoutubeApiKey,
@@ -42,39 +47,37 @@ namespace OpenSpotify.Services
             YouTube = YouTube.Default;
         }
 
-        public async void Search(string searchQuery) {
-            if (!IsInternetAvailable()) {
+        public async Task<List<SongModel>> Search(string searchQuery) {
+            if(!IsInternetAvailable()) {
                 ApplicationModel.StatusText = "No Internet Connection";
-                return;
+                return null;
             }
 
             try {
-
                 ApplicationModel.YouTubeCollection.Clear();
                 var searchListRequest = YouTubeService.Search.List(SearchInfo);
                 searchListRequest.Q = searchQuery;
                 searchListRequest.MaxResults = 50;
 
                 var searchListResponse = await searchListRequest.ExecuteAsync();
-                AddResults(searchListResponse);
+                return AddResults(searchListResponse);
             }
-            catch (Exception ex) {
+            catch(Exception ex) {
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
             }
+            return null;
         }
 
-        private void AddResults(SearchListResponse searchResponse) {
-            if (searchResponse == null) {
-                return;
-            }
-
-            foreach (var result in searchResponse.Items) {
-                ApplicationModel.YouTubeCollection.Add(new SongModel {
-                    ArtistName = result.Snippet.Title,
-                    CoverImage = result.Snippet.Thumbnails.Medium.Url,
-                });
-            }
+        private static List<SongModel> AddResults(SearchListResponse searchResponse) {
+            return searchResponse?.Items.Select(result => new SongModel {
+                SongName = result.Snippet.Title,
+                ArtistName = result.Snippet.ChannelTitle,
+                CoverImage = result.Snippet.Thumbnails.Medium.Url,
+                YouTubeUri = YouTubeUri + result.Id.VideoId
+            }).ToList();
         }
+
+        #endregion
     }
 }

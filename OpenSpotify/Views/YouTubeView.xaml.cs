@@ -27,7 +27,7 @@ namespace OpenSpotify.Views
 
         private void UIElement_OnKeyDown(object sender, KeyEventArgs e) {
             if (e.Key == Key.Enter) {
-                ((YouTubeViewModel)DataContext).DownloadCommand.Execute(null);
+                ((YouTubeViewModel)DataContext).SearchCommand.Execute(null);
             }
         }
     }
