@@ -15,8 +15,10 @@ using static OpenSpotify.Models.SettingsModel;
 using static OpenSpotify.Services.ApplicationService;
 using static OpenSpotify.Services.Util.Utils;
 
-namespace OpenSpotify.ViewModels {
-    public class MainViewModel : BaseViewModel, IDropTarget {
+namespace OpenSpotify.ViewModels
+{
+    public class MainViewModel : BaseViewModel, IDropTarget
+    {
         public MainViewModel(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
             Initialize();
@@ -150,33 +152,43 @@ namespace OpenSpotify.ViewModels {
 
         #region Functions
 
+        /// <summary>
+        /// Initializes ViewModel
+        /// </summary>
         private void Initialize() {
             try {
                 NavigationService = new NavigationService(ApplicationModel);
                 NavigationService.InitializeNavigation();
                 DownloadService = new DownloadService(ApplicationModel, NavigationService);
-                CollectionView = (CollectionView) CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
+                CollectionView = (CollectionView)CollectionViewSource.GetDefaultView(ApplicationModel.SongCollection);
                 CollectionView.Filter = SearchFilter;
                 ApplicationModel.StatusText = "Ready...";
                 ApplicationModel.IsListEmpty = Visibility.Visible;
                 NavigationService.ContentWindow = NavigationService.SpotifyView;
                 ShowInTaskbar = true;
 
-                SaveModelEventHandler += () => { SaveApplicationModel(ApplicationModel); };
+                SaveModelEventHandler += () => {
+                    SaveApplicationModel(ApplicationModel);
+                };
             }
             catch (Exception ex) {
+#if !DEBUG
                 new LogException(ex);
+#endif
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
             }
         }
 
         private bool SearchFilter(object item) {
-            if (String.IsNullOrEmpty(SearchText)) {
+            if (string.IsNullOrEmpty(SearchText)) {
                 return true;
             }
+
             var songModel = item as SongModel;
             return songModel != null &&
                    (songModel.SongName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                   (songModel.ArtistName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0);
+                   (songModel?.ArtistName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         public void DragOver(IDropInfo dropInfo) {
@@ -184,10 +196,16 @@ namespace OpenSpotify.ViewModels {
             dropInfo.Effects = DragDropEffects.Copy;
         }
 
+        /// <summary>
+        /// Drag & Drop Handler 
+        /// </summary>
+        /// <param name="dropInfo"></param>
         public async void Drop(IDropInfo dropInfo) {
+
             try {
+
                 if (!ApplicationModel.Settings.IsReady) {
-                    ApplicationModel.StatusText = "No API Key or FFmpeg detected!.";
+                    ApplicationModel.StatusText = NotReady;
                     return;
                 }
 
@@ -201,7 +219,7 @@ namespace OpenSpotify.ViewModels {
 
                     await Task.Run(() => {
 
-                        var filenames = (string) dataObject.GetData(DataFormats.StringFormat, true);
+                        var filenames = (string)dataObject.GetData(DataFormats.StringFormat, true);
                         ToCollection(filenames?.Split('\n'), ApplicationModel.DroppedSongs);
                         ApplicationModel.StatusText = $"{ApplicationModel.DroppedSongs.Count} Dropped...";
                         if (ApplicationModel.DroppedSongs == null) {
@@ -218,7 +236,11 @@ namespace OpenSpotify.ViewModels {
                 }
             }
             catch (Exception ex) {
+#if !DEBUG
                 new LogException(ex);
+#endif
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
             }
         }
 

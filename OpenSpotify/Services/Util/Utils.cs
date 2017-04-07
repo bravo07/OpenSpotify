@@ -8,6 +8,7 @@ using OpenSpotify.Models;
 
 namespace OpenSpotify.Services.Util {
     public class Utils {
+
         #region Prepare Id
 
         /// <summary>
@@ -28,6 +29,9 @@ namespace OpenSpotify.Services.Util {
                 foreach(var file in Directory.GetFiles(TempPath)) if(File.Exists(file)) File.Delete(file);
             }
             catch(Exception) {
+#if !DEBUG
+                new LogException(ex);
+#endif
             }
         }
 
@@ -62,9 +66,13 @@ namespace OpenSpotify.Services.Util {
 
         #endregion
 
+        #region Remove Special Chars
+
         public static string RemoveSpecialCharacters(string source) {
             return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }
+
+        #endregion
 
         #region Properties
 
@@ -101,6 +109,10 @@ namespace OpenSpotify.Services.Util {
         public static string FailedLoadingSongInformation => "Failed to load Song Information";
 
         public static string Downloading => "Downloading...";
+
+        public static string NoInternet => "No Internet!";
+
+        public static string NotReady => "No API Key or FFmpeg detected!";
 
         public static string Finished => "Finished.";
 

@@ -133,15 +133,20 @@
                             </StackPanel>
 
 
-                            <Button HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Background="Red"
-                                    BorderBrush="Transparent"
-                                    Foreground="White"
-                                    Content="Download"
-                                    Width="70"
-                                    FontFamily="Calibri Light"
-                                    Height="15"/>
+                            <StackPanel HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Orientation="Vertical">
+                                <Button Background="Red"
+                                        BorderBrush="Transparent"
+                                        Foreground="White"
+                                        Content="Download"
+                                        Width="70"
+                                        FontFamily="Calibri Light"
+                                        Height="15"/>
+                                <controls:SplitButton Orientation="Vertical"
+                                                      ItemsSource="{Binding ElementName=UserControl,Path=DataContext.DownloadOptionsCollection}"
+                                                      SelectedIndex="0"/>
+                            </StackPanel>
 
                             <!--<StackPanel HorizontalAlignment="Right" 
                                         VerticalAlignment="Top" 

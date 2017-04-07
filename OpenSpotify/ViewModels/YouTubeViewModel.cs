@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows;
 using OpenSpotify.Models;
 using OpenSpotify.Services;
 using OpenSpotify.Services.Util;
@@ -39,7 +38,8 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-        public ObservableCollection<SongModel> DebugCollection { get; set; }
+        public List<string> DownloadOptionsCollection { get; set; } = 
+            new List<string>{"Mp4", "Mp3"};
 
         public bool IsSearching {
             get { return _isSearching; }
