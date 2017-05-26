@@ -5,149 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:OpenSpotify.Services.Util"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:custom="clr-namespace:OpenSpotify.Views.Custom"
              mc:Ignorable="d"
              x:Name="UserControl"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converter:ImageCoverter x:Key="ImageCoverter"/>
-    </UserControl.Resources>
-
-
+             d:DesignHeight="300"
+             d:DesignWidth="300">
     <Grid Margin="48,10,0,0">
         <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.ContextMenu>
-                            <ContextMenu DataContext="{Binding ElementName=UserControl}">
-                                <MenuItem Header="Play Song" 
-                                          FontFamily="Calibri Light" 
-                                          Command="{Binding PlaySongCommand}"
-                                          CommandParameter="{Binding}">
-                                    <MenuItem.Icon>
-                                        <Image Source="../Assets/Play.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Open Song" 
-                                          FontFamily="Calibri Light" 
-                                          Command="{Binding OpenFileInDirectoryCommand}" 
-                                          CommandParameter="{Binding}">
-                                    <MenuItem.Icon>
-                                        <Image Source="../Assets/Open.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Remove Song" 
-                                          FontFamily="Calibri Light" 
-                                          Command="{Binding RemoveSongCommand}" 
-                                          CommandParameter="{Binding}">
-                                    <MenuItem.Icon>
-                                        <Image Source="../Assets/RemoveSong.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="Remove All" 
-                                          FontFamily="Calibri Light" 
-                                          Command="{Binding RemoveAllCommand}">
-                                    <MenuItem.Icon>
-                                        <Image Source="../Assets/Remove.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Grid.ContextMenu>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Image Source="{Binding CoverImage, Converter={StaticResource ImageCoverter}}" 
-                               Height="80"
-                               Width="80"/>
-    
-
-                        <Grid Grid.Column="1" 
-                              Grid.ColumnSpan="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="0" 
-                                        Orientation="Vertical" 
-                                        Margin="5,0,0,0">
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Margin"
-                                                Value="0,1,0,0"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <TextBlock Foreground="White" 
-                                           Text="{Binding SongName}" 
-                                           FontSize="16" 
-                                           FontFamily="Calibri Light"/>
-                                
-                                <TextBlock Foreground="#FFB8B8B8"
-                                           Text="{Binding ArtistName}" 
-                                           FontSize="15"
-                                           FontFamily="Calibri Light"/>
-                                
-                                <TextBlock Text="{Binding YouTubeUri}" 
-                                           Foreground="#FF838383" 
-                                           FontSize="14" 
-                                           FontFamily="Calibri Light">                                          
-                                        <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.OpenYoutubeCommand}" 
-                                                                   CommandParameter="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBlock>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding StatusImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                           Height="20" 
-                                           Width="20"
-                                           Stretch="Fill"
-                                           VerticalAlignment="Bottom" 
-                                           HorizontalAlignment="Right">
-                                       <i:Interaction.Triggers>
-                                           <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=UserControl, Path=DataContext.PlaySongCommand}"
-                                                                      CommandParameter="{Binding}"/>
-                                           </i:EventTrigger>
-                                       </i:Interaction.Triggers> 
-                                        
-                                        
-                                    </Image>
-                                    
-                                    <TextBlock Text="{Binding Status,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                           Foreground="#FF727272"  
-                                           FontSize="12"  VerticalAlignment="Center"
-                                           FontFamily="Calibri Light"/>
-                                </StackPanel>
-                            </StackPanel>
-
-                            <StackPanel HorizontalAlignment="Right" 
-                                        VerticalAlignment="Top" 
-                                        Orientation="Horizontal">
-                                <Image Source="../Assets/Remove.png"
-                                       Margin="3" 
-                                       Width="15"
-                                       Height="15">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding ElementName=UserControl,Path=DataContext.RemoveSongCommand}"
-                                                                   CommandParameter="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Image>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
+                   <custom:ItemViewCell/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
         </ListBox>
     </Grid>
 </UserControl>

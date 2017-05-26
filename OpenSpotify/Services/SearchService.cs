@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenSpotify.Models;
+using OpenSpotify.Services.Util;
 using VideoLibrary;
 using static OpenSpotify.Services.Util.Utils;
 
@@ -15,7 +20,7 @@ namespace OpenSpotify.Services {
 
         public SearchService(ApplicationModel applicationModel) {
             ApplicationModel = applicationModel;
-            Initialize();
+            InitializeYouTubeApi();
         }
 
         #region Fields
@@ -25,50 +30,31 @@ namespace OpenSpotify.Services {
 
         #region Properties
 
-        public ApplicationModel ApplicationModel { get; set; }
+       
 
-        public YouTube YouTube { get; set; }
 
-        public YouTubeService YouTubeService { get; set; }
 
         #endregion
 
-        #region Functions
-
-        /// <summary>
-        /// Initializes YouTube API
-        /// </summary>
-        public void Initialize() {
-            if(YouTubeService != null) {
-                return;
-            }
-
-            YouTubeService = new YouTubeService(new BaseClientService.Initializer {
-                ApiKey = ApplicationModel.Settings.YoutubeApiKey,
-                ApplicationName = AppDomain.CurrentDomain.FriendlyName
-            });
-            YouTube = YouTube.Default;
-        }
+        #region YouTube
 
         /// <summary>
         ///     Search YouTube with given search query
         /// </summary>
         /// <param name="searchQuery"></param>
         /// <returns> Returns the Completed Collection of "Songs" </returns>
-        public async Task<List<SongModel>> Search(string searchQuery) {
+        public async Task<List<ItemModel>> Search(string searchQuery) {
             if(!IsInternetAvailable()) {
                 ApplicationModel.StatusText = NoInternet;
                 return null;
             }
 
             try {
-                ApplicationModel.YouTubeCollection.Clear();
                 var searchListRequest = YouTubeService.Search.List(SearchInfo);
                 searchListRequest.Q = searchQuery;
                 searchListRequest.MaxResults = 50;
 
                 var searchListResponse = await searchListRequest.ExecuteAsync();
-
                 return AddResults(searchListResponse);
             }
             catch(Exception ex) {
@@ -86,8 +72,8 @@ namespace OpenSpotify.Services {
         /// </summary>
         /// <param name="searchResponse"></param>
         /// <returns> Returns an Collection of SearchResults </returns>
-        private static List<SongModel> AddResults(SearchListResponse searchResponse) {
-            return searchResponse?.Items.Select(result => new SongModel {
+        private static List<ItemModel> AddResults(SearchListResponse searchResponse) {
+            return searchResponse?.Items.Select(result => new ItemModel {
                 SongName = result.Snippet.Title.Length >= 50
                     ? result.Snippet.Title.Remove(50, result.Snippet.Title.Length - 50) + "..."
                     : result.Snippet.Title,
@@ -97,5 +83,44 @@ namespace OpenSpotify.Services {
             }).ToList();
         }
         #endregion
+
+        #region Spotify
+
+        public ItemModel SearchSpotifySongInformation(string id) {
+            try {
+                string loadedData;
+                using (var webClient = new WebClient()) {
+                    loadedData = webClient.DownloadString(SongInformationUri + PrepareId(id));
+                }
+
+                var desirializedInfo = JsonConvert.DeserializeObject<JObject>(loadedData);
+                var songModel = new ItemModel {
+                    Id = PrepareId(id),
+                    Artists = new List<string>(),
+                    AlbumName = (string)desirializedInfo["album"]["name"],
+                    SongName = (string)desirializedInfo["name"],
+                    CoverImage = (string)desirializedInfo["album"]["images"][0]["url"],
+                    StatusValue = 60
+                };
+
+                var artistBuilder = new StringBuilder();
+                foreach (var artist in desirializedInfo["artists"]) {
+                    songModel.Artists.Add((string)artist["name"]);
+                    artistBuilder.Append($"{artist["name"]},");
+                }
+                songModel.ArtistName = artistBuilder.ToString();
+                return songModel;
+            }
+            catch (Exception ex) {
+#if !DEBUG
+                new LogException(ex);
+#endif
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+            return null;
+        }
+
+        #endregion 
     }
 }

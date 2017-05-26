@@ -157,7 +157,7 @@ namespace OpenSpotify.Services
                                 ContentWindow = YouTubeView;
                                 YouTubeViewModel.ApplicationModel = ApplicationModel;
                                 YouTubeView.DataContext = YouTubeViewModel;
-                                ApplicationModel.CurrentView = YouTube;
+                                ApplicationModel.CurrentView = Util.Views.YouTube;
                                 ApplicationModel.IsDownloadView = false;
                                 ApplicationModel.IsListEmpty = Visibility.Collapsed;
                                 return;

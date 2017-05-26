@@ -50,7 +50,7 @@
         <ListBox Grid.Row="1"
                  Margin="0,5,0,0"
                  Visibility="{calcBinding:Binding !IsSearching, FalseToVisibility=Collapsed}"
-                 ItemsSource="{Binding ApplicationModel.YouTubeCollection}">
+                 ItemsSource="{Binding ApplicationModel.SearchResultCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

@@ -49,9 +49,9 @@ namespace OpenSpotify.ViewModels {
 
         #region Commands
 
-        public CommandHandler<SongModel> OpenYoutubeCommand {
+        public CommandHandler<ItemModel> OpenYoutubeCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     if (selectedSong.YouTubeUri == null) {
                         return;
                     }
@@ -61,9 +61,9 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<SongModel> PlaySongCommand {
+        public CommandHandler<ItemModel> PlaySongCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
 
                     if(selectedSong.Status != "Done!") {
                         return;
@@ -95,9 +95,9 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<SongModel> RemoveSongCommand {
+        public CommandHandler<ItemModel> RemoveSongCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     ApplicationModel.DownloadCollection.Remove(selectedSong);
                     ApplicationModel.IsListEmpty =
                                 ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
@@ -105,9 +105,9 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<SongModel> RemoveAllCommand {
+        public CommandHandler<ItemModel> RemoveAllCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     ApplicationModel.DownloadCollection.Clear();
                     ApplicationModel.IsListEmpty =
                                 ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;

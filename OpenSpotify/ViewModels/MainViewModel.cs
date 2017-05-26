@@ -185,7 +185,7 @@ namespace OpenSpotify.ViewModels
                 return true;
             }
 
-            var songModel = item as SongModel;
+            var songModel = item as ItemModel;
             return songModel != null &&
                    (songModel.SongName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
                    (songModel?.ArtistName.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0);
@@ -261,6 +261,7 @@ namespace OpenSpotify.ViewModels
                 ClearTemp();
             }
         }
+
 
 
         #endregion

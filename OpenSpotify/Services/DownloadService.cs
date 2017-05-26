@@ -28,44 +28,10 @@ namespace OpenSpotify.Services
             InitializeFileWatcher();
         }
 
-        #region Get Song Information 
-
-        public SongModel DownloadSongInformation(string id) {
-            try {
-                string loadedData;
-                using (var webClient = new WebClient()) {
-                    loadedData = webClient.DownloadString(SongInformationUri + PrepareId(id));
-                }
-
-                var desirializedInfo = JsonConvert.DeserializeObject<JObject>(loadedData);
-                var songModel = new SongModel {
-                    Id = PrepareId(id),
-                    Artists = new List<string>(),
-                    AlbumName = (string)desirializedInfo["album"]["name"],
-                    SongName = (string)desirializedInfo["name"],
-                    CoverImage = (string)desirializedInfo["album"]["images"][0]["url"],
-                    StatusValue = 60
-                };
-
-                var artistBuilder = new StringBuilder();
-                foreach (var artist in desirializedInfo["artists"]) {
-                    songModel.Artists.Add((string)artist["name"]);
-                    artistBuilder.Append($"{artist["name"]},");
-                }
-                songModel.ArtistName = artistBuilder.ToString();
-                return songModel;
-            }
-            catch (Exception ex) {
-                new LogException(ex);
-                return null;
-            }
-        }
-
-        #endregion
 
         #region Download Songs
 
-        private void DownloadSongs(SongModel song) {
+        private void DownloadSongs(ItemModel song) {
             if (!IsInternetAvailable())
                 return;
 
@@ -147,25 +113,6 @@ namespace OpenSpotify.Services
 
         #endregion
 
-        #region Initialization 
-
-        private void InitalizeYouTubeService() {
-            if (YouTubeService != null) return;
-            try {
-                YouTubeService = new YouTubeService(new BaseClientService.Initializer {
-                    ApiKey = ApplicationModel.Settings.YoutubeApiKey,
-                    ApplicationName = AppDomain.CurrentDomain.FriendlyName
-                });
-                YouTube = YouTube.Default;
-            }
-            catch (Exception ex) {
-#if !DEBUG
-                    new LogException(ex);
-#endif
-                Debug.Write(ex.Message);
-                Debug.Write(ex.StackTrace);
-            }
-        }
 
         private void InitializeFileWatcher() {
             FileSystemDownloadWatcher = new FileSystemWatcher(TempPath) {
@@ -185,32 +132,31 @@ namespace OpenSpotify.Services
 
         public async void Start(string songId) {
             try {
-                InitalizeYouTubeService();
                 if(!IsInternetAvailable()) {
-                    ApplicationModel.StatusText = "No Internet Connection";
+                    ApplicationModel.StatusText = NoInternet;
                     return;
                 }
 
-                var song = DownloadSongInformation(songId);
-                song.Status = LoadingSongInformation;
-                song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
+                //var song = SearchSpotifySongInformation(songId);
+                //song.Status = LoadingSongInformation;
+                //song.YouTubeUri = await SearchForSong(song.SongName, song.Artists?[0]);
 
-                if (string.IsNullOrEmpty(song.YouTubeUri) ||
-                   song.YouTubeUri.Length <= YouTubeUri.Length) {
-                    song.Status = FailedLoadingSongInformation;
-                    return;
-                }
+                //if (string.IsNullOrEmpty(song.YouTubeUri) ||
+                //   song.YouTubeUri.Length <= YouTubeUri.Length) {
+                //    song.Status = FailedLoadingSongInformation;
+                //    return;
+                //}
 
-                Application.Current.Dispatcher.Invoke(() => {
-                    if(ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) {
-                        return;
-                    }
+                //Application.Current.Dispatcher.Invoke(() => {
+                //    if(ApplicationModel.DownloadCollection.Any(i => i.Id == song.Id)) {
+                //        return;
+                //    }
 
-                    SetStatus(song, Status.Downloading);
-                    ApplicationModel.DownloadCollection.Add(song);
-                });
+                //    SetStatus(song, Status.Downloading);
+                //    ApplicationModel.DownloadCollection.Add(song);
+                //});
 
-                DownloadSongs(song);
+                //DownloadSongs(song);
             }
             catch (Exception ex) {
 #if !DEBUG
@@ -221,7 +167,7 @@ namespace OpenSpotify.Services
             }
         }
 
-        #endregion
+        //#endregion
 
         #region SearchQuery YouTube 
 
@@ -344,7 +290,7 @@ namespace OpenSpotify.Services
 
         public void AddFailedSong(string artist, string songName) {
 
-            var song = new SongModel {
+            var song = new ItemModel {
                 SongName = songName,
                 ArtistName = artist
             };

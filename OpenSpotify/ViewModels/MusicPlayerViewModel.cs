@@ -15,7 +15,7 @@ namespace OpenSpotify.ViewModels
     public class MusicPlayerViewModel : BaseViewModel
     {
 
-        public MusicPlayerViewModel(ApplicationModel applicationModel, SongModel currentSong) {
+        public MusicPlayerViewModel(ApplicationModel applicationModel, ItemModel currentSong) {
             ApplicationModel = applicationModel;
             CurrentSong = currentSong;
             Initialize();
@@ -34,7 +34,7 @@ namespace OpenSpotify.ViewModels
         private double _sliderTrackMaximum;
         private Visibility _soundSliderVisibility;
         private double _soundSliderValue;
-        private SongModel _currentSong;
+        private ItemModel _currentSong;
         private double _largeChange;
         private bool _isDragging;
         private double _smallChange;
@@ -53,7 +53,7 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-        public SongModel CurrentSong {
+        public ItemModel CurrentSong {
             get { return _currentSong; }
             set {
                 _currentSong = value;
@@ -309,7 +309,7 @@ namespace OpenSpotify.ViewModels
             InitializeMediaElement(CurrentSong);
         }
 
-        private void InitializeMediaElement(SongModel song) {
+        private void InitializeMediaElement(ItemModel song) {
             if (ApplicationModel.SongCollection.Count > 0) {
                 IndexOfLastSong = ApplicationModel.SongCollection.IndexOf(song);
             }
@@ -410,7 +410,7 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-        private void GetCurrentSongName(SongModel currentSong) {
+        private void GetCurrentSongName(ItemModel currentSong) {
             CurrentSongName = $"{currentSong.ArtistName} / {currentSong.SongName}";
         }
 

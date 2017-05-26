@@ -79,6 +79,24 @@
             Represents a lambda expression that can be invoked. This class is thread safe.
             </summary>
         </member>
+        <member name="P:DynamicExpresso.Lambda.Parameters">
+            <summary>
+            Gets the parameters actually used in the expression parsed.
+            </summary>
+            <value>The used parameters.</value>
+        </member>
+        <member name="P:DynamicExpresso.Lambda.UsedParameters">
+            <summary>
+            Gets the parameters actually used in the expression parsed.
+            </summary>
+            <value>The used parameters.</value>
+        </member>
+        <member name="P:DynamicExpresso.Lambda.DeclaredParameters">
+            <summary>
+            Gets the parameters declared when parsing the expression.
+            </summary>
+            <value>The declared parameters.</value>
+        </member>
         <member name="M:DynamicExpresso.Lambda.Invoke(System.Object[])">
             <summary>
             Invoke the expression with the given parameters values.
@@ -99,24 +117,6 @@
             <returns>The lambda expression.</returns>
             <typeparam name="TDelegate">The delegate to generate. Delegate parameters must match the one defined when creating the expression, see UsedParameters.</typeparam>
         </member>
-        <member name="P:DynamicExpresso.Lambda.Parameters">
-            <summary>
-            Gets the parameters actually used in the expression parsed.
-            </summary>
-            <value>The used parameters.</value>
-        </member>
-        <member name="P:DynamicExpresso.Lambda.UsedParameters">
-            <summary>
-            Gets the parameters actually used in the expression parsed.
-            </summary>
-            <value>The used parameters.</value>
-        </member>
-        <member name="P:DynamicExpresso.Lambda.DeclaredParameters">
-            <summary>
-            Gets the parameters declared when parsing the expression.
-            </summary>
-            <value>The declared parameters.</value>
-        </member>
         <member name="T:DynamicExpresso.Interpreter">
             <summary>
             Class used to parse and compile a text expression into an Expression or a Delegate that can be invoked. Expression are written using a subset of C# syntax.
@@ -133,6 +133,21 @@
             Creates a new Interpreter using the specified options.
             </summary>
             <param name="options"></param>
+        </member>
+        <member name="P:DynamicExpresso.Interpreter.ReferencedTypes">
+            <summary>
+            Gets a list of registeres types. Add types by using the Reference method.
+            </summary>
+        </member>
+        <member name="P:DynamicExpresso.Interpreter.Identifiers">
+            <summary>
+            Gets a list of known identifiers. Add identifiers using SetVariable, SetFunction or SetExpression methods.
+            </summary>
+        </member>
+        <member name="P:DynamicExpresso.Interpreter.AssignmentOperators">
+            <summary>
+            Gets the available assignment operators.
+            </summary>
         </member>
         <member name="M:DynamicExpresso.Interpreter.EnableAssignment(DynamicExpresso.AssignmentOperators)">
             <summary>
@@ -296,21 +311,6 @@
             <param name="expressionType">The return type of the expression. Use void or object if you don't know the expected return type.</param>
             <param name="parameters"></param>
             <returns></returns>
-        </member>
-        <member name="P:DynamicExpresso.Interpreter.ReferencedTypes">
-            <summary>
-            Gets a list of registeres types. Add types by using the Reference method.
-            </summary>
-        </member>
-        <member name="P:DynamicExpresso.Interpreter.Identifiers">
-            <summary>
-            Gets a list of known identifiers. Add identifiers using SetVariable, SetFunction or SetExpression methods.
-            </summary>
-        </member>
-        <member name="P:DynamicExpresso.Interpreter.AssignmentOperators">
-            <summary>
-            Gets the available assignment operators.
-            </summary>
         </member>
         <member name="T:DynamicExpresso.Parameter">
             <summary>

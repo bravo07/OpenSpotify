@@ -39,7 +39,7 @@ namespace OpenSpotify.Services.Util {
 
         #region Set Status Image
 
-        public static void SetStatus(SongModel song, Status status) {
+        public static void SetStatus(ItemModel song, Status status) {
             Application.Current.Dispatcher.Invoke(() => {
                 switch(status) {
                     case Status.Downloading:

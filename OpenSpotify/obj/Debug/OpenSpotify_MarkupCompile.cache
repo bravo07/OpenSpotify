@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\App.xaml
-7-1496196523
+101607646498
 11889791067
-37-2097821208
-80-2097522633
-ResourceDictionary.xaml;Views\Custom\MusicPlayerView.xaml;Views\DownloadView.xaml;Views\HomeView.xaml;Views\MainView.xaml;Views\MusicView.xaml;Views\SettingsView.xaml;
+42-1984991660
+82-189678377
+ResourceDictionary.xaml;Views\Custom\DownloadViewCell.xaml;Views\Custom\ItemViewCell.xaml;Views\Custom\MusicPlayerView.xaml;Views\DownloadView.xaml;Views\SpotifyView.xaml;Views\MainView.xaml;Views\MusicView.xaml;Views\SettingsView.xaml;Views\YouTubeView.xaml;
 
 False
 

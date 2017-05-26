@@ -49,9 +49,9 @@ namespace OpenSpotify.ViewModels {
 
         #region Command
 
-        public CommandHandler<SongModel> PlaySongCommand {
+        public CommandHandler<ItemModel> PlaySongCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     if(!File.Exists(selectedSong.FullPath)) return;
 
                     var existingWindow = Application.Current.Windows.Cast<Window>().SingleOrDefault(w => w.Name == nameof(MusicView));
@@ -67,9 +67,9 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<SongModel> OpenYoutubeCommand {
+        public CommandHandler<ItemModel> OpenYoutubeCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     if(selectedSong.YouTubeUri == null) {
                         return;
                     }
@@ -80,9 +80,9 @@ namespace OpenSpotify.ViewModels {
         }
 
 
-        public CommandHandler<SongModel> OpenFileInDirectoryCommand {
+        public CommandHandler<ItemModel> OpenFileInDirectoryCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     if(!File.Exists(selectedSong.FullPath)) {
                         ApplicationModel.SongCollection.Remove(selectedSong);
                         ApplicationService.SaveApplicationModel(ApplicationModel);
@@ -93,18 +93,18 @@ namespace OpenSpotify.ViewModels {
             }
         }
 
-        public CommandHandler<SongModel> RemoveSongCommand {
+        public CommandHandler<ItemModel> RemoveSongCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     ApplicationModel.SongCollection.Remove(selectedSong);
                     ApplicationService.SaveApplicationModel(ApplicationModel);
                 });
             }
         }
 
-        public CommandHandler<SongModel> RemoveAllCommand {
+        public CommandHandler<ItemModel> RemoveAllCommand {
             get {
-                return new CommandHandler<SongModel>(selectedSong => {
+                return new CommandHandler<ItemModel>(selectedSong => {
                     ApplicationModel.SongCollection.Clear();
                     ApplicationService.SaveApplicationModel(ApplicationModel);
                 });
@@ -119,7 +119,7 @@ namespace OpenSpotify.ViewModels {
             if(MusicView == null) MusicView = new MusicView();
         }
 
-        private void CreateView(SongModel selectedSong) {
+        private void CreateView(ItemModel selectedSong) {
             MusicPlayerViewModel = new MusicPlayerViewModel(ApplicationModel, selectedSong);
             MusicView.DataContext = MusicPlayerViewModel;
             MusicView.Show();

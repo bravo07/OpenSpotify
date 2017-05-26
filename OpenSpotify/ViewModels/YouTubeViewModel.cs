@@ -57,6 +57,7 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<object> SearchCommand {
             get {
                 return new CommandHandler<object>(async o => {
+                    ApplicationModel.SearchResultCollection.Clear();
                     IsSearching = true;
                     AddMatches(await SearchService.Search(SearchText));
                     IsSearching = false;
@@ -67,14 +68,14 @@ namespace OpenSpotify.ViewModels
         public CommandHandler<object> ClearSearchBoxCommand {
             get {
                 return new CommandHandler<object>(o => {
-                    ApplicationModel.YouTubeCollection.Clear();
+                    ApplicationModel.SearchResultCollection.Clear();
                 });
             }
         }
 
-        public CommandHandler<SongModel> OpenYoutubeCommand {
+        public CommandHandler<ItemModel> OpenYoutubeCommand {
             get {
-                return new CommandHandler<SongModel>(song => {
+                return new CommandHandler<ItemModel>(song => {
                     Process.Start(song.YouTubeUri);
                 });
             }
@@ -89,9 +90,9 @@ namespace OpenSpotify.ViewModels
             }
         }
 
-        private void AddMatches(IEnumerable<SongModel> matchList) {
+        private void AddMatches(IEnumerable<ItemModel> matchList) {
             foreach (var match in matchList) {
-                ApplicationModel.YouTubeCollection.Add(match);
+                ApplicationModel.SearchResultCollection.Add(match);
             }
         } 
         #endregion

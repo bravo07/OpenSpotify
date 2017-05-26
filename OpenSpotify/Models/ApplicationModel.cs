@@ -63,13 +63,13 @@ namespace OpenSpotify.Models {
             get; set;
         }
 
-        public ObservableCollection<SongModel> SongCollection { get; set; }
+        public ObservableCollection<ItemModel> SongCollection { get; set; }
 
-        public ObservableCollection<SongModel> YouTubeCollection { get; set; }
+        public ObservableCollection<ItemModel> SearchResultCollection { get; set; }
 
         [JsonIgnore]
-        public ObservableCollection<SongModel> DownloadCollection { get; set; } =
-            new ObservableCollection<SongModel>();
+        public ObservableCollection<ItemModel> DownloadCollection { get; set; } =
+            new ObservableCollection<ItemModel>();
 
         [JsonIgnore]
         public ObservableCollection<string> DroppedSongs { get; set; } =
@@ -81,11 +81,11 @@ namespace OpenSpotify.Models {
 
         private void Initialize() {
             if (SongCollection == null) {
-                SongCollection = new ObservableCollection<SongModel>();
+                SongCollection = new ObservableCollection<ItemModel>();
             }
 
-            if (YouTubeCollection == null) {
-                YouTubeCollection  = new ObservableCollection<SongModel>();
+            if (SearchResultCollection == null) {
+                SearchResultCollection  = new ObservableCollection<ItemModel>();
             }
 
             if (Settings == null) {
