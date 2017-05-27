@@ -10,6 +10,11 @@
              x:Name="UserControl"
              d:DesignHeight="300"
              d:DesignWidth="300">
+    <UserControl.Background>
+
+        <SolidColorBrush Color="#FF1F1F1F" Opacity="0.87"/>
+
+    </UserControl.Background>
     <Grid Margin="48,10,0,0">
         <ListBox ItemsSource="{Binding ApplicationModel.DownloadCollection}">
             <ListBox.ItemTemplate>

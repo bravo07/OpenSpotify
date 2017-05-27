@@ -25,9 +25,14 @@
         dd:DragDrop.IsDropTarget="True"
         dd:DragDrop.DropHandler="{Binding}" 
         ResizeMode="CanResize" 
+        WindowTitleBrush="Transparent"
         Icon="/OpenSpotify;component/Logo.ico" 
         IconScalingMode="NoScaleSmallerFrame" 
-        x:Name="MetroWindow">
+        x:Name="MetroWindow" Loaded="MainView_OnLoaded">
+    <controls:MetroWindow.Background>
+        <SolidColorBrush Color="#FF1F1F1F" Opacity="0.87"/>
+    </controls:MetroWindow.Background>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <ei:CallMethodAction MethodName="ViewClosing" TargetObject="{Binding}" />

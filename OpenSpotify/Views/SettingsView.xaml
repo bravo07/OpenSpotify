@@ -5,6 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d">
+    <UserControl.Background>
+
+        <SolidColorBrush Color="#FF1F1F1F" Opacity="0.87"/>
+
+    </UserControl.Background>
     <Grid>
 
         <StackPanel Orientation="Vertical" Margin="70,10,0,0">

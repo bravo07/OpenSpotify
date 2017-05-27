@@ -189,3 +189,6 @@ E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\You
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.g.resources
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.Properties.Resources.resources
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csproj.GenerateResource.Cache
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csprojResolveAssemblyReference.cache
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml

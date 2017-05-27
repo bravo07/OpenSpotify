@@ -3,11 +3,14 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using OpenSpotify.Models;
 
-namespace OpenSpotify.Services.Util {
-    public class Utils {
+namespace OpenSpotify.Services.Util
+{
+    public class Utils
+    {
 
         #region Prepare Id
 
@@ -26,9 +29,9 @@ namespace OpenSpotify.Services.Util {
 
         public static void ClearTemp() {
             try {
-                foreach(var file in Directory.GetFiles(TempPath)) if(File.Exists(file)) File.Delete(file);
+                foreach (var file in Directory.GetFiles(TempPath)) if (File.Exists(file)) File.Delete(file);
             }
-            catch(Exception) {
+            catch (Exception) {
 #if !DEBUG
                 new LogException(ex);
 #endif
@@ -41,7 +44,7 @@ namespace OpenSpotify.Services.Util {
 
         public static void SetStatus(ItemModel song, Status status) {
             Application.Current.Dispatcher.Invoke(() => {
-                switch(status) {
+                switch (status) {
                     case Status.Downloading:
                         song.Status = "Downloading...";
                         song.StatusImage = StatusImageDownload;
@@ -167,9 +170,66 @@ namespace OpenSpotify.Services.Util {
         }
 
         #endregion
+
+        #region Blur
+        public static void EnableBlur(Window window) {
+            var windowHelper = new WindowInteropHelper(window);
+
+            var accent = new AccentPolicy();
+            var accentStructSize = Marshal.SizeOf(accent);
+            accent.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND;
+
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new WindowCompositionAttributeData();
+            data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
+            data.SizeOfData = accentStructSize;
+            data.Data = accentPtr;
+
+            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+        }
+
+        [DllImport("user32.dll")]
+        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct WindowCompositionAttributeData
+        {
+            public WindowCompositionAttribute Attribute;
+            public IntPtr Data;
+            public int SizeOfData;
+        }
+
+        internal enum WindowCompositionAttribute
+        {
+            WCA_ACCENT_POLICY = 19
+        }
+
+        internal enum AccentState
+        {
+            ACCENT_DISABLED = 0,
+            ACCENT_ENABLE_GRADIENT = 1,
+            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+            ACCENT_ENABLE_BLURBEHIND = 3,
+            ACCENT_INVALID_STATE = 4
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct AccentPolicy
+        {
+            public AccentState AccentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        }
+        #endregion
     }
 
-    public static class StringExtensions {
+    public static class StringExtensions
+    {
         public static bool Contains(this string source, string toCheck, StringComparison comp) {
             return source.IndexOf(toCheck, comp) >= 0;
         }

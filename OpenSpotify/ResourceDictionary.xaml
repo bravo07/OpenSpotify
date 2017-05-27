@@ -18,6 +18,21 @@
         </Setter>
     </Style>
 
-   
+    <Style x:Key="WindowBlur" TargetType="Window">
+        <Setter Property="Background">
+            <Setter.Value>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <Image>
+                            <Image.Effect>
+                                <BlurEffect Radius="20"/>
+                            </Image.Effect>
+                        </Image>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
 </ResourceDictionary>

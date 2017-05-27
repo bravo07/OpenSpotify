@@ -15,6 +15,7 @@
         ResizeMode="NoResize" 
         Background="Transparent"
         Foreground="{x:Null}">
+    
  
     <Grid>
         <Grid.RowDefinitions>
