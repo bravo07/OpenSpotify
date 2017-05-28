@@ -3,80 +3,137 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OpenSpotify.Views"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:dd="urn:gong-wpf-dragdrop"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         GlowBrush="Green"
+        dd:DragDrop.IsDragSource="False"
+        dd:DragDrop.IsDropTarget="True"
+        dd:DragDrop.DropHandler="{Binding}" 
         WindowTitleBrush="Transparent"
-        Title="HomeView" Height="300" Width="300" Loaded="HomeView_OnLoaded">
-    <controls:MetroWindow.Background>
+        Icon="/OpenSpotify;component/Logo.ico" 
+        IconScalingMode="NoScaleSmallerFrame" 
+        Left="{Binding  ApplicationModel.Settings.WindowLeft, Mode=TwoWay}"
+        Top="{Binding ApplicationModel.Settings.WindowTop, Mode=TwoWay}"
+        Height="{Binding ApplicationModel.Settings.WindowHeight, Mode=TwoWay}" 
+        Width="{Binding ApplicationModel.Settings.WindowWidth, Mode=TwoWay}"
+        Title="Open Downloader" 
+        x:Name="MetroWindow"
+        Loaded="HomeView_OnLoaded">
 
+    <controls:MetroWindow.Background>
         <SolidColorBrush Color="#FF1F1F1F" Opacity="0.87"/>
-    
     </controls:MetroWindow.Background>
 
+    <Window.Resources>
+        <SolidColorBrush x:Key="DarkRed" Color="#FFA71F12" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <DataTemplate x:Key="HamburgerMenuItem"
+                      DataType="{x:Type controls:HamburgerMenuItem}">
 
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <ContentControl Grid.Column="0" 
+                                Content="{Binding Tag}" 
+                                Focusable="False"
+                                Foreground="White" 
+                                IsTabStop="False" />
+
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center" 
+                           FontSize="16"
+                           Foreground="White"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HamburgerMenuImageItem" 
+                      DataType="{x:Type controls:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Margin="12"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Source="{Binding Glyph}"
+                       Stretch="UniformToFill" />
+                <TextBlock Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="White"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+
+    <!-- T I T L E M E N U -->
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <TextBox Width="150" 
+                     controls:TextBoxHelper.Watermark="SearchQuery..."
+                     controls:TextBoxHelper.ClearTextButton="True"
+                     Visibility="{Binding ApplicationModel.IsDownloadView ,Converter={StaticResource BoolToVis}}" 
+                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Command="{Binding OpenMusicCommand}">
+                <Image Source="../Assets/Directory.png" 
+                       Stretch="Uniform"
+                       Height="17"
+                       Width="17"/>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 
     <Grid>
-
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                         Foreground="White"
+                        Content="{Binding NavigationService.ContentWindow, Mode=TwoWay}"
+                        SelectedItem="{Binding NavigationService.SelectedItem, Mode=TwoWay}"
                         PaneBackground="#FF1F1F1F"
                         Opacity="0.67"
+                        ItemTemplate="{StaticResource HamburgerMenuImageItem}"
+                        OptionsItemTemplate="{StaticResource HamburgerMenuImageItem}" 
                         IsPaneOpen="False"
                         DisplayMode="CompactOverlay">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ItemClick">
+                    <i:InvokeCommandAction Command="{Binding NavigationService.ItemClickCommand}" 
+                                           CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
-            <controls:HamburgerMenu.ContentTemplate>
-                <DataTemplate DataType="{x:Type controls:HamburgerMenuItem}">
-                    <Grid x:Name="TheContentGrid">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="48" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Border Grid.Row="0"
-                                Background="Transparent">
-                            <TextBlock x:Name="Header"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="24"
-                            Foreground="White"
-                            Text="{Binding Label}" />
-                        </Border>
-                        <ContentControl x:Name="TheContent"
-                            Grid.Row="1"
-                            Focusable="False"
-                            Foreground="{DynamicResource BlackBrush}"
-                            Content="{Binding Tag}" />
-                    </Grid>
-                </DataTemplate>
-            </controls:HamburgerMenu.ContentTemplate>
-
+            <!--  Items  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Glyph="" Label="Home">
-                      
-                    </controls:HamburgerMenuGlyphItem>
-                    <controls:HamburgerMenuGlyphItem Glyph="" Label="Private">
-                      
-                    </controls:HamburgerMenuGlyphItem>
-
-                    <controls:HamburgerMenuGlyphItem Glyph="" Label="Settings">
-                       
-                    </controls:HamburgerMenuGlyphItem>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Spotify.png" Label="Spotify"/>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/YouTube.png" Label="YouTube"/>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Download.png" Label="Downloads"/>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Settings.png" Label="Settings"/>
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
 
             <!--  Options  -->
             <controls:HamburgerMenu.OptionsItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Glyph="" Label="About">
-                     
-                    </controls:HamburgerMenuGlyphItem>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/About.png" Label="About"/>
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.OptionsItemsSource>
+
+            <controls:HamburgerMenu.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl DataContext="{Binding ElementName=MetroWindow, Path=DataContext}" 
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Content="{Binding NavigationService.ContentWindow}"/>
+                </DataTemplate>
+            </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>
-        
-        
     </Grid>
-    <!--Background="#FF1F1F1F"-->
 </controls:MetroWindow>

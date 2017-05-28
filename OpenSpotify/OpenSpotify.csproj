@@ -139,6 +139,7 @@
     <Compile Include="Services\Util\Utils.cs" />
     <Compile Include="Services\Util\Views.cs" />
     <Compile Include="ViewModels\DownloadsViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\SpotifyViewModel.cs" />
     <Compile Include="ViewModels\MusicPlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -314,7 +315,8 @@
     <Resource Include="Assets\YouTube.png" />
     <Resource Include="Assets\Spotify.png" />
     <Resource Include="Assets\Search.png" />
-    <Resource Include="Assets\back.PNG" />
+    <Resource Include="Assets\back.png" />
+    <Resource Include="Assets\About.png" />
     <Content Include="libvideo.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

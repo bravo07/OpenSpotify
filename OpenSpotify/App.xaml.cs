@@ -21,8 +21,8 @@ namespace OpenSpotify {
                         MusicPath = MusicPath
                     }
                 };
-            var mainView = new MainView(applicationModel);
-            mainView.Show();
+            var home = new HomeView(applicationModel);
+            home.Show();
         }
     }
 }

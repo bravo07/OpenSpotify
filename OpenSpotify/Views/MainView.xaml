@@ -30,14 +30,15 @@
         IconScalingMode="NoScaleSmallerFrame" 
         x:Name="MetroWindow" Loaded="MainView_OnLoaded">
     <controls:MetroWindow.Background>
+        <!--<ImageBrush ImageSource="../Assets/back.png" Opacity="0.87"/>-->
         <SolidColorBrush Color="#FF1F1F1F" Opacity="0.87"/>
     </controls:MetroWindow.Background>
     
-    <i:Interaction.Triggers>
+    <!--<i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <ei:CallMethodAction MethodName="ViewClosing" TargetObject="{Binding}" />
         </i:EventTrigger>
-    </i:Interaction.Triggers>
+    </i:Interaction.Triggers>-->
     
     <!-- R E S O U R C E S -->  
     <Window.Resources>
@@ -148,8 +149,7 @@
         <!-- M A I N M E N U -->
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Content="{Binding NavigationService.ContentWindow, Mode=TwoWay}"
-                                SelectedItem="{Binding NavigationService.SelectedItem, Mode=TwoWay}"
-                                DisplayMode="Overlay"
+                                SelectedItem="{Binding NavigationService.SelectedItem, Mode=TwoWay}"                         
                                 OpenPaneLength="48"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}" 
@@ -211,7 +211,7 @@
 
 
         <!--S T A T U S B A R -->
-        <Grid Background="{StaticResource DarkRed}" 
+        <!--<Grid Background="{StaticResource DarkRed}" 
               Height="23" 
               VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
@@ -225,7 +225,7 @@
                    FontSize="11" VerticalAlignment="Center"
                    HorizontalContentAlignment="Left"
                    FontFamily="CalibriLight"/>
-        </Grid>
+        </Grid>-->
     </Grid>
 </controls:MetroWindow>
 

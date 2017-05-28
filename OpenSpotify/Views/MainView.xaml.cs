@@ -18,7 +18,6 @@ namespace OpenSpotify.Views {
 
         private void MainView_OnLoaded(object sender, RoutedEventArgs e) {
             Utils.EnableBlur(this);
-
         }
     }
 }

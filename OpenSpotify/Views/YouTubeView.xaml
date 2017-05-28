@@ -15,8 +15,11 @@
         <util:ImageCoverter x:Key="ImageCoverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
+    <UserControl.Background>
+        <SolidColorBrush Color="Transparent"/>
+    </UserControl.Background>
 
-    <Grid Margin="48,10,10,0">
+    <Grid Margin="10,10,10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>

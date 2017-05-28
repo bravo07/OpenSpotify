@@ -11,9 +11,13 @@
         <util:BindingProxy x:Key="DataContextProxy"
                            Data="{Binding}" />
     </UserControl.Resources>
+    <UserControl.Background>
+        <SolidColorBrush Color="Transparent"/>
+    </UserControl.Background>
     <Grid>
         <ListBox ItemsSource="{Binding ApplicationModel.SongCollection}"
-                 Margin="48,10,0,0" 
+                 Margin="10,10,0,0" 
+                 Background="Transparent"
                  TextSearch.TextPath="Name"
                  IsTextSearchEnabled="True">
             <ListBox.ItemTemplate>

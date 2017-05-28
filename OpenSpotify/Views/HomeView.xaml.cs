@@ -1,5 +1,8 @@
 ﻿using System.Windows;
-using OpenSpotify.Services.Util;
+using MahApps.Metro.Controls;
+using OpenSpotify.Models;
+using OpenSpotify.ViewModels;
+using Utils = OpenSpotify.Services.Util.Utils;
 
 namespace OpenSpotify.Views
 {
@@ -8,15 +11,14 @@ namespace OpenSpotify.Views
     /// </summary>
     public partial class HomeView 
     {
-        public HomeView() {
+        public HomeView(ApplicationModel applicationModel) {
             InitializeComponent();
             this.AllowsTransparency = true;
+            DataContext = new HomeViewModel(applicationModel);
         }
 
         private void HomeView_OnLoaded(object sender, RoutedEventArgs e) {
             Utils.EnableBlur(this);
         }
     }
-
-
 }

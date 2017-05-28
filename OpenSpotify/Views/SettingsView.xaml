@@ -6,13 +6,11 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d">
     <UserControl.Background>
-
-        <SolidColorBrush Color="#FF1F1F1F" Opacity="0.87"/>
-
+        <SolidColorBrush Color="Transparent"/>
     </UserControl.Background>
     <Grid>
 
-        <StackPanel Orientation="Vertical" Margin="70,10,0,0">
+        <StackPanel Orientation="Vertical" Margin="10,10,0,0">
 
             <Label Content="General" FontSize="20" FontFamily="Calibri Light"/>
             <StackPanel Orientation="Horizontal">
