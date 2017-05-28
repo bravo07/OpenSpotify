@@ -15,7 +15,7 @@ If you run into any problems or issues, **please** let us know so we can address
 
 ## Download
 Always Download OpenSpotify at the Release Page <a href="https://github.com/ValonK/OpenSpotify/releases" target="top">Here</a>. 
-The current Build might be not functional due to Development and Changes.
+The current Build might be not functional due to Development or Changes.
 
 ## Contributing
 If you want to Contribute you need to follow the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel" target="top">MVVM</a>  Design Pattern.
