@@ -144,13 +144,16 @@
     <Compile Include="ViewModels\MusicPlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\YouTubeViewModel.cs" />
-    <Compile Include="Views\Custom\DownloadViewCell.xaml.cs">
+    <Compile Include="Views\Custom\Controls\CustomButton.xaml.cs">
+      <DependentUpon>CustomButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Custom\Controls\DownloadViewCell.xaml.cs">
       <DependentUpon>DownloadViewCell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Custom\ItemViewCell.xaml.cs">
+    <Compile Include="Views\Custom\Controls\ItemViewCell.xaml.cs">
       <DependentUpon>ItemViewCell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Custom\MusicPlayerView.xaml.cs">
+    <Compile Include="Views\Custom\Controls\MusicPlayerView.xaml.cs">
       <DependentUpon>MusicPlayerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
@@ -172,15 +175,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Custom\DownloadViewCell.xaml">
+    <Page Include="Views\Custom\Controls\CustomButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Custom\ItemViewCell.xaml">
+    <Page Include="Views\Custom\Controls\DownloadViewCell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Custom\MusicPlayerView.xaml">
+    <Page Include="Views\Custom\Controls\ItemViewCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Custom\Controls\MusicPlayerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -317,6 +324,7 @@
     <Resource Include="Assets\Search.png" />
     <Resource Include="Assets\back.png" />
     <Resource Include="Assets\About.png" />
+    <Resource Include="Assets\SearchInactive.png" />
     <Content Include="libvideo.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

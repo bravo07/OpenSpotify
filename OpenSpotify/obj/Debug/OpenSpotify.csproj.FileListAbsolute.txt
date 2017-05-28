@@ -124,9 +124,6 @@ D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csproj.GenerateReso
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.exe
 D:\Development\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.pdb
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\SettingsView.baml
-E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\DownloadViewCell.g.cs
-E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\ItemViewCell.g.cs
-E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\MusicPlayerView.g.cs
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.g.cs
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\SpotifyView.g.cs
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.g.cs
@@ -178,9 +175,6 @@ E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\bin\Debug\Newtonsof
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\bin\Debug\Zlib.Portable.xml
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\App.baml
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\ResourceDictionary.baml
-E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\DownloadViewCell.baml
-E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\ItemViewCell.baml
-E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\MusicPlayerView.baml
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\DownloadView.baml
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\SpotifyView.baml
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\MainView.baml
@@ -192,3 +186,11 @@ E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpoti
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.csprojResolveAssemblyReference.cache
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.g.cs
 E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\HomeView.baml
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\CustomButton.baml
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\CustomButton.g.cs
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\DownloadViewCell.g.cs
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\ItemViewCell.g.cs
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\MusicPlayerView.g.cs
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\DownloadViewCell.baml
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\ItemViewCell.baml
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\Custom\Controls\MusicPlayerView.baml

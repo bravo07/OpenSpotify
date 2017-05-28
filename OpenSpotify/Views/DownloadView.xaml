@@ -22,7 +22,7 @@
                  IsTextSearchEnabled="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="Transparent">
                         <Grid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Play Song" 
@@ -70,7 +70,9 @@
                                Height="80" Width="80"
                                HorizontalAlignment="Left"/>
 
-                        <Grid Grid.Column="1" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1" 
+                              Grid.ColumnSpan="2"
+                              Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>

@@ -1,12 +1,13 @@
 ﻿
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\App.xaml;;
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\ResourceDictionary.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\DownloadViewCell.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\ItemViewCell.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\MusicPlayerView.xaml;;
+FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\DownloadViewCell.xaml;;
+FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\ItemViewCell.xaml;;
+FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\MusicPlayerView.xaml;;
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\DownloadView.xaml;;
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\SpotifyView.xaml;;
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\MainView.xaml;;
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\MusicView.xaml;;
 FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\YouTubeView.xaml;;
+FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\SettingsView.xaml;;
 

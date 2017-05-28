@@ -30,5 +30,14 @@ namespace OpenSpotify.Views
                 ((YouTubeViewModel)DataContext).SearchCommand.Execute(null);
             }
         }
+
+        private void UIElement_OnMouseEnter(object sender, MouseEventArgs e) {
+            ButtonImage.Source = new BitmapImage(new Uri("/Assets/Search.png", UriKind.RelativeOrAbsolute));
+        }
+
+        private void UIElement_OnMouseLeave(object sender, MouseEventArgs e) {
+            ButtonImage.Source = new BitmapImage(new Uri("/Assets/SearchInactive.png", UriKind.RelativeOrAbsolute));
+
+        }
     }
 }

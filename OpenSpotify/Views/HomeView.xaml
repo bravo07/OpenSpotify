@@ -78,7 +78,9 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <TextBox Width="150" 
-                     controls:TextBoxHelper.Watermark="SearchQuery..."
+                     Margin="2.4"
+                     BorderThickness="0"
+                     controls:TextBoxHelper.Watermark="Search..."
                      controls:TextBoxHelper.ClearTextButton="True"
                      Visibility="{Binding ApplicationModel.IsDownloadView ,Converter={StaticResource BoolToVis}}" 
                      Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
