@@ -7,17 +7,17 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Background>
+        <SolidColorBrush Color="Transparent"/>
+    </UserControl.Background>
+    
     <Grid>
-        <TabControl>
+        <TabControl Background="Transparent">>
             <TabItem Header="About" controls:ControlsHelper.HeaderFontSize="15">
                 
             </TabItem>
 
             <TabItem Header="Changelog" controls:ControlsHelper.HeaderFontSize="15">
-
-            </TabItem>
-
-            <TabItem Header="What's Next?" controls:ControlsHelper.HeaderFontSize="15">
 
             </TabItem>
         </TabControl>

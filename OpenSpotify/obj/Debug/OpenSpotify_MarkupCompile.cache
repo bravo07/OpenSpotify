@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\
 OpenSpotify
 none
 false
 DEBUG;TRACE
-D:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\App.xaml
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\App.xaml
 13-1534609746
 11889791067
 47-1799991323
-82141262402
+82-189678377
 ResourceDictionary.xaml;Views\AboutView.xaml;Views\Custom\Controls\CustomButton.xaml;Views\Custom\Controls\DownloadViewCell.xaml;Views\Custom\Controls\ItemViewCell.xaml;Views\Custom\Controls\MusicPlayerView.xaml;Views\DownloadView.xaml;Views\HomeView.xaml;Views\SpotifyView.xaml;Views\MainView.xaml;Views\MusicView.xaml;Views\SettingsView.xaml;Views\YouTubeView.xaml;
 
 False

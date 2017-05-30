@@ -265,3 +265,5 @@ D:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpoti
 D:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\OpenSpotify.pdb
 D:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\AboutView.g.cs
 D:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\AboutView.baml
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\AboutView.g.cs
+E:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\obj\Debug\Views\AboutView.baml
