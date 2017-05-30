@@ -1,13 +1,14 @@
 ﻿
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\App.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\ResourceDictionary.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\DownloadViewCell.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\ItemViewCell.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\MusicPlayerView.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\DownloadView.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\SpotifyView.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\MainView.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\MusicView.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\YouTubeView.xaml;;
-FE:\_Development\_Desktop\OpenSpotify\OpenSpotify\OpenSpotify\Views\SettingsView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\App.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\ResourceDictionary.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\DownloadViewCell.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\ItemViewCell.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\Custom\Controls\MusicPlayerView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\DownloadView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\SpotifyView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\MainView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\MusicView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\SettingsView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\YouTubeView.xaml;;
+FD:\_Development\_Privat\_OpenSpotify\OpenSpotify\OpenSpotify\Views\AboutView.xaml;;
 

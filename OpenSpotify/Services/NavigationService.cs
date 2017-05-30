@@ -31,6 +31,8 @@ namespace OpenSpotify.Services
         private DownloadsViewModel _downloadsViewModel;
         private YouTubeView _youTubeView;
         private YouTubeViewModel _youTubeViewModel;
+        private AboutView _aboutView;
+        private AboutViewModel _aboutViewModel;
 
         #endregion
 
@@ -75,6 +77,15 @@ namespace OpenSpotify.Services
                 OnPropertyChanged(nameof(YouTube));
             }
         }
+
+        public AboutView AboutView {
+            get { return _aboutView; }
+            set {
+                _aboutView = value;
+                OnPropertyChanged(nameof(AboutView));
+            }
+        }
+
 
         public HamburgerMenuGlyphItem SelectedItem {
             get { return _selectedItem; }
@@ -121,6 +132,14 @@ namespace OpenSpotify.Services
             set {
                 _downloadsViewModel = value;
                 OnPropertyChanged(nameof(DownloadsViewModel));
+            }
+        }
+
+        public AboutViewModel AboutViewModel {
+            get { return _aboutViewModel; }
+            set {
+                _aboutViewModel = value; 
+                OnPropertyChanged(nameof(AboutViewModel));
             }
         }
 
@@ -171,6 +190,10 @@ namespace OpenSpotify.Services
                                 ApplicationModel.IsListEmpty =
                                     ApplicationModel.DownloadCollection.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
                                 break;
+
+                            case nameof(About):
+                                ContentWindow = AboutView;
+                                break;
                         }
                     }
                     catch (Exception ex) {
@@ -201,6 +224,10 @@ namespace OpenSpotify.Services
                 YouTubeView = new YouTubeView();
                 YouTubeViewModel = new YouTubeViewModel(ApplicationModel);
                 YouTubeView.DataContext = YouTubeViewModel;
+
+                AboutView = new AboutView();
+                AboutViewModel = new AboutViewModel(ApplicationModel);
+                AboutView.DataContext = AboutViewModel;
 
                 ContentWindow = SpotifyView;
             }

@@ -3,6 +3,7 @@
         Spotify,
         YouTube,
         Settings,
-        Downloads
+        Downloads,
+        About
     }
 }
